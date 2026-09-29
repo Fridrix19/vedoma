@@ -1,0 +1,44 @@
+# Запуск всех компонентов одной командой:
+#   docker compose up -d --build
+# Остановка:            docker compose down
+# Сброс тестовых данных: docker compose down -v
+#
+# На сервере с доменом (https для Mini App) дополнительно поднимается Caddy
+# с автоматическим сертификатом Let's Encrypt:
+#   docker compose --profile https up -d --build
+name: uniflow
+
+services:
+  app:
+    build: .
+    image: uniflow-app:latest
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PORT: "8080"
+      DATA_DIR: /app/data
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    volumes:
+      - uniflow-data:/app/data
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["https"]
+    restart: unless-stopped
+    depends_on:
+      - app
+    command: caddy reverse-proxy --from "${DOMAIN:-localhost}" --to app:8080
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  uniflow-data:
+  caddy-data:
+  caddy-config:

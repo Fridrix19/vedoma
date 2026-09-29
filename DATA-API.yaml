@@ -1,0 +1,241 @@
+# Описание обязательных проверок API для платформы оценки хакатона.
+# Полный контракт — openapi.yaml. Все данные тестовые.
+version: "1.0"
+solution:
+  name: UniFlow
+  team: UniFlow            # замените на идентификатор команды
+base_url: https://uniflow.betatestbyfridrix.ru   # боевой стенд; при своём запуске — ваш PUBLIC_URL
+
+roles:
+  public:
+    description: Без авторизации
+  student:
+    description: Студент (тестовый). Токен — поле token из проверки student_login
+    header: X-Session
+    obtain: student_login
+  panel:
+    description: Сотрудник деканата / администратор вуза (тестовый). Токен — поле token из проверки panel_login
+    header: X-Panel-Token
+    obtain: panel_login
+
+test_accounts:
+  student:
+    tenantId: univ-a
+    email: a.ivanova@student.univ-a.ru
+    password: demo-pass          # подходит любой пароль от 4 символов (SSO вуза замокан)
+  panel:
+    password: "<PANEL_PASSWORD из .env — указывается на первом слайде презентации>"
+
+# Проверки выполняются по порядку: id заявки из create_request используется дальше как {request_id}.
+checks:
+  - id: health
+    title: Сервер и бот работают
+    method: GET
+    path: /api/health
+    role: public
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [ok, bot.enabled]
+
+  - id: tenants
+    title: Список вузов для входа
+    method: GET
+    path: /api/public/tenants
+    role: public
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: ["tenants", "tenants[].id", "tenants[].name", "browserLogin"]
+
+  - id: student_login
+    title: Вход студента
+    method: POST
+    path: /api/student/login
+    role: public
+    headers: { Content-Type: application/json }
+    body: { tenantId: univ-a, email: a.ivanova@student.univ-a.ru, password: demo-pass }
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [token, studentId, linked]
+
+  - id: student_login_wrong
+    title: Неверный логин обрабатывается
+    method: POST
+    path: /api/student/login
+    role: public
+    headers: { Content-Type: application/json }
+    body: { tenantId: univ-a, email: nobody@student.univ-a.ru, password: demo-pass }
+    expected_status: [400]
+    response:
+      content_type: application/json
+      required_fields: [error]
+
+  - id: student_state
+    title: Данные студента (только свои заявки)
+    method: GET
+    path: /api/student/state
+    role: student
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [tenants, students, services, requests, messages, drafts]
+
+  - id: student_state_unauthorized
+    title: Без токена доступ закрыт
+    method: GET
+    path: /api/student/state
+    role: public
+    expected_status: [401]
+    response:
+      content_type: application/json
+      required_fields: [error]
+
+  - id: create_request
+    title: Подать заявку на справку об обучении
+    method: POST
+    path: /api/student/requests
+    role: student
+    headers: { Content-Type: application/json }
+    body:
+      serviceId: cert-study
+      values: { place: Банк / кредит, reason: Для оформления кредита }
+      files: {}
+      channel: miniapp
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [request.id, request.status, request.deadline, request.history]
+      expect: { request.status: accepted }
+    save: { request_id: request.id }
+
+  - id: create_request_invalid
+    title: Пустое обязательное поле отклоняется
+    method: POST
+    path: /api/student/requests
+    role: student
+    headers: { Content-Type: application/json }
+    body: { serviceId: cert-study, values: {}, files: {} }
+    expected_status: [400]
+    response:
+      content_type: application/json
+      required_fields: [error]
+
+  - id: panel_login
+    title: Вход в панель вуза
+    method: POST
+    path: /api/panel/login
+    role: public
+    headers: { Content-Type: application/json }
+    body: { password: "<PANEL_PASSWORD>" }
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [token]
+
+  - id: panel_state
+    title: Очередь заявок вуза
+    method: GET
+    path: /api/panel/state
+    query: { tenantId: univ-a }
+    role: panel
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [requests, services, students, messages, staffCount, bot]
+
+  - id: take_in_work
+    title: Взять заявку в работу
+    method: POST
+    path: /api/panel/requests/{request_id}/take
+    role: panel
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [ok]
+
+  - id: complete_without_document
+    title: Справку нельзя завершить без документа
+    method: POST
+    path: /api/panel/requests/{request_id}/complete
+    role: panel
+    headers: { Content-Type: application/json }
+    body: {}
+    expected_status: [400]
+    response:
+      content_type: application/json
+      required_fields: [error]
+
+  - id: attach_result
+    title: Прикрепить PDF — сервер подписывает его электронной подписью вуза
+    method: POST
+    path: /api/panel/requests/{request_id}/result
+    role: panel
+    headers: { Content-Type: application/json }
+    body:
+      file:
+        name: spravka.pdf
+        mime: application/pdf
+        dataUrl: "data:application/pdf;base64,JVBERi0xLjQKJSVFT0YK"
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [ok, file.url, file.signature.docId, file.signature.sha256, file.signature.sig]
+      expect: { file.signature.alg: Ed25519 }
+    save: { doc_id: file.signature.docId }
+
+  - id: verify_document
+    title: Подлинность документа проверяется по номеру (QR-код в справке)
+    method: GET
+    path: /api/public/verify/{doc_id}
+    role: public
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [valid, docId, document, issuer, signedAt, sha256]
+      expect: { valid: true }
+
+  - id: verify_unknown_document
+    title: Неизвестный номер документа — 404
+    method: GET
+    path: /api/public/verify/UF-0-NOTFOUND
+    role: public
+    expected_status: [404]
+    response:
+      content_type: application/json
+      required_fields: [error]
+
+  - id: complete
+    title: Завершить заявку — студенту уходит PDF в бот и в Mini App
+    method: POST
+    path: /api/panel/requests/{request_id}/complete
+    role: panel
+    headers: { Content-Type: application/json }
+    body: { note: Оригинал с печатью — каб. 105 }
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [ok]
+
+  - id: rate
+    title: Студент оценивает выполненную заявку
+    method: POST
+    path: /api/student/requests/{request_id}/rate
+    role: student
+    headers: { Content-Type: application/json }
+    body: { score: 4 }
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: [ok]
+
+  - id: request_done_visible
+    title: Статус «Готово» и документ видны студенту
+    method: GET
+    path: /api/student/state
+    role: student
+    expected_status: [200]
+    response:
+      content_type: application/json
+      required_fields: ["requests[].status", "requests[].result.url", "requests[].rating.score"]

@@ -1,0 +1,37 @@
+{
+  "name": "uniflow-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:server": "vite --mode server",
+    "build": "tsc --noEmit && vite build --mode server",
+    "build:demo": "vite build --config vite.demo.config.ts",
+    "start": "node server/start.mjs",
+    "server:dev": "node server/start.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "jev:check": "node --import tsx --env-file=.env server/jev-check.ts"
+  },
+  "dependencies": {
+    "@maxhub/max-bot-api": "^0.3.1",
+    "express": "^4.22.3",
+    "pdfkit": "0.17.2",
+    "qrcode": "1.5.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsx": "^4.23.15"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.25",
+    "@types/node": "^22.20.4",
+    "@types/pdfkit": "^0.17.6",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.2",
+    "vite-plugin-singlefile": "^2.0.2"
+  }
+}

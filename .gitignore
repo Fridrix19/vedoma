@@ -1,0 +1,9 @@
+node_modules
+dist
+dist-demo
+data
+.env
+*.zip
+*.log
+.env.*
+!.env.example

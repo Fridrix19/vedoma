@@ -1,0 +1,157 @@
+/* Демо-стенд: три поверхности на одном экране */
+html, body, #root { height: 100%; }
+body { background: #e6ecee; }
+
+.demo { height: 100%; display: flex; flex-direction: column; min-height: 640px; }
+
+.demo-top {
+  flex: none;
+  display: flex; align-items: center; gap: 16px 24px; flex-wrap: wrap;
+  padding: 12px 20px;
+  background: var(--surface);
+  border-bottom: 0.8px solid var(--line);
+}
+.demo-brand { display: flex; align-items: center; gap: 10px; }
+.demo-brand__mark {
+  width: 34px; height: 34px; border-radius: 10px; background: var(--teal); color: #fff;
+  display: grid; place-items: center; font-weight: 800; font-size: 17px;
+}
+.demo-brand__name { font-size: 17px; font-weight: 800; letter-spacing: -0.01em; }
+.demo-brand__sub { font-size: 12px; font-weight: 600; color: var(--muted); }
+
+.demo-steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 auto 0 0; padding: 0; list-style: none; }
+.demo-steps li {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px 5px 5px; border-radius: 999px;
+  background: var(--bg); color: var(--muted); font-size: 13px; font-weight: 700; cursor: help;
+}
+.demo-steps__n {
+  width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface); font-size: 11px; font-weight: 800;
+}
+.demo-steps li.is-current { background: var(--amber-soft); color: var(--ink); }
+.demo-steps li.is-current .demo-steps__n { background: var(--amber); color: #fff; }
+.demo-steps li.is-done { background: var(--green-soft); color: var(--green); }
+.demo-steps li.is-done .demo-steps__n { background: var(--green); color: #fff; }
+.demo-reset { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+
+.demo-hint {
+  flex: none; padding: 8px 20px; font-size: 14px; color: var(--ink);
+  background: var(--amber-soft); border-bottom: 0.8px solid #f6d2b8;
+}
+
+.demo-stage {
+  flex: 1; min-height: 0;
+  display: grid;
+  grid-template-columns: 300px auto minmax(0, 1fr);
+  grid-template-areas: 'chat phone panel';
+  gap: 20px;
+  padding: 16px 20px 20px;
+}
+.demo-col { display: flex; flex-direction: column; gap: 8px; min-height: 0; min-width: 0; }
+.demo-col--chat { grid-area: chat; }
+.demo-col--phone { grid-area: phone; align-items: center; }
+.demo-col--panel { grid-area: panel; }
+.demo-label { font-size: 13px; font-weight: 700; color: var(--muted); align-self: flex-start; }
+.demo-label em { font-style: normal; font-weight: 600; padding: 1px 6px; border-radius: 6px; background: var(--surface); margin-left: 4px; }
+
+/* Телефон */
+.demo-phone-box { flex: none; position: relative; }
+.demo-phone {
+  position: absolute; top: 0; left: 0;
+  width: 390px; height: 844px;
+  transform-origin: top left;
+  border: 8px solid var(--ink);
+  border-radius: 44px;
+  overflow: hidden;
+  box-shadow: var(--shadow-frame);
+  background: var(--bg);
+}
+
+/* Рабочий стол */
+.demo-desktop {
+  flex: 1; min-height: 0;
+  border: 0.8px solid var(--line); border-radius: 16px; overflow: hidden;
+  box-shadow: 0 16px 40px rgba(25, 40, 59, 0.1);
+  background: var(--bg);
+}
+
+/* Чат MAX (упрощённо) */
+.chat {
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column;
+  border-radius: 20px; overflow: hidden;
+  background: linear-gradient(180deg, #74b6e3 0%, #a5d4cc 60%, #c3e6d9 100%);
+  box-shadow: 0 10px 30px rgba(25, 40, 59, 0.1);
+}
+.chat__head {
+  display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+  background: var(--surface); border-bottom: 0.8px solid var(--line);
+}
+.chat__head b { display: block; font-size: 15px; }
+.chat__head div span { font-size: 12px; color: var(--muted); }
+.chat__avatar {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--teal); color: #fff;
+  display: grid; place-items: center; font-weight: 800; font-size: 14px;
+}
+.chat__list { flex: 1; min-height: 0; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.chat__msg { display: flex; flex-direction: column; gap: 6px; max-width: 88%; }
+.chat__msg--user { align-self: flex-end; }
+.chat__bubble {
+  position: relative;
+  padding: 8px 12px 18px; border-radius: 14px;
+  background: var(--surface); font-size: 14px; line-height: 1.4; white-space: pre-line;
+  box-shadow: 0 1px 2px rgba(25, 40, 59, 0.08);
+}
+.chat__msg--user .chat__bubble { background: #dff3ff; }
+.chat__time { position: absolute; right: 10px; bottom: 3px; font-size: 11px; color: var(--muted); }
+.chat__buttons { display: flex; flex-direction: column; gap: 4px; }
+.chat__buttons button {
+  border: 0; border-radius: 10px; padding: 8px 10px;
+  background: var(--teal); color: #fff; font-size: 13px; font-weight: 700;
+}
+.chat__buttons button + button { background: var(--surface); color: var(--teal); }
+.chat__buttons button:hover { filter: brightness(1.08); }
+.chat__input { display: flex; gap: 8px; padding: 10px; background: var(--surface); }
+.chat__input input {
+  flex: 1; min-width: 0; height: 38px; border: 0; border-radius: 999px; background: var(--bg);
+  padding: 0 14px; font-size: 14px; outline: 0;
+}
+.chat__input input:focus { box-shadow: 0 0 0 2px var(--teal); }
+.chat__input .btn { padding: 8px 12px; font-size: 13px; }
+.chat__examples { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 10px 10px; background: var(--surface); }
+.chat__examples button {
+  border: 0.8px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 9px;
+  font-size: 12px; font-weight: 600; color: var(--muted);
+}
+.chat__examples button:hover { color: var(--teal); border-color: var(--teal); }
+.chat__note { margin: 0; padding: 8px 12px 10px; font-size: 11.5px; line-height: 1.4; color: var(--muted); background: var(--surface); border-top: 0.8px solid var(--line); }
+
+/* Средние экраны: чат под телефоном и панелью */
+@media (max-width: 1440px) {
+  .demo { height: auto; min-height: 100%; }
+  .demo-stage {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: calc(100vh - 150px) auto;
+    grid-template-areas: 'phone panel' 'chat chat';
+    min-height: 700px;
+  }
+  .demo-col--chat .chat { height: 420px; flex: none; }
+  .chat__list { max-height: none; }
+}
+
+/* Узкие экраны: всё в колонку */
+@media (max-width: 900px) {
+  .demo-top { padding: 12px 16px; }
+  .demo-steps { margin: 0; }
+  .demo-stage {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: 'phone' 'chat' 'panel';
+    padding: 16px;
+  }
+  .demo-col--phone { min-height: 520px; }
+  .demo-desktop { height: 820px; flex: none; }
+}
+.chat__buttons--row { flex-direction: row; }
+.chat__buttons--row button, .chat__buttons--row button + button { flex: 1; background: var(--surface); color: var(--teal); padding: 8px 0; }

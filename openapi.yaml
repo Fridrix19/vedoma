@@ -1,0 +1,790 @@
+openapi: 3.1.0
+info:
+  title: UniFlow API
+  version: 1.0.0
+  summary: API сервера UniFlow — Mini App студента и веб-панель вуза в MAX
+  description: |
+    Сервер обслуживает Mini App (студент) и веб-панель вуза (сотрудник деканата, администратор).
+    Бот MAX работает в том же процессе и отправляет уведомления при изменении заявок.
+
+    Авторизация:
+    * студент — заголовок `X-Session` (токен из `POST /api/student/login` или `POST /api/student/session`);
+      внутри MAX дополнительно передаётся `X-Max-Init-Data` (подпись проверяется токеном бота);
+    * панель — заголовок `X-Panel-Token` (токен из `POST /api/panel/login`).
+
+    Все данные вузов и студентов — тестовые.
+servers:
+  - url: https://{domain}
+    variables:
+      domain:
+        default: example.sslip.io
+        description: Публичный домен сервера (PUBLIC_URL)
+  - url: http://localhost:8080
+    description: Локальный запуск (docker compose up)
+
+tags:
+  - name: public
+  - name: student
+  - name: panel
+  - name: files
+  - name: documents
+    description: Электронная подпись и проверка подлинности выданных документов
+
+paths:
+  /api/health:
+    get:
+      tags: [public]
+      summary: Проверка работоспособности и статус бота
+      responses:
+        '200':
+          description: Сервер работает
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok, bot]
+                properties:
+                  ok: { type: boolean, const: true }
+                  bot: { $ref: '#/components/schemas/BotInfo' }
+                  router:
+                    type: string
+                    enum: [jev, llm, keywords]
+                    description: Активный маршрутизатор запросов бота
+
+  /api/public/tenants:
+    get:
+      tags: [public]
+      summary: Список вузов для экрана входа
+      responses:
+        '200':
+          description: Вузы
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [tenants, browserLogin]
+                properties:
+                  tenants:
+                    type: array
+                    items:
+                      type: object
+                      required: [id, name, short, demoEmail]
+                      properties:
+                        id: { type: string, example: univ-a }
+                        name: { type: string, example: Университет А }
+                        short: { type: string, example: ВУЗ А }
+                        demoEmail: { type: string, description: Подсказка тестового логина }
+                  browserLogin: { type: boolean }
+
+  /api/student/login:
+    post:
+      tags: [student]
+      summary: Вход студента (имитация SSO вуза). В MAX привязывает профиль к пользователю MAX
+      parameters:
+        - $ref: '#/components/parameters/MaxInitData'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tenantId, email, password]
+              properties:
+                tenantId: { type: string, example: univ-a }
+                email: { type: string, example: a.ivanova@student.univ-a.ru }
+                password: { type: string, minLength: 4, example: demo-pass }
+      responses:
+        '200':
+          description: Успешный вход
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [token, studentId, linked]
+                properties:
+                  token: { type: string, description: Значение для заголовка X-Session }
+                  studentId: { type: string, example: s-ivanova }
+                  linked: { type: boolean, description: Профиль привязан к пользователю MAX }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403':
+          description: Вход из браузера выключен (ALLOW_BROWSER_LOGIN=0)
+          content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+
+  /api/student/session:
+    post:
+      tags: [student]
+      summary: Автовход в MAX по подписанному initData (если профиль уже привязан)
+      parameters:
+        - $ref: '#/components/parameters/MaxInitData'
+      responses:
+        '200':
+          description: Сессия создана
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [token, studentId]
+                properties:
+                  token: { type: string }
+                  studentId: { type: string }
+                  startParam: { type: [string, 'null'] }
+        '401':
+          description: Профиль не привязан или initData без подписи
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: { type: string, const: need_login }
+                  insideMax: { type: boolean }
+
+  /api/student/state:
+    get:
+      tags: [student]
+      summary: Данные студента — только свои заявки, услуги своего вуза, черновики бота
+      security: [{ studentSession: [] }]
+      responses:
+        '200':
+          description: Состояние
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/StudentState' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/student/requests:
+    post:
+      tags: [student]
+      summary: Подать заявку
+      security: [{ studentSession: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [serviceId, values]
+              properties:
+                serviceId: { type: string, example: cert-study }
+                values:
+                  type: object
+                  additionalProperties: { type: string }
+                  example: { place: Банк / кредит, reason: Для оформления кредита }
+                files:
+                  type: object
+                  description: Вложения по id поля; файл передаётся как data URL (до 10 МБ)
+                  additionalProperties: { $ref: '#/components/schemas/FileUpload' }
+                channel: { type: string, enum: [miniapp, bot] }
+                draftId: { type: string, description: Черновик, созданный ботом (start_param=draft_<id>) }
+      responses:
+        '200':
+          description: Заявка создана, статус «Принято»; бот уведомляет студента и деканат
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [request]
+                properties:
+                  request: { $ref: '#/components/schemas/ServiceRequest' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/student/requests/{id}/reply:
+    post:
+      tags: [student]
+      summary: Дополнить заявку после запроса уточнения («Нужны данные» → «В работе»)
+      security: [{ studentSession: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text: { type: string, example: Подойдёт 11:00 в тот же день }
+      responses:
+        '200': { $ref: '#/components/responses/Ok' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/student/requests/{id}/rate:
+    post:
+      tags: [student]
+      summary: Оценить выполненную заявку (1–5) и оставить комментарий
+      security: [{ studentSession: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [score]
+              properties:
+                score: { type: integer, minimum: 1, maximum: 5 }
+                comment: { type: string, maxLength: 500 }
+      responses:
+        '200': { $ref: '#/components/responses/Ok' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/login:
+    post:
+      tags: [panel]
+      summary: Вход в панель вуза (пароль PANEL_PASSWORD)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [password]
+              properties:
+                password: { type: string, example: uniflow }
+      responses:
+        '200':
+          description: Токен панели
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [token]
+                properties:
+                  token: { type: string, description: Значение для заголовка X-Panel-Token }
+        '401':
+          description: Неверный пароль
+          content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+
+  /api/panel/state:
+    get:
+      tags: [panel]
+      summary: Заявки, услуги, студенты и сообщения бота по одному вузу
+      security: [{ panelToken: [] }]
+      parameters:
+        - name: tenantId
+          in: query
+          required: false
+          schema: { type: string, default: univ-a }
+      responses:
+        '200':
+          description: Состояние панели
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PanelState' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/requests/{id}/take:
+    post:
+      tags: [panel]
+      summary: Взять заявку в работу («Принято» → «В работе»)
+      security: [{ panelToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      responses:
+        '200': { $ref: '#/components/responses/Ok' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/requests/{id}/clarify:
+    post:
+      tags: [panel]
+      summary: Запросить уточнение у студента (статус «Нужны данные», текст уходит в бот)
+      security: [{ panelToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [comment]
+              properties:
+                comment: { type: string, example: Уточните название банка }
+      responses:
+        '200': { $ref: '#/components/responses/Ok' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/requests/{id}/result:
+    post:
+      tags: [panel]
+      summary: Прикрепить готовый документ (PDF или скан). PDF подписывается электронной подписью вуза
+      security: [{ panelToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [file]
+              properties:
+                file: { $ref: '#/components/schemas/FileUpload' }
+      responses:
+        '200': { $ref: '#/components/responses/FileResult' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+    delete:
+      tags: [panel]
+      summary: Убрать прикреплённый документ (до завершения)
+      security: [{ panelToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      responses:
+        '200': { $ref: '#/components/responses/Ok' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/requests/{id}/generate:
+    post:
+      tags: [panel]
+      summary: Сформировать справку по шаблону вуза — PDF со штампом электронной подписи и QR-кодом проверки
+      description: Только для услуг с результатом «PDF». Файл подписывается Ed25519-ключом вуза, строится превью первой страницы.
+      security: [{ panelToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      responses:
+        '200': { $ref: '#/components/responses/FileResult' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/requests/{id}/complete:
+    post:
+      tags: [panel]
+      summary: Завершить заявку («Готово»); документ и комментарий уходят студенту в бот и Mini App
+      security: [{ panelToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note: { type: string, example: Оригинал с печатью — каб. 105 }
+      responses:
+        '200': { $ref: '#/components/responses/Ok' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/requests/{id}/reject:
+    post:
+      tags: [panel]
+      summary: Отклонить заявку с причиной
+      security: [{ panelToken: [] }]
+      parameters: [{ $ref: '#/components/parameters/RequestId' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason: { type: string }
+      responses:
+        '200': { $ref: '#/components/responses/Ok' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/services/{serviceId}/enabled:
+    post:
+      tags: [panel]
+      summary: Включить или выключить услугу в каталоге Mini App и бота
+      security: [{ panelToken: [] }]
+      parameters:
+        - name: serviceId
+          in: path
+          required: true
+          schema: { type: string, example: campus-pass }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [enabled]
+              properties:
+                enabled: { type: boolean }
+      responses:
+        '200': { $ref: '#/components/responses/Ok' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/panel/services:
+    put:
+      tags: [panel]
+      summary: Создать или изменить услугу (конструктор); publish=true — опубликовать
+      security: [{ panelToken: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [service]
+              properties:
+                service: { $ref: '#/components/schemas/Service' }
+                publish: { type: boolean }
+      responses:
+        '200':
+          description: Сохранено
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [service]
+                properties:
+                  service: { $ref: '#/components/schemas/Service' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/NeedLogin' }
+
+  /api/public/verify/{docId}:
+    get:
+      tags: [documents]
+      summary: Проверить подлинность документа по номеру (номер и QR-код — в справке)
+      parameters:
+        - { name: docId, in: path, required: true, schema: { type: string, example: UF-18425-8DUFI2 } }
+      responses:
+        '200':
+          description: Документ найден; valid — файл не изменён и подпись сделана ключом вуза
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/VerifyResult' }
+        '404':
+          description: Документа с таким номером нет
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /api/public/signing-key:
+    get:
+      tags: [documents]
+      summary: Открытый ключ вуза для независимой проверки подписи
+      responses:
+        '200':
+          description: Ключ Ed25519
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [alg, keyId, publicKeyPem]
+                properties:
+                  alg: { type: string, const: Ed25519 }
+                  keyId: { type: string, example: 49D5 CFD5 3B79 48C7 }
+                  publicKeyPem: { type: string }
+
+  /verify/{docId}:
+    get:
+      tags: [documents]
+      summary: Страница проверки подлинности (HTML) — открывается по QR-коду; можно сверить присланный PDF
+      parameters:
+        - { name: docId, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Страница с результатом проверки, content: { text/html: {} } }
+        '404': { description: Страница «Документ не найден», content: { text/html: {} } }
+
+  /files/{fileId}/{name}:
+    get:
+      tags: [files]
+      summary: Скачать файл заявки (ссылка содержит случайный идентификатор)
+      parameters:
+        - { name: fileId, in: path, required: true, schema: { type: string, pattern: '^[a-z0-9]{16}$' } }
+        - { name: name, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Содержимое файла
+          content:
+            application/pdf: {}
+            image/*: {}
+        '404':
+          description: Файл не найден
+
+components:
+  securitySchemes:
+    studentSession:
+      type: apiKey
+      in: header
+      name: X-Session
+    panelToken:
+      type: apiKey
+      in: header
+      name: X-Panel-Token
+
+  parameters:
+    RequestId:
+      name: id
+      in: path
+      required: true
+      schema: { type: integer, example: 18425 }
+    MaxInitData:
+      name: X-Max-Init-Data
+      in: header
+      required: false
+      description: WebApp.initData из MAX Bridge; сервер проверяет подпись HMAC-SHA256 токеном бота
+      schema: { type: string }
+
+  responses:
+    Ok:
+      description: Выполнено
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [ok]
+            properties:
+              ok: { type: boolean, const: true }
+    FileResult:
+      description: Документ прикреплён к заявке
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [ok, file]
+            properties:
+              ok: { type: boolean, const: true }
+              file: { $ref: '#/components/schemas/StoredFile' }
+    BadRequest:
+      description: Ошибка в данных или недопустимое действие (текст для пользователя в поле error)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NeedLogin:
+      description: Нужен вход
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [error]
+            properties:
+              error: { type: string, const: need_login }
+
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error: { type: string, example: Заполните поле «Место требования». }
+
+    BotInfo:
+      type: object
+      required: [enabled]
+      properties:
+        enabled: { type: boolean }
+        username: { type: string }
+        id: { type: integer }
+
+    Tenant:
+      type: object
+      required: [id, name, short]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        short: { type: string }
+        ssoDomain: { type: string }
+        archive:
+          type: object
+          properties:
+            processed: { type: integer }
+            totalDays: { type: number }
+
+    Student:
+      type: object
+      required: [id, tenantId, fullName, group]
+      properties:
+        id: { type: string }
+        tenantId: { type: string }
+        fullName: { type: string }
+        firstName: { type: string }
+        lastName: { type: string }
+        faculty: { type: string }
+        facultyFull: { type: string }
+        group: { type: string }
+        course: { type: integer }
+        email: { type: string }
+
+    ServiceField:
+      type: object
+      required: [id, type, label, required]
+      properties:
+        id: { type: string }
+        type: { type: string, enum: [text, textarea, date, time, select, file] }
+        label: { type: string }
+        required: { type: boolean }
+        options: { type: array, items: { type: string } }
+        placeholder: { type: string }
+
+    Service:
+      type: object
+      required: [id, tenantId, title, category, slaDays, resultType, fields, enabled, published]
+      properties:
+        id: { type: string }
+        tenantId: { type: string }
+        title: { type: string }
+        description: { type: string }
+        icon: { type: string }
+        category: { type: string, enum: [docs, study, social, campus] }
+        meta: { type: string }
+        slaDays: { type: integer, minimum: 1 }
+        resultType: { type: string, enum: [pdf, visit, none] }
+        resultNote: { type: string }
+        department: { type: string }
+        fields: { type: array, items: { $ref: '#/components/schemas/ServiceField' } }
+        enabled: { type: boolean }
+        published: { type: boolean }
+        aiHints: { type: array, items: { type: string } }
+
+    FileUpload:
+      type: object
+      required: [name, dataUrl]
+      properties:
+        name: { type: string, example: spravka_18425.pdf }
+        mime: { type: string, example: application/pdf }
+        size: { type: integer }
+        dataUrl: { type: string, description: 'data:<mime>;base64,<содержимое>' }
+
+    StoredFile:
+      type: object
+      required: [name, size, mime]
+      properties:
+        name: { type: string }
+        size: { type: integer }
+        mime: { type: string }
+        url: { type: string, example: /files/abcdefghij012345/spravka_18425.pdf }
+        previewUrl: { type: string, description: PNG первой страницы PDF, example: /files/abcdefghij012345/preview.png }
+        signature: { $ref: '#/components/schemas/FileSignature' }
+
+    FileSignature:
+      type: object
+      description: Электронная подпись документа (демо — Ed25519 ключ сервера вуза; подписывается SHA-256 файла)
+      required: [docId, alg, keyId, sha256, sig, signedAt, signer]
+      properties:
+        docId: { type: string, example: UF-18425-8DUFI2 }
+        alg: { type: string, const: Ed25519 }
+        keyId: { type: string, example: 49D5 CFD5 3B79 48C7 }
+        sha256: { type: string, pattern: '^[0-9a-f]{64}$' }
+        sig: { type: string, description: Подпись в base64 }
+        signedAt: { type: string, format: date-time }
+        signer: { type: string, example: Учебный отдел · Университет А }
+
+    VerifyResult:
+      type: object
+      required: [valid, hashOk, sigOk, docId, document, issuedTo, issuer, signedAt, alg, keyId, sha256]
+      properties:
+        valid: { type: boolean }
+        hashOk: { type: boolean, description: Файл на сервере совпадает с подписанным }
+        sigOk: { type: boolean, description: Подпись верна для ключа вуза }
+        docId: { type: string }
+        document: { type: string, example: Справка об обучении }
+        fileName: { type: string }
+        requestId: { type: integer }
+        issuedTo: { type: string, description: Только фамилия и инициалы, example: Иванова А. С. }
+        issuer: { type: string }
+        signedAt: { type: string, format: date-time }
+        alg: { type: string }
+        keyId: { type: string }
+        sha256: { type: string }
+
+    HistoryEntry:
+      type: object
+      required: [at, status, note, actor]
+      properties:
+        at: { type: string, format: date-time }
+        status: { $ref: '#/components/schemas/RequestStatus' }
+        note: { type: string }
+        actor: { type: string, enum: [student, staff, system] }
+
+    RequestStatus:
+      type: string
+      enum: [accepted, in_progress, need_info, done, rejected]
+      description: Принято, В работе, Нужны данные, Готово, Отказ
+
+    ServiceRequest:
+      type: object
+      required: [id, tenantId, serviceId, studentId, status, values, createdAt, updatedAt, deadline, history]
+      properties:
+        id: { type: integer, example: 18425 }
+        tenantId: { type: string }
+        serviceId: { type: string }
+        studentId: { type: string }
+        values: { type: object, additionalProperties: { type: string } }
+        files: { type: object, additionalProperties: { $ref: '#/components/schemas/StoredFile' } }
+        status: { $ref: '#/components/schemas/RequestStatus' }
+        channel: { type: string, enum: [miniapp, bot] }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+        deadline: { type: string, format: date-time }
+        history: { type: array, items: { $ref: '#/components/schemas/HistoryEntry' } }
+        clarification: { type: string }
+        studentReply: { type: string }
+        result: { $ref: '#/components/schemas/StoredFile' }
+        resultNote: { type: string }
+        rejectReason: { type: string }
+        rating:
+          type: object
+          required: [score, at, channel]
+          properties:
+            score: { type: integer, minimum: 1, maximum: 5 }
+            comment: { type: string }
+            at: { type: string, format: date-time }
+            channel: { type: string, enum: [miniapp, bot] }
+
+    BotMessage:
+      type: object
+      required: [id, at, audience, tenantId, requestId, text, buttons]
+      properties:
+        id: { type: string }
+        at: { type: string, format: date-time }
+        audience: { type: string, enum: [student, staff] }
+        tenantId: { type: string }
+        studentId: { type: string }
+        requestId: { type: integer }
+        text: { type: string }
+        buttons:
+          type: array
+          items:
+            type: object
+            required: [label, action]
+            properties:
+              label: { type: string }
+              action: { type: string, enum: [open_request, download_pdf, open_panel, reply, rate] }
+              value: { type: string }
+
+    Draft:
+      type: object
+      required: [id, studentId, serviceId, values, sourceText]
+      properties:
+        id: { type: string }
+        studentId: { type: string }
+        serviceId: { type: string }
+        values: { type: object, additionalProperties: { type: string } }
+        sourceText: { type: string }
+
+    StudentState:
+      type: object
+      required: [tenants, students, services, requests, messages, drafts]
+      properties:
+        tenants: { type: array, items: { $ref: '#/components/schemas/Tenant' } }
+        students: { type: array, items: { $ref: '#/components/schemas/Student' } }
+        services: { type: array, items: { $ref: '#/components/schemas/Service' } }
+        requests: { type: array, items: { $ref: '#/components/schemas/ServiceRequest' } }
+        messages: { type: array, items: { $ref: '#/components/schemas/BotMessage' } }
+        drafts: { type: array, items: { $ref: '#/components/schemas/Draft' } }
+
+    PanelState:
+      type: object
+      required: [tenants, students, services, requests, messages, staffCount, bot]
+      properties:
+        tenants: { type: array, items: { $ref: '#/components/schemas/Tenant' } }
+        students:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Student'
+              - type: object
+                properties:
+                  maxLinked: { type: boolean }
+        services: { type: array, items: { $ref: '#/components/schemas/Service' } }
+        requests: { type: array, items: { $ref: '#/components/schemas/ServiceRequest' } }
+        messages: { type: array, items: { $ref: '#/components/schemas/BotMessage' } }
+        drafts: { type: array, items: {} }
+        staffCount: { type: integer }
+        bot: { $ref: '#/components/schemas/BotInfo' }
