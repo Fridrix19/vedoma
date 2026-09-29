@@ -8,4 +8,4 @@ data
 .env.*
 !.env.example
 presentation/private.js
-presentation/UniFlow.pdf
+presentation/*.pdf
