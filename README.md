@@ -4,6 +4,8 @@
 
 Трек «Образовательные решения». Чат-бот MAX с подключённым Mini App и веб-панелью для вуза.
 
+Репозиторий: https://github.com/Fridrix19/vedoma · команда «Пантеры», СПбГУПТД.
+
 ## Назначение решения
 
 Студенту нужна справка, заявление или запись в деканат, и сейчас он ищет нужный отдел, форму и часы приёма
@@ -255,7 +257,7 @@ docker compose down -v         # удалить контейнеры и тест
    Адреса вида `*.sslip.io` не рекомендуем: у них общий лимит выдачи сертификатов Let's Encrypt, и он часто исчерпан.
 3. На сервере:
    ```bash
-   git clone <репозиторий> uniflow && cd uniflow
+   git clone https://github.com/Fridrix19/vedoma.git uniflow && cd uniflow
    cp .env.example .env   # BOT_TOKEN, PANEL_PASSWORD, STAFF_CODE, DOMAIN, PUBLIC_URL=https://DOMAIN
    docker compose --profile https up -d --build
    ```
