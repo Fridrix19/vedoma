@@ -121,6 +121,7 @@
 .pn-actions label.btn { cursor: pointer; }
 .btn.is-on { border-color: var(--teal); background: var(--teal-soft); }
 .btn.is-disabled { opacity: .45; pointer-events: none; }
+.pn-hint { font-size: 14px; color: var(--muted, #5b6b7b); background: #eef5f6; border-radius: 10px; padding: 10px 12px; }
 .pn-error { font-size: 14px; font-weight: 700; color: var(--coral); }
 
 .pn-box {

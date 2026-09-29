@@ -24,7 +24,7 @@ test_accounts:
     email: a.ivanova@student.univ-a.ru
     password: demo-pass          # подходит любой пароль от 4 символов (SSO вуза замокан)
   panel:
-    password: "<PANEL_PASSWORD из .env — указывается на первом слайде презентации>"
+    password: "<PANEL_PASSWORD из .env — указывается на служебном слайде презентации>"
 
 # Проверки выполняются по порядку: id заявки из create_request используется дальше как {request_id}.
 checks:

@@ -14,6 +14,8 @@ export const config = {
   panelPassword: process.env.PANEL_PASSWORD ?? 'uniflow',
   /** Код для команды «/staff КОД» в боте — подписка сотрудника на уведомления деканата. */
   staffCode: process.env.STAFF_CODE ?? process.env.PANEL_PASSWORD ?? 'uniflow',
+  /** OPEN_PANEL=1 — пускать в панель с любым паролем и принимать «/staff» без кода (открытый показ стенда). */
+  openPanel: bool(process.env.OPEN_PANEL, false),
   /** Вход в Mini App по логину вне MAX (браузер). В MAX всё равно проверяется подпись initData. */
   allowBrowserLogin: bool(process.env.ALLOW_BROWSER_LOGIN, true),
   /** Кнопка «Демо-вход» в боте: привязать MAX к тестовому студенту без Mini App (пока Mini App не зарегистрирован в MAX). */

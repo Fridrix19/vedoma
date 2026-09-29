@@ -114,6 +114,7 @@ docker compose --profile https up -d --build
 | `BOT_TOKEN` | да | — | Токен бота MAX. Без него сервер работает без бота |
 | `PUBLIC_URL` | для MAX | — | Публичный https-адрес (`https://DOMAIN`). Используется в ссылках на панель и в логах |
 | `DOMAIN` | для профиля https | — | Домен для Caddy и сертификата Let's Encrypt |
+| `OPEN_PANEL` | нет | `0` | `1` — пускать в панель с любым паролем и принимать `/staff` без кода |
 | `PANEL_PASSWORD` | да | `uniflow` | Пароль веб-панели вуза |
 | `STAFF_CODE` | да | `= PANEL_PASSWORD` | Код для команды боту `/staff КОД` (уведомления сотруднику) |
 | `BOT_USERNAME` | нет | из `/me` | Ник бота без @ для ссылок `max.ru/<бот>?startapp=…` |

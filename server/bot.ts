@@ -229,13 +229,14 @@ function registerHandlers(b: Bot) {
   // «/staff КОД» — сотрудник подписывается на уведомления деканата («/staff КОД univ-b» — для другого вуза)
   b.command(/^staff(\s|$)/, async (ctx) => {
     const sender = ctx.message?.sender;
-    const [, code, tenantArg] = (ctx.message?.body.text ?? '').trim().split(/\s+/);
-    if (!sender || code !== config.staffCode) {
+    const args = (ctx.message?.body.text ?? '').trim().split(/\s+/).slice(1);
+    if (!sender || (!config.openPanel && args[0] !== config.staffCode)) {
       await ctx.reply('Неверный код. Спросите его у администратора панели.');
       return;
     }
     const d = getDB();
-    const tenant = d.tenants.find((t) => t.id === tenantArg) ?? d.tenants[0];
+    // При OPEN_PANEL=1 код не нужен: «/staff» или «/staff univ-b»
+    const tenant = d.tenants.find((t) => args.includes(t.id)) ?? d.tenants[0];
     mutate((dd) => {
       dd.staff = (dd.staff ?? []).filter((s) => !(s.maxUserId === sender.user_id && s.tenantId === tenant.id));
       dd.staff.push({ tenantId: tenant.id, maxUserId: sender.user_id, name: sender.first_name ?? sender.name });
@@ -456,7 +457,7 @@ export async function startBot() {
     await bot.api.setMyCommands([
       { name: 'start', description: 'Начать' },
       { name: 'my', description: 'Мои заявки' },
-      { name: 'staff', description: 'Для сотрудников: /staff КОД' },
+      { name: 'staff', description: 'Для сотрудников: уведомления о новых заявках' },
     ]);
   } catch (e) {
     const msg = (e as Error).message;

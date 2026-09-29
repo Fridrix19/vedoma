@@ -64,7 +64,7 @@ function panelState(d: DB, tenantId: string) {
 
 // ——— Публичное ———
 
-app.get('/api/health', (_req, res) => res.json({ ok: true, bot: getBotInfo(), router: routerEngine() }));
+app.get('/api/health', (_req, res) => res.json({ ok: true, bot: getBotInfo(), router: routerEngine(), openPanel: config.openPanel }));
 
 app.get('/api/public/tenants', (_req, res) => {
   const d = getDB();
@@ -156,7 +156,7 @@ app.post('/api/student/requests/:id/rate', studentAuth, h((req, res) => {
 // ——— Панель вуза ———
 
 app.post('/api/panel/login', h((req, res) => {
-  if (String(req.body?.password ?? '') !== config.panelPassword) {
+  if (!config.openPanel && String(req.body?.password ?? '') !== config.panelPassword) {
     res.status(401).json({ error: 'Неверный пароль панели.' });
     return;
   }
@@ -267,7 +267,7 @@ if (existsSync(config.distDir)) {
 app.listen(config.port, () => {
   console.log(`[server] Сервер «Ведома» запущен: http://localhost:${config.port}`);
   console.log(`[server] Mini App: ${config.publicUrl || `http://localhost:${config.port}`}/miniapp.html`);
-  console.log(`[server] Панель:   ${config.publicUrl || `http://localhost:${config.port}`}/panel.html  (пароль из PANEL_PASSWORD)`);
+  console.log(`[server] Панель:   ${config.publicUrl || `http://localhost:${config.port}`}/panel.html  (${config.openPanel ? 'вход без пароля' : 'пароль из PANEL_PASSWORD'})`);
   if (!config.publicUrl) console.warn('[server] PUBLIC_URL не задан — укажите https-адрес туннеля/хостинга, чтобы открыть Mini App из MAX.');
   if (!existsSync(join(config.distDir, 'miniapp.html'))) console.warn('[server] Нет dist/miniapp.html — выполните «npm run build».');
 });

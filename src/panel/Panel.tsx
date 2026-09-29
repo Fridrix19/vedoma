@@ -166,7 +166,7 @@ export default function Panel({ framed = false }: { framed?: boolean }) {
             <div className="pn-server">
               <span className={`pn-server__dot ${serverInfo.bot?.enabled ? 'is-on' : ''}`} />
               {serverInfo.bot?.enabled ? `Бот @${serverInfo.bot.username || '—'} подключён` : 'Бот не подключён'}
-              <small>Сотрудников в MAX: {serverInfo.staffCount ?? 0} · команда боту «/staff КОД»</small>
+              <small>Сотрудников в MAX: {serverInfo.staffCount ?? 0} · команда боту «/staff»</small>
             </div>
           )}
         </div>
@@ -195,11 +195,15 @@ export default function Panel({ framed = false }: { framed?: boolean }) {
   );
 }
 
-/** Вход в панель (режим с сервером). Пароль — PANEL_PASSWORD из .env. */
+/** Вход в панель (режим с сервером). Пароль — PANEL_PASSWORD из .env; при OPEN_PANEL=1 подходит любой. */
 function PanelLogin({ framed, onDone }: { framed: boolean; onDone: () => void }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    fetch('/api/health').then((r) => r.json()).then((h: { openPanel?: boolean }) => setOpen(Boolean(h.openPanel))).catch(() => {});
+  }, []);
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
@@ -229,8 +233,9 @@ function PanelLogin({ framed, onDone }: { framed: boolean; onDone: () => void })
               <input id="pn-password" type="password" autoComplete="current-password" value={password}
                 onChange={(e) => setPassword(e.target.value)} autoFocus />
             </label>
+            {open && <div className="pn-hint">Вход без пароля: можно просто нажать «Войти».</div>}
             {error && <div className="pn-error">{error}</div>}
-            <div><button className="btn btn--primary" type="submit" disabled={busy || !password}>{busy ? 'Входим…' : 'Войти'}</button></div>
+            <div><button className="btn btn--primary" type="submit" disabled={busy || (!open && !password)}>{busy ? 'Входим…' : 'Войти'}</button></div>
           </form>
         </div>
       </section>
