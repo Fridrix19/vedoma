@@ -3,766 +3,564 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ведома — презентация · команда «Пантеры»</title>
+<title>Ведома — презентация · команда «Пантеры», СПбГУПТД</title>
 <link rel="stylesheet" href="deck.css">
-<!-- Служебные значения (пароли, ключи, ссылка на репозиторий) — в private.js, он не попадает в git.
-     Шаблон: private.example.js -->
+<!-- Служебные значения (пароли, ключи, ссылка на репозиторий) — в private.js, он не попадает в git. Шаблон: private.example.js -->
 <script src="private.example.js"></script>
 <script src="private.js" onerror="void 0"></script>
 </head>
 <body>
 <main class="deck">
 
-<!-- ═════════════════ 1. СЛУЖЕБНЫЙ ═════════════════ -->
-<section class="slide" id="s-service">
-  <div class="kicker"><b>00</b> Служебный слайд · для технической проверки</div>
-  <h2 class="title">Данные для проверки сервиса «Ведома»</h2>
-  <div class="body" style="gap:40px; margin-top:44px">
-    <div class="col grow" style="flex:1.15">
-      <table class="t svc">
-        <tr><td style="width:250px"><b>Чат-бот в MAX</b></td><td><span class="mono" data-p="botLink"></span><br><span class="muted">«Хакатон 302», ник <span class="mono">@t302_hakaton_bot</span></span></td></tr>
-        <tr><td><b>Mini App</b></td><td class="mono">https://uniflow.betatestbyfridrix.ru/miniapp.html</td></tr>
-        <tr><td><b>Панель вуза</b></td><td><span class="mono">https://uniflow.betatestbyfridrix.ru/</span><br>пароль: <b class="mono" data-p="panelPassword"></b></td></tr>
-        <tr><td><b>Собственный API</b></td><td><span class="mono">https://uniflow.betatestbyfridrix.ru</span><br><span class="muted"><span class="mono">openapi.yaml</span> (OpenAPI 3.1) · <span class="mono">DATA-API.yaml</span> — 18 проверок проходят на боевом адресе</span></td></tr>
-        <tr><td><b>Репозиторий</b></td><td><span class="mono" data-p="repoUrl"></span><br>commit <b class="mono" data-p="commit"></b> · тег <span class="mono" data-p="tag"></span></td></tr>
-      </table>
-    </div>
-    <div class="col" style="flex:1">
-      <div class="card" style="padding:30px 34px">
-        <h3 style="font-size:26px">Тестовые доступы</h3>
-        <ul class="clean" style="margin-top:16px; gap:10px">
-          <li style="font-size:21px">Студент в MAX: кнопка <b>«Демо-вход: тестовый студент»</b> в боте</li>
+<!-- 1 · СЛУЖЕБНЫЙ -->
+<section class="slide">
+  <h2 class="h" style="font-size:52px">Данные для проверки</h2>
+  <p class="sub" style="font-size:26px">Служебный слайд: используется только для технической проверки. Все данные в решении тестовые.</p>
+  <div class="content" style="gap:80px; margin-top:52px">
+    <table class="tb" style="flex:1.2; font-size:22px">
+      <tr><td style="width:230px">Чат-бот в MAX</td><td><span class="mono" data-p="botLink"></span> · ник <span class="mono">@t302_hakaton_bot</span></td></tr>
+      <tr><td>Mini App</td><td class="mono">https://uniflow.betatestbyfridrix.ru/miniapp.html</td></tr>
+      <tr><td>Панель вуза</td><td><span class="mono">https://uniflow.betatestbyfridrix.ru/</span><br>пароль <b class="mono" data-p="panelPassword"></b></td></tr>
+      <tr><td>API</td><td><span class="mono">https://uniflow.betatestbyfridrix.ru</span><br><span class="muted">openapi.yaml · DATA-API.yaml — 18 проверок</span></td></tr>
+      <tr><td>Репозиторий</td><td><span class="mono" data-p="repoUrl"></span><br>commit <span class="mono" data-p="commit"></span> · тег <span class="mono" data-p="tag"></span></td></tr>
+    </table>
+    <div class="col" style="flex:1; gap:40px">
+      <div>
+        <div class="label">Тестовые доступы</div>
+        <ul class="list" style="margin-top:18px; gap:12px">
+          <li style="font-size:21px">Студент в MAX: кнопка «Демо-вход: тестовый студент» в боте</li>
           <li style="font-size:21px">Студент в Mini App: <span class="mono">a.ivanova@student.univ-a.ru</span>, любой пароль от 4 символов</li>
-          <li style="font-size:21px">Сотрудник в MAX (уведомления): боту <span class="mono">/staff <span data-p="staffCode"></span></span></li>
+          <li style="font-size:21px">Сотрудник в MAX: боту <span class="mono">/staff <span data-p="staffCode"></span></span></li>
         </ul>
       </div>
-      <div class="card" style="padding:30px 34px">
-        <h3 style="font-size:26px">Переменные для запуска в Docker</h3>
-        <div style="font-size:19px; line-height:1.6; margin-top:12px" class="mono">
+      <div>
+        <div class="label">Переменные для Docker</div>
+        <div class="mono" style="font-size:19px; line-height:1.7; margin-top:14px; color:var(--text)">
           BOT_TOKEN=<span data-p="botToken"></span><br>
           JEV_API_KEY=<span data-p="jevKey"></span><br>
           JEV_API_URL=https://polza.ai/api/v1/systemone<br>
           JEV_MODEL=typesafe/jev<br>
-          <span class="muted">остальное — в .env.example</span><br><span class="muted">запуск: docker compose up -d --build</span>
+          <span class="muted">остальное — в .env.example; запуск: docker compose up -d --build</span>
         </div>
       </div>
     </div>
   </div>
-  <div class="card card--soft" style="margin-top:28px; padding:26px 34px">
-    <div style="display:flex; gap:22px; align-items:center; font-size:21px; line-height:1.35">
-      <b style="font-family:var(--display); font-size:22px; color:var(--teal); white-space:nowrap">Основной сценарий</b>
-      <span><b>1</b> Боту: «Нужна справка» → кнопка «Банк / кредит»</span><span class="arrow" style="font-size:26px">→</span>
-      <span><b>2</b> «Оформить» → «Отправить» в Mini App</span><span class="arrow" style="font-size:26px">→</span>
-      <span><b>3</b> Панель: «Взять в работу» → «Сформировать по шаблону» → «Готово»</span><span class="arrow" style="font-size:26px">→</span>
-      <span><b>4</b> В MAX: PDF с ЭП и «Проверить подпись»</span>
-    </div>
+  <div style="margin-top:28px; font-size:22px; line-height:1.5; color:var(--text)">
+    <b style="color:var(--ink)">Сценарий:</b> боту «Нужна справка» → «Банк / кредит» → «Оформить» → «Отправить» в Mini App → в панели «Взять в работу» → «Сформировать по шаблону» → «Готово» → в MAX приходит PDF с ЭП и кнопка «Проверить подпись»
   </div>
-  <div class="foot"><span class="foot__src">Все данные в решении тестовые. Этот слайд не входит в продуктовую оценку.</span><span class="foot__num">1</span></div>
+  <div class="foot"><span></span><span>1</span></div>
 </section>
 
-<!-- ═════════════════ 2. ТИТУЛ ═════════════════ -->
-<section class="slide slide--dark" id="s-title" style="padding-top:120px">
-  <div class="kicker">Хакатон MAX · трек «Образовательные решения» · 2026</div>
-  <h1 style="font-size:176px; line-height:.95; margin-top:64px; letter-spacing:-0.05em">Ведома</h1>
-  <p style="font-family:var(--display); font-weight:500; font-size:52px; line-height:1.2; margin:34px 0 0; max-width:1380px; letter-spacing:-0.02em">
-    Справка из вуза — за&nbsp;один диалог в&nbsp;MAX. <span style="color:#7fd0da">Без визитов в&nbsp;деканат.</span>
-  </p>
-  <div style="margin-top:auto; display:flex; gap:22px; align-items:stretch">
-    <div style="font:600 22px/1.3 var(--display); color:#9fdbe3; width:230px; padding-top:6px">Команда<br>«Пантеры»</div>
-    <div class="card" style="flex:1; padding:26px 30px"><div style="font-size:27px; font-weight:700">Ульяна Уланова</div><div style="font-size:21px; color:#9fb6c0; margin-top:6px">UX/UI-дизайнер</div></div>
-    <div class="card" style="flex:1; padding:26px 30px"><div style="font-size:27px; font-weight:700">Олег Чыпсымаа</div><div style="font-size:21px; color:#9fb6c0; margin-top:6px">Backend</div></div>
-    <div class="card" style="flex:1; padding:26px 30px"><div style="font-size:27px; font-weight:700">Фёдор Хавалиц</div><div style="font-size:21px; color:#9fb6c0; margin-top:6px">Frontend · тимлид</div></div>
-    <div class="card" style="flex:1; padding:26px 30px"><div style="font-size:27px; font-weight:700">Данил Ключников</div><div style="font-size:21px; color:#9fb6c0; margin-top:6px">Product-менеджер</div></div>
+<!-- 2 · ТИТУЛ -->
+<section class="slide slide--dark" style="padding-top:136px">
+  <div class="label" style="color:#7f9ba6">Хакатон MAX · трек «Образовательные решения»</div>
+  <h1 style="font-family:var(--display); font-weight:600; font-size:168px; line-height:1; letter-spacing:-0.05em; color:#fff; margin:56px 0 0">Ведома</h1>
+  <p style="font-size:46px; line-height:1.25; color:#fff; margin:36px 0 0; max-width:1300px; font-weight:500">Единое окно студенческих услуг в&nbsp;MAX</p>
+  <p style="font-size:30px; line-height:1.4; color:#9fb7c0; margin:18px 0 0; max-width:1200px">Студент пишет боту своими словами, вуз обрабатывает заявку в&nbsp;одной панели, документ приходит в&nbsp;чат</p>
+  <div style="margin-top:auto">
+    <div style="font:600 30px var(--display); color:#fff">Команда «Пантеры»</div>
+    <div style="font-size:24px; color:#9fb7c0; margin-top:10px">СПбГУПТД — Санкт-Петербургский государственный университет промышленных технологий и&nbsp;дизайна</div>
   </div>
-  <div style="height:64px"></div>
-  <div class="foot"><span class="foot__brand">Ведома</span><span class="foot__num">2</span></div>
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:48px; margin-top:40px; padding-top:32px; border-top:1px solid #23414c">
+    <div><div style="font-size:26px; color:#fff; font-weight:600">Ульяна Уланова</div><div style="font-size:21px; color:#8aa6b0; margin-top:6px">UX/UI-дизайнер</div></div>
+    <div><div style="font-size:26px; color:#fff; font-weight:600">Олег Чыпсымаа</div><div style="font-size:21px; color:#8aa6b0; margin-top:6px">Backend</div></div>
+    <div><div style="font-size:26px; color:#fff; font-weight:600">Фёдор Хавалиц</div><div style="font-size:21px; color:#8aa6b0; margin-top:6px">Frontend · тимлид</div></div>
+    <div><div style="font-size:26px; color:#fff; font-weight:600">Данил Ключников</div><div style="font-size:21px; color:#8aa6b0; margin-top:6px">Product-менеджер</div></div>
+  </div>
+  <div class="foot" style="color:#5f7b86"><span></span><span>2</span></div>
 </section>
 
-<!-- ═════════════════ 3. РЕЗЮМЕ ═════════════════ -->
-<section class="slide" id="s-summary">
-  <div class="kicker"><b>01</b> Резюме проекта</div>
-  <h2 class="title">Студент пишет боту своими словами — и&nbsp;получает <em>подписанную справку в&nbsp;чат</em></h2>
-  <div class="body" style="gap:32px">
-    <div class="card grow">
-      <span class="tag tag--fact">Проблема</span>
-      <h3 style="margin-top:26px; font-size:36px">Справку заказывают по&nbsp;почте, в&nbsp;кабинетах и&nbsp;окнах</h3>
-      <p style="font-size:27px; margin-top:20px">У каждого вуза свой порядок. До 3 рабочих дней без статуса, за бумагой — лично.</p>
+<!-- 3 · РЕЗЮМЕ -->
+<section class="slide">
+  <h2 class="h">Коротко о проекте</h2>
+  <p class="sub">Студенческие услуги вуза — справки, заявления, запись, соцподдержка — собраны там, где студент и&nbsp;так проводит день: <b>в&nbsp;MAX</b></p>
+  <div class="content cols cols-3" style="margin-top:80px; gap:80px">
+    <div>
+      <div class="label">Проблема</div>
+      <h3 style="margin-top:20px">Услуги разбросаны по&nbsp;почте, сайтам и&nbsp;окнам</h3>
+      <p class="t-md muted" style="margin:16px 0 0">У каждого вуза свой порядок. Статуса нет, за&nbsp;документом — лично.</p>
     </div>
-    <div class="card grow">
-      <span class="tag tag--ours">Решение</span>
-      <h3 style="margin-top:26px; font-size:36px">Бот MAX с&nbsp;ИИ + Mini App + панель вуза</h3>
-      <p style="font-size:27px; margin-top:20px">ИИ понимает запрос и уточняет кнопками, форма заполнена сама, сотрудник выдаёт справку в&nbsp;один клик.</p>
+    <div>
+      <div class="label">Решение</div>
+      <h3 style="margin-top:20px">Бот с&nbsp;ИИ, Mini App и&nbsp;панель вуза</h3>
+      <p class="t-md muted" style="margin:16px 0 0">ИИ понимает запрос своими словами и&nbsp;уточняет кнопками. Сотрудник отвечает из&nbsp;одной очереди.</p>
     </div>
-    <div class="card grow">
-      <span class="tag tag--hyp">Результат</span>
-      <h3 style="margin-top:26px; font-size:36px">0 визитов, 1 канал, статус приходит сам</h3>
-      <p style="font-size:27px; margin-top:20px">PDF с электронной подписью и QR-кодом можно сразу переслать в&nbsp;банк или МФЦ.</p>
-    </div>
-  </div>
-  <div style="margin-top:32px">
-    <div style="font-size:18px; letter-spacing:.1em; text-transform:uppercase; font-weight:700; color:var(--muted-2); margin-bottom:16px">Что уже работает</div>
-    <div style="display:flex; gap:14px; flex-wrap:wrap">
-      <span class="pill pill--t" style="font-size:21px; padding:12px 20px">Бот MAX с ИИ Jev</span>
-      <span class="pill pill--t" style="font-size:21px; padding:12px 20px">Уточнения кнопками</span>
-      <span class="pill pill--t" style="font-size:21px; padding:12px 20px">Mini App: форма, заявки, документы</span>
-      <span class="pill pill--t" style="font-size:21px; padding:12px 20px">Панель деканата</span>
-      <span class="pill pill--t" style="font-size:21px; padding:12px 20px">PDF с ЭП и проверкой по QR</span>
-      <span class="pill pill--t" style="font-size:21px; padding:12px 20px">Оценки и аналитика для вуза</span>
-      <span class="pill pill--t" style="font-size:21px; padding:12px 20px">Конструктор услуг</span>
-      <span class="pill pill--t" style="font-size:21px; padding:12px 20px">Docker · API 18/18</span>
+    <div>
+      <div class="label">Результат</div>
+      <h3 style="margin-top:20px">Ноль визитов, один канал, статус приходит сам</h3>
+      <p class="t-md muted" style="margin:16px 0 0">Документы — в&nbsp;чат, с&nbsp;электронной подписью и&nbsp;проверкой по&nbsp;QR-коду.</p>
     </div>
   </div>
-  <div class="foot"><span class="foot__brand">Ведома</span><span class="foot__num">3</span></div>
+  <p class="t-md" style="margin:0; padding-top:36px; border-top:1px solid var(--rule)"><b style="color:var(--ink)">Уже работает:</b> бот MAX с&nbsp;ИИ · Mini App · панель деканата · PDF с&nbsp;ЭП · оценки и&nbsp;аналитика · конструктор услуг · несколько вузов на&nbsp;одной платформе</p>
+  <div class="foot"><span></span><span>3</span></div>
 </section>
 
-<!-- ═════════════════ 4. ЦА ═════════════════ -->
-<section class="slide" id="s-audience">
-  <div class="kicker"><b>02</b> Целевая аудитория</div>
-  <h2 class="title">Приоритетный сегмент — студент очной формы, которому <em>нужна типовая справка</em></h2>
-  <div class="body">
-    <div class="col" style="flex:1.25">
-      <div class="card" style="padding:40px 44px">
-        <div style="display:flex; gap:12px; flex-wrap:wrap">
-          <span class="pill pill--t">18–23 года</span><span class="pill pill--t">бакалавриат и специалитет</span><span class="pill pill--t">очная форма</span><span class="pill pill--t">уже в MAX</span>
-        </div>
-        <h3 style="margin-top:28px; font-size:34px">Нужна справка «я студент» — срочно и&nbsp;не&nbsp;в&nbsp;часы приёма</h3>
-        <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:22px">
-          <span class="pill" style="background:#fff; border:2px solid var(--line); font-size:21px">банк и кредит</span>
-          <span class="pill" style="background:#fff; border:2px solid var(--line); font-size:21px">военкомат</span>
-          <span class="pill" style="background:#fff; border:2px solid var(--line); font-size:21px">соцзащита и МФЦ</span>
-          <span class="pill" style="background:#fff; border:2px solid var(--line); font-size:21px">виза</span>
-          <span class="pill" style="background:#fff; border:2px solid var(--line); font-size:21px">работа родителей</span><span class="ref" style="align-self:center">[11]</span>
-        </div>
-        <p style="font-size:22px; margin-top:24px">Почему начинаем с&nbsp;него: запрос частый, форма стандартная, результат понятен — документ. Эффект виден уже в&nbsp;первом семестре.</p>
+<!-- 4 · АУДИТОРИЯ -->
+<section class="slide">
+  <h2 class="h">Для кого</h2>
+  <p class="sub">Приоритетный сегмент — <b>студент очной формы</b>, которому нужна типовая услуга вуза: справка, заявление, запись к&nbsp;специалисту</p>
+  <div class="content" style="gap:96px">
+    <div class="col" style="flex:1.2; gap:44px">
+      <div>
+        <h3>Студент 18–23 лет, бакалавриат или специалитет</h3>
+        <p class="t-md muted" style="margin:14px 0 0">Справка нужна «на&nbsp;вчера» — для банка, военкомата, МФЦ, визы, работы родителей<span class="ref">12</span>. Приёмные часы совпадают с&nbsp;парами.</p>
       </div>
-      <div style="display:flex; gap:24px">
-        <div class="card card--line grow" style="padding:26px 30px"><h3 style="font-size:24px">Сотрудник деканата</h3><p style="font-size:20px; margin-top:8px">Разбирает заявки, выдаёт документы, отвечает на вопросы о статусе</p></div>
-        <div class="card card--line grow" style="padding:26px 30px"><h3 style="font-size:24px">Администратор вуза</h3><p style="font-size:20px; margin-top:8px">Отвечает за услуги, сроки и качество сервиса</p></div>
+      <div>
+        <h3>Почему начинаем с&nbsp;него</h3>
+        <p class="t-md muted" style="margin:14px 0 0">Запросы частые и&nbsp;однотипные, результат понятен — документ или ответ. Эффект виден уже в&nbsp;первом семестре.</p>
+      </div>
+      <div style="display:flex; gap:64px; padding-top:32px; border-top:1px solid var(--rule)">
+        <div><h3 style="font-size:24px">Сотрудник деканата</h3><p class="t-sm" style="margin:8px 0 0">разбирает заявки, выдаёт документы</p></div>
+        <div><h3 style="font-size:24px">Администратор вуза</h3><p class="t-sm" style="margin:8px 0 0">отвечает за услуги, сроки и&nbsp;качество</p></div>
       </div>
     </div>
-    <div class="col" style="flex:1; gap:22px">
-      <div class="card" style="padding:26px 36px"><div class="big" style="font-size:84px">4,66<small>млн</small></div><div class="stat__label">студентов учатся в вузах России<span class="ref">[1]</span></div></div>
-      <div class="card" style="padding:26px 36px"><div class="big" style="font-size:84px">62<small>%</small></div><div class="stat__label">учатся очно — наш приоритетный сегмент<span class="ref">[2]</span></div></div>
-      <div class="card" style="padding:26px 36px"><div class="big" style="font-size:84px">1,42<small>млн</small></div><div class="stat__label">первокурсников в 2025 году — новые пользователи каждый год<span class="ref">[1]</span></div></div>
+    <div class="col" style="flex:.8; gap:48px; justify-content:center">
+      <div><div class="num">4,66<small>млн</small></div><p class="t-sm" style="margin:12px 0 0">студентов в&nbsp;вузах России<span class="ref">1</span></p></div>
+      <div><div class="num">62<small>%</small></div><p class="t-sm" style="margin:12px 0 0">учатся очно<span class="ref">2</span></p></div>
+      <div><div class="num">1,42<small>млн</small></div><p class="t-sm" style="margin:12px 0 0">первокурсников в&nbsp;2025 году<span class="ref">1</span></p></div>
     </div>
   </div>
-  <div class="foot"><span class="foot__src"><span class="tag tag--fact" style="height:26px; font-size:13px">Факт</span>&nbsp; [1] Минобрнауки России, 2026 · [2] ИСИЭЗ НИУ ВШЭ «Образование в цифрах: 2025» · [11] Т—Ж, 2026</span><span class="foot__num">4</span></div>
+  <div class="foot"><span>1 — Минобрнауки России, 2026 · 2 — ИСИЭЗ НИУ ВШЭ · 12 — Т—Ж</span><span>4</span></div>
 </section>
 
-<!-- ═════════════════ 5. ПРОБЛЕМА ═════════════════ -->
-<section class="slide" id="s-problem">
-  <div class="kicker"><b>03</b> Проблема · как сейчас</div>
-  <h2 class="title">Чтобы получить одну справку, студент проходит <em>4 шага и&nbsp;2 визита</em></h2>
-  <div class="body" style="flex-direction:column; gap:30px">
-    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:24px">
-      <div class="card" style="padding:28px 32px">
-        <div class="step-n" style="background:var(--coral)">1</div>
-        <h3 style="margin-top:18px; font-size:27px">Найти, где заказать</h3>
-        <p style="font-size:21px">Сайт, почта, личный кабинет или окно — у каждого вуза свой порядок. В СПбПУ у 11 институтов свои адреса почты<span class="ref">[7]</span></p>
-      </div>
-      <div class="card" style="padding:28px 32px">
-        <div class="step-n" style="background:var(--coral)">2</div>
-        <h3 style="margin-top:18px; font-size:27px">Подать запрос</h3>
-        <p style="font-size:21px">Письмо, бланк или очередь. Окно выдачи может работать, например, пн–чт с&nbsp;13:30 до&nbsp;17:15<span class="ref">[7]</span></p>
-      </div>
-      <div class="card" style="padding:28px 32px">
-        <div class="step-n" style="background:var(--coral)">3</div>
-        <h3 style="margin-top:18px; font-size:27px">Ждать без статуса</h3>
-        <p style="font-size:21px">Типичный срок — до 3 рабочих дней<span class="ref">[7–9]</span>. Где справка — неизвестно, остаётся писать и звонить.</p>
-      </div>
-      <div class="card" style="padding:28px 32px">
-        <div class="step-n" style="background:var(--coral)">4</div>
-        <h3 style="margin-top:18px; font-size:27px">Забрать бумагу</h3>
-        <p style="font-size:21px">Второй визит за оригиналом. Потерял — заказывай снова (в РАНХиГС дубликаты платные с 2026 г.<span class="ref">[9]</span>)</p>
+<!-- 5 · ПРОБЛЕМА -->
+<section class="slide">
+  <h2 class="h">Проблема</h2>
+  <p class="sub">Типовая услуга вуза превращается в&nbsp;квест: <b>каналы разные, статуса нет, результат — только лично</b></p>
+  <div class="content" style="gap:96px">
+    <div class="col" style="flex:1.1">
+      <div class="label">Как сейчас получают справку, заявление, запись</div>
+      <div class="steps" style="margin-top:32px">
+        <div class="step"><i>1</i><div><b>Найти, куда обращаться</b><span>Сайт, почта, личный кабинет или окно. В&nbsp;СПбПУ у&nbsp;11 институтов — свои адреса почты<span class="ref">8</span></span></div></div>
+        <div class="step"><i>2</i><div><b>Подать запрос</b><span>Письмо, бланк или очередь в&nbsp;часы приёма — например, пн–чт с&nbsp;13:30 до&nbsp;17:15<span class="ref">8</span></span></div></div>
+        <div class="step"><i>3</i><div><b>Ждать без статуса</b><span>Обычно до&nbsp;3 рабочих дней<span class="ref">8–10</span>. Где заявка — узнавать самому</span></div></div>
+        <div class="step"><i>4</i><div><b>Прийти за&nbsp;результатом</b><span>Второй визит. Бумажные дубликаты в&nbsp;РАНХиГС с&nbsp;2026 года платные<span class="ref">10</span></span></div></div>
       </div>
     </div>
-    <div style="display:flex; gap:24px; flex:1">
-      <div class="card card--soft" style="flex:1.1; display:flex; flex-direction:column; justify-content:center">
-        <span class="tag tag--fact" style="align-self:flex-start">Спрос подтверждают сами вузы</span>
-        <ul class="clean" style="margin-top:16px; gap:10px">
-          <li>Открывают «единые деканаты», чтобы студент не ходил по кабинетам — РХТУ<span class="ref">[10]</span></li>
-          <li>Строят студенческие офисы «одного окна» — РАНХиГС<span class="ref">[9]</span></li>
-          <li>Переходят на электронные справки с ЭП — ВШЭ, с 2023 г.<span class="ref">[8]</span></li>
+    <div class="col" style="flex:.9; justify-content:center; gap:36px">
+      <div class="panel panel--soft">
+        <div class="label" style="color:var(--accent)">Вузы уже ищут решение</div>
+        <ul class="list" style="margin-top:22px">
+          <li>«Единые деканаты», чтобы не ходить по&nbsp;кабинетам — РХТУ<span class="ref">11</span></li>
+          <li>Студенческие офисы «одного окна» — РАНХиГС<span class="ref">10</span></li>
+          <li>Электронные справки с&nbsp;ЭП — ВШЭ, с&nbsp;2023 года<span class="ref">9</span></li>
         </ul>
       </div>
-      <div class="card" style="flex:.9; background:var(--night); color:#fff; display:flex; flex-direction:column; justify-content:center">
-        <div style="font:600 30px/1.25 var(--display); letter-spacing:-.02em">Решения есть, но они <span style="color:#7fd0da">разные в&nbsp;каждом вузе</span> и&nbsp;живут на сайтах, куда студент заходит редко</div>
-        <div style="font-size:21px; color:#9fb6c0; margin-top:18px">А в мессенджере студент каждый день →</div>
-      </div>
+      <p class="t-md" style="margin:0 8px">Но это отдельные решения на&nbsp;сайтах конкретных вузов — там, куда студент заходит редко.</p>
     </div>
   </div>
-  <div class="foot"><span class="foot__src">[7] СПбПУ · [8] НИУ ВШЭ · [9] РАНХиГС · [10] РХТУ — официальные страницы о выдаче справок</span><span class="foot__num">5</span></div>
+  <div class="foot"><span>8 — СПбПУ · 9 — НИУ ВШЭ · 10 — РАНХиГС · 11 — РХТУ: официальные страницы о&nbsp;справках и&nbsp;заявлениях</span><span>5</span></div>
 </section>
 
-<!-- ═════════════════ 6. ПОЧЕМУ MAX ═════════════════ -->
-<section class="slide slide--dark" id="s-max">
-  <div class="kicker"><b>04</b> Почему в MAX</div>
-  <h2 class="title">Студенты и вузы <em>уже общаются в&nbsp;MAX</em> — услуге не нужно отдельное приложение</h2>
-  <div class="body" style="flex-direction:column; gap:28px">
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px">
-      <div class="card"><div class="big">107<small>млн</small></div><div class="stat__label">пользователей MAX, из них 77 млн заходят каждый день<span class="ref">[5]</span></div></div>
-      <div class="card"><div class="big">230<small>тыс.</small></div><div class="stat__label">студенческих чатов в MAX<span class="ref">[6]</span></div></div>
-      <div class="card"><div class="big">2,4<small>млн</small></div><div class="stat__label">студентов в этих чатах<span class="ref">[6]</span></div></div>
-      <div class="card"><div class="big">5<small>тыс.</small></div><div class="stat__label">официальных каналов вузов<span class="ref">[6]</span></div></div>
-    </div>
-    <div style="display:flex; gap:24px; flex:1">
-      <div class="card" style="flex:1; display:flex; flex-direction:column; justify-content:center">
-        <span class="tag tag--fact" style="align-self:flex-start">Факт</span>
-        <p style="font-size:27px; color:#e3eef2; margin-top:18px">В приёмной кампании 2026 года первокурсники получают приглашение в учебный чат вуза в MAX прямо через Госуслуги<span class="ref">[6]</span></p>
-      </div>
-      <div class="card" style="flex:1.2; display:flex; flex-direction:column; justify-content:center">
-        <span class="tag tag--ours" style="align-self:flex-start">Наш вывод</span>
-        <ul class="clean" style="margin-top:18px">
-          <li>Не нужно устанавливать приложение, придумывать логин и пароль</li>
-          <li>Студента узнаём по подписи MAX: вход в Mini App без пароля</li>
-          <li>Статусы и документ приходят туда, где студент и так читает сообщения</li>
-        </ul>
-      </div>
-    </div>
+<!-- 6 · ПОЧЕМУ MAX -->
+<section class="slide">
+  <h2 class="h">Почему MAX</h2>
+  <p class="sub">Студенты и&nbsp;вузы уже там: <b>расписание и&nbsp;учебные чаты перешли в&nbsp;MAX</b>, а&nbsp;заявки и&nbsp;документы — пока нет</p>
+  <div class="content cols cols-4" style="margin-top:84px; gap:56px">
+    <div><div class="num">86<small>млн</small></div><p class="t-sm" style="margin:16px 0 0">месячная аудитория MAX, июнь 2026<span class="ref">5</span></p></div>
+    <div><div class="num">230<small>тыс.</small></div><p class="t-sm" style="margin:16px 0 0">студенческих чатов, в&nbsp;них 2,4&nbsp;млн участников<span class="ref">6</span></p></div>
+    <div><div class="num">100+</div><p class="t-sm" style="margin:16px 0 0">вузов в&nbsp;едином боте расписания VK и&nbsp;Минобрнауки<span class="ref">7</span></p></div>
+    <div><div class="num">2026</div><p class="t-sm" style="margin:16px 0 0">первокурсники получают приглашение в&nbsp;учебный чат через Госуслуги<span class="ref">6</span></p></div>
   </div>
-  <div class="foot"><span class="foot__src">[5] RB.ru, 26.03.2026 · [6] iPhones.ru по данным VK и Минобрнауки, 30.07.2026</span><span class="foot__num">6</span></div>
+  <div class="panel" style="display:flex; gap:64px; align-items:center">
+    <div style="font:600 30px/1.3 var(--display); color:var(--ink); letter-spacing:-.02em; flex:1">Следующий шаг — <span class="accent">сервисы вуза</span> в&nbsp;том&nbsp;же мессенджере</div>
+    <ul class="list" style="flex:1.2; gap:12px">
+      <li style="font-size:23px">не нужно ставить приложение и&nbsp;заводить пароль</li>
+      <li style="font-size:23px">вход в&nbsp;Mini App — по&nbsp;подписи MAX</li>
+      <li style="font-size:23px">статусы приходят туда, где студент читает сообщения</li>
+    </ul>
+  </div>
+  <div class="foot"><span>5 — Mediascope, 2026 · 6 — VK и&nbsp;Минобрнауки, 30.07.2026 · 7 — VK, 20.03.2026</span><span>6</span></div>
 </section>
 
-<!-- ═════════════════ 7. РЕШЕНИЕ ═════════════════ -->
-<section class="slide" id="s-solution">
-  <div class="kicker"><b>05</b> Решение</div>
-  <h2 class="title">Ведома — <em>единое окно студенческих услуг</em> внутри MAX</h2>
-  <div class="body" style="gap:30px">
-    <div class="card grow" style="display:flex; flex-direction:column; padding:36px 38px">
-      <div class="pill pill--t" style="align-self:flex-start">Для студента</div>
-      <h3 style="margin-top:20px; font-size:34px">Бот с ИИ</h3>
-      <ul class="clean" style="margin-top:20px">
-        <li>Понимает запрос своими словами</li>
-        <li>Уточняет недостающее кнопками</li>
-        <li>Присылает статусы и готовый PDF</li>
-        <li>Отвечает «где моя справка?»</li>
-      </ul>
+<!-- 7 · РЕШЕНИЕ -->
+<section class="slide">
+  <h2 class="h">Решение</h2>
+  <p class="sub">Ведома — <b>единое окно студенческих услуг внутри MAX</b>: три части, связанные в&nbsp;один процесс</p>
+  <div class="content cols cols-3" style="margin-top:84px; gap:80px">
+    <div>
+      <div class="num" style="font-size:40px">01</div>
+      <h3 style="margin-top:22px; font-size:34px">Бот с&nbsp;ИИ</h3>
+      <p class="t-md muted" style="margin:16px 0 0">Понимает запрос своими словами, уточняет недостающее кнопками, присылает статусы и&nbsp;готовый документ.</p>
     </div>
-    <div class="card grow" style="display:flex; flex-direction:column; padding:36px 38px">
-      <div class="pill pill--t" style="align-self:flex-start">Для студента</div>
-      <h3 style="margin-top:20px; font-size:34px">Mini App</h3>
-      <ul class="clean" style="margin-top:20px">
-        <li>Форма уже заполнена ботом и данными вуза</li>
-        <li>Каталог услуг, мои заявки, история статусов</li>
-        <li>Документы с отметкой о подписи</li>
-        <li>Оценка услуги в два касания</li>
-      </ul>
+    <div>
+      <div class="num" style="font-size:40px">02</div>
+      <h3 style="margin-top:22px; font-size:34px">Mini App</h3>
+      <p class="t-md muted" style="margin:16px 0 0">Каталог услуг, форма уже заполнена ботом и&nbsp;данными вуза, мои заявки, документы, оценка услуги.</p>
     </div>
-    <div class="card grow" style="display:flex; flex-direction:column; padding:36px 38px">
-      <div class="pill pill--mid" style="align-self:flex-start">Для вуза</div>
-      <h3 style="margin-top:20px; font-size:34px">Веб-панель</h3>
-      <ul class="clean" style="margin-top:20px">
-        <li>Одна очередь со сроками и просрочками</li>
-        <li>Справка по шаблону с ЭП — в один клик</li>
-        <li>Оценки и узкие места на дашборде</li>
-        <li>Новые услуги — без разработчика</li>
-      </ul>
+    <div>
+      <div class="num" style="font-size:40px">03</div>
+      <h3 style="margin-top:22px; font-size:34px">Панель вуза</h3>
+      <p class="t-md muted" style="margin:16px 0 0">Одна очередь со&nbsp;сроками, документ по&nbsp;шаблону в&nbsp;один клик, аналитика и&nbsp;конструктор услуг.</p>
     </div>
   </div>
-  <div class="card card--soft" style="margin-top:30px; padding:26px 36px; display:flex; align-items:center; gap:26px">
-    <span style="font:600 26px var(--display); color:var(--teal); white-space:nowrap">Всё связано</span>
-    <span style="font-size:24px; color:var(--muted)">действие сотрудника в панели мгновенно становится сообщением студенту в MAX, а заявка из бота — строкой в очереди деканата</span>
-  </div>
-  <div class="foot"><span class="foot__brand">Ведома</span><span class="foot__num">7</span></div>
+  <p class="t-md" style="margin:0; padding-top:36px; border-top:1px solid var(--rule)">Действие сотрудника в&nbsp;панели сразу становится сообщением студенту в&nbsp;MAX, а&nbsp;заявка из&nbsp;бота — строкой в&nbsp;очереди деканата.</p>
+  <div class="foot"><span></span><span>7</span></div>
 </section>
 
-<!-- ═════════════════ 8. ПУТЬ СТУДЕНТА ═════════════════ -->
-<section class="slide" id="s-journey">
-  <div class="kicker"><b>06</b> Основной сценарий</div>
-  <h2 class="title">От сообщения до справки — <em>без визитов и&nbsp;писем</em></h2>
-  <div class="body" style="gap:34px; margin-top:44px; align-items:flex-start; justify-content:space-between">
-    <div class="col" style="gap:18px; align-items:center; width:300px">
-      <div class="phone phone--sm"><div class="screen" style="aspect-ratio:780/1644">
-        <div class="chat z">
-          <div class="chat__head"><div class="chat__ava">В</div><div class="chat__name">Ведома<small>бот вуза</small></div></div>
-          <div class="msg msg--me">Нужна справка</div>
-          <div class="msg msg--bot">Похоже, вам нужна справка об обучении.<br><b>Куда нужна справка?</b></div>
-          <div class="btns btns--row"><span class="on">Банк / кредит</span><span>Военкомат</span><span>Соцзащита / МФЦ</span><span>Посольство / виза</span><span>Работа родителей</span><span>Другое</span></div>
-          <div class="msg msg--bot">Отлично, заявка «Справка об обучении» почти готова.<br>Место требования: Банк / кредит<br><span class="muted">Обычно до 3 рабочих дней.</span></div>
-          <div class="btns"><span>Оформить</span><span>Это другая услуга</span></div>
-        </div>
-      </div></div>
-      <div style="display:flex; gap:14px; align-items:flex-start"><div class="step-n" style="width:44px;height:44px;font-size:20px">1</div><div style="font-size:20px; line-height:1.3"><b>Пишет боту</b> своими словами. ИИ уточняет кнопкой</div></div>
+<!-- 8 · ПУТЬ СТУДЕНТА -->
+<section class="slide" style="padding-top:96px">
+  <h2 class="h">Путь студента</h2>
+  <p class="sub" style="margin-top:14px">На&nbsp;примере справки об&nbsp;обучении — от&nbsp;сообщения до&nbsp;документа, <b>без визитов и&nbsp;писем</b></p>
+  <div class="content" style="gap:0; justify-content:space-between; margin-top:44px">
+    <div class="col" style="width:300px; gap:20px">
+      <div class="phone"><div class="screen"><div class="chat">
+        <div class="chat__head"><div class="chat__ava">В</div><div class="chat__name">Ведома<small>бот вуза</small></div></div>
+        <div class="msg msg--me">Нужна справка</div>
+        <div class="msg msg--bot">Похоже, вам нужна справка об&nbsp;обучении.<br><b>Куда нужна справка?</b></div>
+        <div class="btns btns--row"><span class="on">Банк / кредит</span><span>Военкомат</span><span>Соцзащита / МФЦ</span><span>Посольство / виза</span><span>Работа родителей</span><span>Другое</span></div>
+        <div class="msg msg--bot">Отлично, заявка «Справка об&nbsp;обучении» почти готова.<br>Место требования: Банк / кредит</div>
+        <div class="btns"><span>Оформить</span><span>Это другая услуга</span></div>
+      </div></div></div>
+      <p class="t-sm" style="margin:0"><b style="color:var(--ink)">1. Пишет боту.</b> ИИ уточняет кнопкой</p>
     </div>
-    <div class="arrow" style="margin-top:290px">→</div>
-    <div class="col" style="gap:18px; align-items:center; width:300px">
-      <div class="phone phone--sm"><img src="assets/img/mini_form.png" alt="Форма в Mini App, заполненная ботом"></div>
-      <div style="display:flex; gap:14px; align-items:flex-start"><div class="step-n" style="width:44px;height:44px;font-size:20px">2</div><div style="font-size:20px; line-height:1.3"><b>Mini App:</b> форма уже заполнена → «Отправить»</div></div>
+    <div class="col" style="width:300px; gap:20px">
+      <div class="phone"><img src="assets/img/mini_form.png" alt="Форма в Mini App"></div>
+      <p class="t-sm" style="margin:0"><b style="color:var(--ink)">2. Mini App.</b> Форма уже заполнена</p>
     </div>
-    <div class="arrow" style="margin-top:290px">→</div>
-    <div class="col" style="gap:18px; align-items:center; width:300px">
-      <div class="phone phone--sm"><img src="assets/img/mini_sent.png" alt="Заявка отправлена"></div>
-      <div style="display:flex; gap:14px; align-items:flex-start"><div class="step-n" style="width:44px;height:44px;font-size:20px">3</div><div style="font-size:20px; line-height:1.3"><b>Заявка принята,</b> срок виден сразу</div></div>
+    <div class="col" style="width:300px; gap:20px">
+      <div class="phone"><img src="assets/img/mini_sent.png" alt="Заявка отправлена"></div>
+      <p class="t-sm" style="margin:0"><b style="color:var(--ink)">3. Заявка принята.</b> Срок виден сразу</p>
     </div>
-    <div class="arrow" style="margin-top:290px">→</div>
-    <div class="col" style="gap:18px; align-items:center; width:300px">
-      <div class="phone phone--sm"><div class="screen" style="aspect-ratio:780/1644">
-        <div class="chat z" style="gap:10px">
-          <div class="chat__head"><div class="chat__ava">В</div><div class="chat__name">Ведома<small>бот вуза</small></div></div>
-          <div class="msg msg--bot">Заявка №18425 принята.<br>Срок: до 02.10.</div>
-          <div class="msg msg--bot">Заявка №18425: статус «В работе».</div>
-          <div class="msg msg--bot">Заявка №18425 готова. Документ подписан электронной подписью вуза. Файл можно переслать.</div>
-          <div class="file"><div class="file__ico">PDF</div><div><b>spravka_18425.pdf</b><small>49 КБ</small></div></div>
-          <div class="btns"><span>Проверить подпись</span></div>
-          <div class="msg msg--bot">Оцените, как прошло оформление</div>
-          <div class="btns btns--row"><span>1</span><span>2</span><span>3</span><span>4</span><span class="on">5</span></div>
-        </div>
-      </div></div>
-      <div style="display:flex; gap:14px; align-items:flex-start"><div class="step-n" style="width:44px;height:44px;font-size:20px">4</div><div style="font-size:20px; line-height:1.3"><b>Статусы и PDF</b> приходят в чат сами</div></div>
+    <div class="col" style="width:300px; gap:20px">
+      <div class="phone"><div class="screen"><div class="chat" style="gap:10px">
+        <div class="chat__head"><div class="chat__ava">В</div><div class="chat__name">Ведома<small>бот вуза</small></div></div>
+        <div class="msg msg--bot">Заявка №18425 принята.<br>Срок: до 02.10.</div>
+        <div class="msg msg--bot">Заявка №18425: статус «В работе».</div>
+        <div class="msg msg--bot">Заявка №18425 готова. Документ подписан электронной подписью вуза.</div>
+        <div class="file"><div class="file__ico">PDF</div><div><b>spravka_18425.pdf</b><small>49 КБ</small></div></div>
+        <div class="btns"><span>Проверить подпись</span></div>
+        <div class="msg msg--bot">Оцените, как прошло оформление</div>
+        <div class="btns btns--row"><span>1</span><span>2</span><span>3</span><span>4</span><span class="on">5</span></div>
+      </div></div></div>
+      <p class="t-sm" style="margin:0"><b style="color:var(--ink)">4. Статусы и&nbsp;PDF</b> приходят в&nbsp;чат</p>
     </div>
-    <div class="arrow" style="margin-top:290px">→</div>
-    <div class="col" style="gap:18px; align-items:center; width:300px">
-      <div class="phone phone--sm"><img src="assets/img/mini_doc.png" alt="Заявка с подписанным документом"></div>
-      <div style="display:flex; gap:14px; align-items:flex-start"><div class="step-n" style="width:44px;height:44px;font-size:20px">5</div><div style="font-size:20px; line-height:1.3"><b>Документ с ЭП</b> — пересылает в банк</div></div>
+    <div class="col" style="width:300px; gap:20px">
+      <div class="phone"><img src="assets/img/mini_doc.png" alt="Заявка с документом"></div>
+      <p class="t-sm" style="margin:0"><b style="color:var(--ink)">5. Документ с&nbsp;ЭП</b> — пересылает в&nbsp;банк</p>
     </div>
   </div>
-  <div class="foot"><span class="foot__src">Скриншоты работающего MVP · чат показан схематично · данные тестовые</span><span class="foot__num">8</span></div>
+  <div class="foot"><span>Экраны Mini App — из&nbsp;работающего MVP; диалог с&nbsp;ботом показан схематично; данные тестовые</span><span>8</span></div>
 </section>
 
-<!-- ═════════════════ 9. ИИ: ЧТО ДАЁТ ═════════════════ -->
-<section class="slide" id="s-ai">
-  <div class="kicker"><b>07</b> Искусственный интеллект · зачем</div>
-  <h2 class="title">Студент не знает, как называется услуга. <em>ИИ понимает, что ему нужно</em></h2>
-  <div class="body" style="gap:36px">
-    <div class="col" style="flex:1.75">
-      <table class="t" style="font-size:21px">
-        <tr><th>Студент пишет</th><th>Что понял ИИ</th><th style="width:210px">Без ИИ</th></tr>
-        <tr><td><b>«Надо подтвердить, что я учусь, для визы»</b></td><td>Справка об обучении<br><span class="muted">место: «Посольство / виза»</span></td><td><span class="pill pill--no">не понял</span></td></tr>
-        <tr><td><b>«Не хватает денег на еду, в семье пятеро детей»</b></td><td>Материальная помощь<br><span class="muted">основание: «Многодетная семья»</span></td><td><span class="pill pill--no">не понял</span></td></tr>
-        <tr><td><b>«Заболел, хочу взять паузу в учёбе»</b></td><td>Академический отпуск<br><span class="muted">основание: «По медицинским показаниям»</span></td><td><span class="pill pill--mid">без основания</span></td></tr>
-        <tr><td><b>«Хочу к декану»</b></td><td>Запись в деканат<br><span class="muted">время уточнит кнопками</span></td><td><span class="pill pill--no">не понял</span></td></tr>
-        <tr><td><b>«Какая погода завтра»</b></td><td>Не про услуги вуза<br><span class="muted">подскажет, с чем может помочь</span></td><td><span class="pill pill--ok">понял</span></td></tr>
-      </table>
-    </div>
-    <div class="col" style="flex:1; gap:22px">
-      <div class="card" style="padding:26px 34px"><span class="tag tag--ours">Наш замер</span><div class="big" style="margin-top:14px; font-size:80px">5<small>из 5</small></div><div class="stat__label">фраз понял ИИ. Поиск по ключевым словам — 1 из 5</div></div>
-      <div class="card" style="padding:26px 34px"><div class="big" style="font-size:72px">0,5<small>сек</small></div><div class="stat__label">ответ ИИ на одно сообщение (0,4–0,7 с)</div></div>
-      <div class="card" style="padding:26px 34px"><div class="big" style="font-size:72px">0,04<small>₽</small></div><div class="stat__label">стоимость разбора одного сообщения</div></div>
+<!-- 9 · ИИ: ЧТО ДАЁТ -->
+<section class="slide">
+  <h2 class="h">Искусственный интеллект</h2>
+  <p class="sub">Студент не&nbsp;знает, как называется услуга. <b>ИИ понимает, что ему нужно</b>, и&nbsp;заполняет форму</p>
+  <div class="content" style="gap:96px">
+    <table class="tb" style="flex:1.7; font-size:23px">
+      <tr><th>Студент пишет</th><th>Что понял ИИ</th><th style="width:170px">Без ИИ</th></tr>
+      <tr><td>«Надо подтвердить, что я&nbsp;учусь, для визы»</td><td>Справка об&nbsp;обучении<br><span class="muted">место: посольство / виза</span></td><td class="muted">не понял</td></tr>
+      <tr><td>«Не хватает денег на&nbsp;еду, в&nbsp;семье пятеро детей»</td><td>Материальная помощь<br><span class="muted">основание: многодетная семья</span></td><td class="muted">не понял</td></tr>
+      <tr><td>«Заболел, хочу взять паузу в&nbsp;учёбе»</td><td>Академический отпуск<br><span class="muted">основание: по&nbsp;медицинским показаниям</span></td><td class="muted">без основания</td></tr>
+      <tr><td>«Хочу к&nbsp;декану»</td><td>Запись в&nbsp;деканат<br><span class="muted">время уточнит кнопками</span></td><td class="muted">не понял</td></tr>
+    </table>
+    <div class="col" style="flex:.8; gap:52px; justify-content:center">
+      <div><div class="num">4<small>из 4</small></div><p class="t-sm" style="margin:12px 0 0">запроса понял ИИ; по&nbsp;ключевым словам — ни одного полностью</p></div>
+      <div><div class="num" style="font-size:72px">0,5<small>с</small></div><p class="t-sm" style="margin:12px 0 0">на&nbsp;одно сообщение</p></div>
+      <div><div class="num" style="font-size:72px">0,04<small>₽</small></div><p class="t-sm" style="margin:12px 0 0">стоимость разбора одного сообщения</p></div>
     </div>
   </div>
-  <div class="foot"><span class="foot__src">Прогон через Jev (TypeSafe AI) по API Polza.AI на каталоге тестового вуза, 29.09.2026</span><span class="foot__num">9</span></div>
+  <div class="foot"><span>Наш замер на&nbsp;работающем MVP: Jev (TypeSafe AI) через Polza.AI, каталог тестового вуза, 29.09.2026</span><span>9</span></div>
 </section>
 
-<!-- ═════════════════ 10. ИИ: КАК УСТРОЕН ═════════════════ -->
-<section class="slide" id="s-ai-how">
-  <div class="kicker"><b>08</b> Искусственный интеллект · как устроен</div>
-  <h2 class="title">Один запрос к ИИ — и бот знает, <em>что сделать дальше</em></h2>
-  <div class="body" style="flex-direction:column; gap:32px; margin-top:48px">
-    <div style="display:flex; align-items:stretch; gap:22px; height:470px">
-      <div class="card" style="width:330px; display:flex; flex-direction:column; justify-content:center">
-        <div style="font-size:18px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-2); font-weight:700">Сообщение</div>
-        <div class="msg msg--me" style="margin-top:16px; font-size:25px; max-width:100%; padding:16px 20px">Привет, нужна справка в&nbsp;военкомат</div>
-      </div>
-      <div class="arrow" style="align-self:center">→</div>
-      <div class="card" style="flex:1; background:var(--night); color:#fff; display:flex; flex-direction:column; justify-content:center">
-        <div style="display:flex; align-items:baseline; justify-content:space-between">
-          <div style="font:600 30px var(--display)">Jev <span style="color:#7fd0da; font-weight:500; font-size:22px">· ИИ-классификатор</span></div>
-          <div style="font-size:18px; color:#9fb6c0">3 вопроса в одном запросе</div>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:22px">
-          <div style="background:var(--night-2); border-radius:18px; padding:24px 24px"><div style="font-size:20px; color:#9fb6c0">Что хочет?</div><div style="font-size:26px; margin-top:10px; font-weight:600; line-height:1.25">оформить услугу</div><div style="font-size:18px; color:#7f99a5; margin-top:10px; line-height:1.35">или привет · статус · спасибо · не по теме</div></div>
-          <div style="background:var(--night-2); border-radius:18px; padding:24px 24px"><div style="font-size:20px; color:#9fb6c0">Какая услуга?</div><div style="font-size:26px; margin-top:10px; font-weight:600; line-height:1.25">Справка об обучении</div><div style="font-size:18px; color:#7f99a5; margin-top:10px; line-height:1.35">только из каталога этого вуза</div></div>
-          <div style="background:var(--night-2); border-radius:18px; padding:24px 24px"><div style="font-size:20px; color:#9fb6c0">Что уже сказано?</div><div style="font-size:26px; margin-top:10px; font-weight:600; line-height:1.25">место: Военкомат</div><div style="font-size:18px; color:#7f99a5; margin-top:10px; line-height:1.35">поля-списки формы</div></div>
-        </div>
-      </div>
-      <div class="arrow" style="align-self:center">→</div>
-      <div class="col" style="width:420px; gap:16px">
-        <div class="card" style="padding:16px 22px; flex:1; display:flex; flex-direction:column; justify-content:center"><span style="align-self:flex-start" class="pill pill--ok">уверен</span><div style="font-size:22px; margin-top:10px; line-height:1.35">Черновик заявки + кнопка «Оформить»</div></div>
-        <div class="card" style="padding:16px 22px; flex:1; display:flex; flex-direction:column; justify-content:center"><span style="align-self:flex-start" class="pill pill--mid">не хватает данных</span><div style="font-size:22px; margin-top:10px; line-height:1.35">Уточнить кнопками: «Куда нужна справка?»</div></div>
-        <div class="card" style="padding:16px 22px; flex:1; display:flex; flex-direction:column; justify-content:center"><span style="align-self:flex-start" class="pill pill--t">разговор</span><div style="font-size:22px; margin-top:10px; line-height:1.35">Представиться, показать статусы</div></div>
-      </div>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px">
-      <div class="card card--soft" style="padding:32px 36px"><h3 style="font-size:28px">Не выдумывает</h3><p style="font-size:23px">Jev не пишет текст — он выбирает из вариантов. Бот не пообещает несуществующую услугу или срок: ответы готовит вуз.</p></div>
-      <div class="card card--soft" style="padding:32px 36px"><h3 style="font-size:28px">Учится без разработчика</h3><p style="font-size:23px">Варианты берутся из конструктора услуг. Добавили услугу в панели — ИИ сразу её узнаёт.</p></div>
-      <div class="card card--soft" style="padding:32px 36px"><h3 style="font-size:28px">Не принимает решений</h3><p style="font-size:23px">ИИ только заполняет черновик. Студент подтверждает, сотрудник выдаёт. Если ИИ недоступен — бот работает по ключевым словам.</p></div>
-    </div>
-  </div>
-  <div class="foot"><span class="foot__src">[12] Jev (TypeSafe AI) — модель-классификатор с вероятностями ответов; подключена через Polza.AI</span><span class="foot__num">10</span></div>
-</section>
-
-<!-- ═════════════════ 11. ДОКУМЕНТ С ЭП ═════════════════ -->
-<section class="slide" id="s-doc">
-  <div class="kicker"><b>09</b> Результат для студента</div>
-  <h2 class="title">Справка приходит <em>PDF с электронной подписью</em> и&nbsp;проверяется по&nbsp;QR-коду</h2>
-  <div class="body" style="gap:44px; margin-top:44px">
-    <div style="flex:none; width:440px; background:#fff; border-radius:10px; box-shadow:0 26px 56px rgba(12,37,48,.18); overflow:hidden; align-self:flex-start">
-      <img src="assets/img/spravka.png" alt="Справка об обучении в PDF" style="display:block; width:100%">
-    </div>
-    <div class="col grow" style="gap:18px; justify-content:center">
-      <div style="display:flex; gap:20px; align-items:flex-start"><div class="step-n">1</div><div><div style="font-size:27px; font-weight:700">Сотрудник: «Сформировать по шаблону»</div><div style="font-size:21px; color:var(--muted); margin-top:4px">Текст справки собирается из данных студента и заявки</div></div></div>
-      <div style="display:flex; gap:20px; align-items:flex-start"><div class="step-n">2</div><div><div style="font-size:27px; font-weight:700">Сервер подписывает файл</div><div style="font-size:21px; color:var(--muted); margin-top:4px">Штамп подписи и QR-код внутри PDF, номер документа в реестре</div></div></div>
-      <div style="display:flex; gap:20px; align-items:flex-start"><div class="step-n">3</div><div><div style="font-size:27px; font-weight:700">Файл приходит студенту в MAX</div><div style="font-size:21px; color:var(--muted); margin-top:4px">Его можно сразу переслать в банк, МФЦ или военкомат</div></div></div>
-      <div style="display:flex; gap:20px; align-items:flex-start"><div class="step-n" style="background:var(--green)">4</div><div><div style="font-size:27px; font-weight:700">Получатель сканирует QR</div><div style="font-size:21px; color:var(--muted); margin-top:4px">«Подпись действительна». Изменили хоть байт — страница покажет «файл изменён»</div></div></div>
-      <div class="card" style="background:var(--sign-soft); box-shadow:none; padding:22px 28px; margin-top:6px">
-        <div style="font-size:20px; line-height:1.4; color:var(--sign)"><b>В MVP</b> — настоящая криптоподпись Ed25519 ключом сервера вуза, с пометкой «демо». <b>В вузе</b> — усиленная квалифицированная ЭП (ГОСТ Р 34.10-2012), остальное без изменений.</div>
-      </div>
-    </div>
-    <div class="phone" style="width:300px; align-self:flex-start"><img src="assets/img/verify.png" alt="Страница проверки подлинности" style="aspect-ratio:780/1644; object-fit:cover; object-position:top"></div>
-  </div>
-  <div class="foot"><span class="foot__src">Скриншоты работающего MVP · документ демонстрационный, данные тестовые</span><span class="foot__num">11</span></div>
-</section>
-
-<!-- ═════════════════ 12. ПАНЕЛЬ СОТРУДНИКА ═════════════════ -->
-<section class="slide" id="s-staff">
-  <div class="kicker"><b>10</b> Для вуза · сотрудник деканата</div>
-  <h2 class="title">Все заявки в&nbsp;одной очереди, <em>ответ уходит студенту сам</em></h2>
-  <div class="body" style="gap:48px">
-    <div class="col" style="width:560px; flex:none; gap:26px; justify-content:center">
-      <div style="display:flex; gap:18px"><div class="step-n" style="width:48px;height:48px;font-size:21px">1</div><div style="font-size:24px; line-height:1.35"><b>Одна очередь</b> из бота и Mini App — со сроками, фильтрами и подсветкой просрочек</div></div>
-      <div style="display:flex; gap:18px"><div class="step-n" style="width:48px;height:48px;font-size:21px">2</div><div style="font-size:24px; line-height:1.35"><b>Справка по шаблону</b> с электронной подписью — одной кнопкой. Или свой PDF — он тоже подписывается</div></div>
-      <div style="display:flex; gap:18px"><div class="step-n" style="width:48px;height:48px;font-size:21px">3</div><div style="font-size:24px; line-height:1.35"><b>Каждое действие</b> — «В работе», уточнение, «Готово» — сразу сообщение студенту в MAX</div></div>
-      <div style="display:flex; gap:18px"><div class="step-n" style="width:48px;height:48px;font-size:21px">4</div><div style="font-size:24px; line-height:1.35"><b>Новые заявки и низкие оценки</b> приходят сотруднику в MAX</div></div>
-      <div class="card" style="padding:18px 22px; background:#eaf0f1; box-shadow:none; border-radius:20px">
-        <div class="msg msg--bot" style="max-width:100%; font-size:19px">Новая заявка №18425<br>Справка об обучении · Иванова А. · ИТ-31</div>
-        <div class="btns" style="margin-top:8px"><span style="font-size:17px">Открыть заявку</span></div>
-      </div>
-    </div>
-    <div class="grow" style="position:relative">
-      <div class="browser" style="position:absolute; left:0; top:0; width:960px"><div class="browser__bar"><i></i><i></i><i></i><span>uniflow.betatestbyfridrix.ru — очередь</span></div><img src="assets/img/panel_queue.png" alt="Очередь заявок"></div>
-      <div class="browser" style="position:absolute; right:-60px; top:170px; width:760px"><div class="browser__bar"><i></i><i></i><i></i><span>Карточка заявки №18425</span></div><img src="assets/img/panel_card.png" alt="Карточка заявки"></div>
-    </div>
-  </div>
-  <div class="foot"><span class="foot__src">Скриншоты работающего MVP · данные тестовые</span><span class="foot__num">12</span></div>
-</section>
-
-<!-- ═════════════════ 13. АДМИНИСТРАТОР ═════════════════ -->
-<section class="slide" id="s-admin">
-  <div class="kicker"><b>11</b> Для вуза · администратор</div>
-  <h2 class="title">Вуз видит <em>узкие места</em> и меняет услуги сам</h2>
-  <div class="body" style="gap:40px">
-    <div class="col grow" style="gap:24px">
-      <div class="browser"><div class="browser__bar"><i></i><i></i><i></i><span>Дашборд вуза</span></div><img src="assets/img/panel_dash.png" alt="Дашборд с обратной связью"></div>
+<!-- 10 · ИИ: КАК УСТРОЕН -->
+<section class="slide">
+  <h2 class="h">Как работает ИИ</h2>
+  <p class="sub">Один запрос к&nbsp;модели — и&nbsp;бот знает, <b>что сделать дальше</b></p>
+  <div class="content" style="flex-direction:column; gap:64px; margin-top:72px">
+    <div style="display:grid; grid-template-columns:1fr auto 1.4fr auto 1fr; gap:36px; align-items:center">
       <div>
-        <h3 style="font-size:30px">Обратная связь → решения</h3>
-        <p style="font-size:22px; color:var(--muted); line-height:1.45; margin:10px 0 0">Оценки 1–5 и комментарии студентов по каждой услуге: средний срок, доля уточнений и просрочек, готовые подсказки, что поправить в процессе</p>
+        <div class="label">Сообщение</div>
+        <div class="msg msg--me" style="margin-top:18px; font-size:24px; max-width:100%; padding:18px 22px">Привет, нужна справка в&nbsp;военкомат</div>
+      </div>
+      <div style="font-size:40px; color:var(--faint)">→</div>
+      <div class="panel" style="padding:36px 40px">
+        <div class="label" style="color:var(--accent)">Jev · три вопроса за&nbsp;один раз</div>
+        <div class="t-md" style="margin-top:18px; line-height:1.7"><span class="muted">Что хочет?</span> оформить услугу<br><span class="muted">Какая услуга?</span> справка об&nbsp;обучении<br><span class="muted">Что уже сказано?</span> место — военкомат</div>
+      </div>
+      <div style="font-size:40px; color:var(--faint)">→</div>
+      <div>
+        <div class="label">Действие бота</div>
+        <p class="t-md" style="margin:18px 0 0">Уверен — черновик и&nbsp;«Оформить».<br>Не хватает данных — вопрос кнопками.<br>Разговор — ответит или покажет статусы.</p>
       </div>
     </div>
-    <div class="col grow" style="gap:24px">
-      <div class="browser"><div class="browser__bar"><i></i><i></i><i></i><span>Конструктор услуг</span></div><img src="assets/img/panel_builder.png" alt="Конструктор услуг"></div>
-      <div>
-        <h3 style="font-size:30px">Новая услуга без разработчика</h3>
-        <p style="font-size:22px; color:var(--muted); line-height:1.45; margin:10px 0 0">Поля формы, срок, отдел, тип результата и фразы для ИИ. «Опубликовать» — и услуга сразу в Mini App и в ответах бота</p>
-      </div>
+    <div class="cols cols-3" style="gap:80px; padding-top:44px; border-top:1px solid var(--rule)">
+      <div><h3>Не выдумывает</h3><p class="t-md muted" style="margin:12px 0 0">Модель выбирает из&nbsp;вариантов, а&nbsp;не&nbsp;пишет текст. Ответы бота готовит вуз.</p></div>
+      <div><h3>Учится без разработчика</h3><p class="t-md muted" style="margin:12px 0 0">Варианты берутся из&nbsp;конструктора услуг: новую услугу ИИ узнаёт сразу.</p></div>
+      <div><h3>Не принимает решений</h3><p class="t-md muted" style="margin:12px 0 0">ИИ заполняет черновик, решения за&nbsp;людьми. Без ИИ бот работает по&nbsp;ключевым словам.</p></div>
     </div>
   </div>
-  <div class="foot"><span class="foot__src">Скриншоты работающего MVP · данные тестовые</span><span class="foot__num">13</span></div>
+  <div class="foot"><span>15 — Jev (TypeSafe AI): модель-классификатор с&nbsp;вероятностями ответов; подключена через Polza.AI</span><span>10</span></div>
 </section>
 
-<!-- ═════════════════ 14. АРХИТЕКТУРА ═════════════════ -->
-<section class="slide" id="s-arch">
-  <div class="kicker"><b>12</b> Архитектура · что куда уходит</div>
-  <h2 class="title">Один сервер вуза связывает MAX, ИИ и&nbsp;панель</h2>
-  <div class="body" style="margin-top:40px">
-    <svg viewBox="0 0 1680 720" width="1680" height="720" font-family="Golos, sans-serif" role="img" aria-label="Схема архитектуры сервиса «Ведома»">
-      <defs>
-        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#13707f"/></marker>
-      </defs>
-      <!-- чат MAX: студент ↔ MAX Bot API -->
-      <path d="M165 40 V12 H1505 V40" fill="none" stroke="#13707f" stroke-width="3" stroke-dasharray="10 8" marker-start="url(#ah)" marker-end="url(#ah)"/>
-      <rect x="640" y="0" width="400" height="26" fill="#f5f7f7"/>
-      <text x="840" y="19" text-anchor="middle" font-size="18" fill="#3d5163" font-weight="600">сообщения и кнопки в чате MAX</text>
+<!-- 11 · ДОКУМЕНТ -->
+<section class="slide">
+  <h2 class="h">Документ с&nbsp;подписью</h2>
+  <p class="sub">Справка приходит <b>PDF-файлом с&nbsp;электронной подписью</b> и&nbsp;проверяется по&nbsp;QR-коду</p>
+  <div class="content" style="gap:88px; margin-top:56px">
+    <div class="shot" style="width:440px; flex:none; align-self:flex-start; border-radius:6px"><img src="assets/img/spravka.png" alt="Справка PDF"></div>
+    <div class="steps" style="flex:1; justify-content:center; gap:36px">
+      <div class="step"><i>1</i><div><b>Сотрудник: «Сформировать по&nbsp;шаблону»</b><span>Текст собирается из&nbsp;данных студента и&nbsp;заявки</span></div></div>
+      <div class="step"><i>2</i><div><b>Сервер подписывает файл</b><span>Штамп подписи и&nbsp;QR-код внутри PDF, номер — в&nbsp;реестре</span></div></div>
+      <div class="step"><i>3</i><div><b>Файл приходит студенту в&nbsp;MAX</b><span>Его можно переслать в&nbsp;банк, МФЦ или военкомат</span></div></div>
+      <div class="step"><i>4</i><div><b>Получатель сканирует QR</b><span>«Подпись действительна». Изменённый файл проверку не&nbsp;пройдёт</span></div></div>
+      <p class="t-sm" style="margin:8px 0 0">В&nbsp;MVP — криптоподпись Ed25519 ключом сервера вуза с&nbsp;пометкой «демо». В&nbsp;вузе — УКЭП (ГОСТ Р 34.10-2012), остальное без изменений.</p>
+    </div>
+    <div class="phone" style="width:290px; align-self:flex-start"><img src="assets/img/verify.png" alt="Проверка подлинности" style="aspect-ratio:780/1644; object-fit:cover; object-position:top"></div>
+  </div>
+  <div class="foot"><span>Экраны из&nbsp;работающего MVP · документ демонстрационный</span><span>11</span></div>
+</section>
 
-      <!-- участники -->
-      <g>
-        <rect x="0" y="40" width="330" height="130" rx="24" fill="#fff" stroke="#d5dee0" stroke-width="2"/>
-        <text x="28" y="92" font-size="28" font-weight="700" fill="#19283b">Студент</text>
-        <text x="28" y="128" font-size="20" fill="#3d5163">MAX: чат-бот + Mini App</text>
-        <rect x="0" y="295" width="330" height="130" rx="24" fill="#fff" stroke="#d5dee0" stroke-width="2"/>
-        <text x="28" y="347" font-size="28" font-weight="700" fill="#19283b">Сотрудник, админ</text>
-        <text x="28" y="383" font-size="20" fill="#3d5163">браузер: веб-панель вуза</text>
-        <rect x="0" y="550" width="330" height="130" rx="24" fill="#fff" stroke="#d5dee0" stroke-width="2"/>
-        <text x="28" y="602" font-size="28" font-weight="700" fill="#19283b">Банк, МФЦ</text>
-        <text x="28" y="638" font-size="20" fill="#3d5163">сканирует QR в справке</text>
-      </g>
+<!-- 12 · СОТРУДНИК -->
+<section class="slide">
+  <h2 class="h">Для сотрудника деканата</h2>
+  <p class="sub">Все заявки в&nbsp;одной очереди, <b>ответ уходит студенту сам</b></p>
+  <div class="content" style="gap:80px">
+    <div class="steps" style="width:520px; flex:none; justify-content:center; gap:34px">
+      <div class="step"><i>1</i><div><b>Одна очередь</b><span>Из бота и&nbsp;Mini App — со&nbsp;сроками и&nbsp;подсветкой просрочек</span></div></div>
+      <div class="step"><i>2</i><div><b>Документ в&nbsp;один клик</b><span>Справка по&nbsp;шаблону с&nbsp;подписью или свой PDF</span></div></div>
+      <div class="step"><i>3</i><div><b>Студент узнаёт сразу</b><span>«В работе», уточнение, «Готово» — сообщением в&nbsp;MAX</span></div></div>
+      <div class="step"><i>4</i><div><b>Уведомления в&nbsp;MAX</b><span>О&nbsp;новых заявках и&nbsp;низких оценках</span></div></div>
+    </div>
+    <div class="shot grow" style="align-self:center"><img src="assets/img/panel_card.png" alt="Карточка заявки в панели"></div>
+  </div>
+  <div class="foot"><span>Экран из&nbsp;работающего MVP · данные тестовые</span><span>12</span></div>
+</section>
 
-      <!-- сервер -->
-      <rect x="470" y="40" width="740" height="680" rx="32" fill="#0c2530"/>
-      <text x="500" y="86" font-size="24" font-weight="700" fill="#fff">Сервер «Ведома»</text>
-      <text x="1180" y="86" font-size="18" fill="#7fd0da" text-anchor="end">Docker · одна команда</text>
-      <rect x="500" y="106" width="680" height="50" rx="14" fill="#1b4b57"/>
-      <text x="840" y="138" font-size="19" fill="#bfeaf0" text-anchor="middle">Caddy · HTTPS-сертификат Let's Encrypt</text>
-      <g font-size="23" font-weight="700" fill="#fff">
-        <rect x="500" y="176" width="330" height="104" rx="18" fill="#123341"/>
-        <text x="524" y="218">Бот MAX</text>
-        <rect x="850" y="176" width="330" height="104" rx="18" fill="#123341"/>
-        <text x="874" y="218">REST API</text>
-        <rect x="500" y="298" width="330" height="104" rx="18" fill="#13707f"/>
-        <text x="524" y="340">ИИ-маршрутизатор</text>
-        <rect x="850" y="298" width="330" height="104" rx="18" fill="#123341"/>
-        <text x="874" y="340">Логика заявок</text>
-        <rect x="500" y="420" width="330" height="104" rx="18" fill="#123341"/>
-        <text x="524" y="462">Документы и ЭП</text>
-        <rect x="850" y="420" width="330" height="104" rx="18" fill="#123341"/>
-        <text x="874" y="462">Проверка подлинности</text>
-        <rect x="500" y="542" width="680" height="150" rx="18" fill="#123341" stroke="#2d5a67" stroke-width="2" stroke-dasharray="8 6"/>
-        <text x="524" y="584">Хранилище</text>
-      </g>
-      <g font-size="17" fill="#9fb6c0">
-        <text x="524" y="250">диалог, уточнения, уведомления</text>
-        <text x="874" y="250">Mini App и панель · openapi.yaml</text>
-        <text x="524" y="372" fill="#cdeff3">намерение · услуга · поля</text>
-        <text x="874" y="372">статусы, сроки, оценки</text>
-        <text x="524" y="494">PDF, подпись Ed25519, QR</text>
-        <text x="874" y="494">/verify/&lt;номер документа&gt;</text>
-        <text x="524" y="620">заявки, студенты, услуги — data/db.json</text>
-        <text x="524" y="648">файлы и справки — data/files</text>
-        <text x="524" y="676">ключ подписи и секреты — вне репозитория</text>
-      </g>
+<!-- 13 · АДМИНИСТРАТОР -->
+<section class="slide">
+  <h2 class="h">Для администратора вуза</h2>
+  <p class="sub">Вуз видит <b>узкие места</b> по&nbsp;оценкам студентов и&nbsp;сам меняет услуги</p>
+  <div class="content cols cols-2" style="gap:64px">
+    <div class="col" style="gap:30px">
+      <div class="shot"><img src="assets/img/panel_dash.png" alt="Дашборд"></div>
+      <div><h3>Обратная связь → решения</h3><p class="t-md muted" style="margin:10px 0 0">Оценки и&nbsp;комментарии по&nbsp;каждой услуге, сроки, просрочки и&nbsp;подсказки, что поправить в&nbsp;процессе</p></div>
+    </div>
+    <div class="col" style="gap:30px">
+      <div class="shot"><img src="assets/img/panel_builder.png" alt="Конструктор услуг"></div>
+      <div><h3>Новая услуга без разработчика</h3><p class="t-md muted" style="margin:10px 0 0">Поля формы, срок, отдел, тип результата и&nbsp;фразы для&nbsp;ИИ — и&nbsp;услуга сразу в&nbsp;Mini App и&nbsp;в&nbsp;боте</p></div>
+    </div>
+  </div>
+  <div class="foot"><span>Экраны из&nbsp;работающего MVP · данные тестовые</span><span>13</span></div>
+</section>
 
-      <!-- внешние сервисы -->
-      <g>
-        <rect x="1350" y="40" width="330" height="130" rx="24" fill="#fff" stroke="#d5dee0" stroke-width="2"/>
-        <text x="1378" y="92" font-size="28" font-weight="700" fill="#19283b">MAX Bot API</text>
-        <text x="1378" y="128" font-size="20" fill="#3d5163">platform-api2.max.ru</text>
-        <rect x="1350" y="295" width="330" height="130" rx="24" fill="#e3f1f2" stroke="#13707f" stroke-width="2"/>
-        <text x="1378" y="347" font-size="28" font-weight="700" fill="#0b5361">Jev · ИИ</text>
-        <text x="1378" y="383" font-size="20" fill="#3d5163">TypeSafe AI через Polza.AI</text>
-        <rect x="1350" y="550" width="330" height="130" rx="24" fill="#fff" stroke="#d5dee0" stroke-width="2"/>
-        <text x="1378" y="602" font-size="28" font-weight="700" fill="#19283b">MAX Bridge</text>
-        <text x="1378" y="638" font-size="20" fill="#3d5163">подпись initData в Mini App</text>
+<!-- 14 · АРХИТЕКТУРА -->
+<section class="slide">
+  <h2 class="h">Архитектура</h2>
+  <p class="sub">Один сервер связывает MAX, ИИ и&nbsp;панель вуза. <b>Что куда уходит:</b></p>
+  <div class="content" style="margin-top:48px; justify-content:center">
+    <svg viewBox="0 0 1664 640" width="1664" height="640" font-family="Golos, sans-serif" role="img" aria-label="Схема архитектуры">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#9aa9b3"/></marker></defs>
+      <g font-size="26" font-weight="700" fill="#17222d">
+        <text x="0" y="96">Студент</text><text x="0" y="336">Сотрудник, админ</text><text x="0" y="576">Банк, МФЦ</text>
+        <text x="1344" y="96">MAX Bot API</text><text x="1344" y="336" fill="#0b5361">Jev · ИИ</text><text x="1344" y="576">MAX Bridge</text>
       </g>
-
-      <!-- связи -->
-      <g stroke="#13707f" stroke-width="3" fill="none">
-        <line x1="332" y1="105" x2="466" y2="105" marker-end="url(#ah)"/>
-        <line x1="332" y1="360" x2="466" y2="360" marker-end="url(#ah)"/>
-        <line x1="332" y1="615" x2="466" y2="615" marker-end="url(#ah)"/>
-        <line x1="1214" y1="105" x2="1346" y2="105" marker-start="url(#ah)" marker-end="url(#ah)"/>
-        <line x1="1214" y1="360" x2="1346" y2="360" marker-end="url(#ah)"/>
-        <line x1="1346" y1="615" x2="1214" y2="615" marker-end="url(#ah)" stroke-dasharray="8 6"/>
+      <g font-size="20" fill="#6b7a86">
+        <text x="0" y="130">чат-бот и Mini App в MAX</text><text x="0" y="370">браузер: панель вуза</text><text x="0" y="610">сканирует QR в справке</text>
+        <text x="1344" y="130">сообщения, кнопки, файлы</text><text x="1344" y="370">через Polza.AI</text><text x="1344" y="610">подпись входа в Mini App</text>
       </g>
-      <g font-size="16" fill="#3d5163" text-anchor="middle">
-        <text x="400" y="80">Mini App</text><text x="400" y="138">HTTPS</text>
-        <text x="400" y="335">панель</text><text x="400" y="393">HTTPS</text>
-        <text x="400" y="590">QR-код</text><text x="400" y="648">/verify</text>
-        <text x="1280" y="80">long polling</text><text x="1280" y="138">текст, PDF</text>
-        <text x="1280" y="335">только текст</text><text x="1280" y="393">сообщения</text>
-        <text x="1280" y="590">подпись</text><text x="1280" y="648">initData</text>
+      <rect x="440" y="20" width="784" height="620" rx="28" fill="#0d2630"/>
+      <text x="476" y="74" font-size="24" font-weight="700" fill="#fff">Сервер «Ведома» · Docker</text>
+      <g font-size="22" fill="#d9e6ea">
+        <text x="476" y="150">Бот MAX</text><text x="476" y="180" font-size="18" fill="#7f9ba6">диалог, уточнения, уведомления</text>
+        <text x="860" y="150">REST API</text><text x="860" y="180" font-size="18" fill="#7f9ba6">Mini App и панель · openapi.yaml</text>
+        <text x="476" y="262" fill="#7fd0da">ИИ-маршрутизатор</text><text x="476" y="292" font-size="18" fill="#7f9ba6">намерение · услуга · поля</text>
+        <text x="860" y="262">Логика заявок</text><text x="860" y="292" font-size="18" fill="#7f9ba6">статусы, сроки, оценки</text>
+        <text x="476" y="374">Документы и ЭП</text><text x="476" y="404" font-size="18" fill="#7f9ba6">PDF, подпись, QR</text>
+        <text x="860" y="374">Проверка подлинности</text><text x="860" y="404" font-size="18" fill="#7f9ba6">/verify/‹номер›</text>
+      </g>
+      <line x1="476" y1="456" x2="1188" y2="456" stroke="#23414c" stroke-width="1.5"/>
+      <g font-size="19" fill="#9fb7c0">
+        <text x="476" y="502">Хранилище: заявки, студенты, услуги — data/db.json · файлы — data/files</text>
+        <text x="476" y="536">Несколько вузов на одном сервере: свои услуги, сотрудники и данные</text>
+        <text x="476" y="570">HTTPS — Caddy и Let's Encrypt · секреты и ключ подписи вне репозитория</text>
+      </g>
+      <g stroke="#9aa9b3" stroke-width="2" fill="none">
+        <line x1="300" y1="104" x2="432" y2="104" marker-end="url(#ah)"/>
+        <line x1="300" y1="344" x2="432" y2="344" marker-end="url(#ah)"/>
+        <line x1="300" y1="584" x2="432" y2="584" marker-end="url(#ah)"/>
+        <line x1="1232" y1="104" x2="1332" y2="104" marker-start="url(#ah)" marker-end="url(#ah)"/>
+        <line x1="1232" y1="344" x2="1332" y2="344" marker-end="url(#ah)"/>
+        <line x1="1332" y1="584" x2="1232" y2="584" marker-end="url(#ah)" stroke-dasharray="6 6"/>
       </g>
     </svg>
   </div>
-  <div class="foot"><span class="foot__src">Node.js 22 · Express · React 18 · официальная библиотека @maxhub/max-bot-api · pdfkit · Docker Compose</span><span class="foot__num">14</span></div>
+  <div class="foot"><span>Node.js 22 · Express · React 18 · официальная библиотека @maxhub/max-bot-api · pdfkit · Docker Compose</span><span>14</span></div>
 </section>
 
-<!-- ═════════════════ 15. ДАННЫЕ И БЕЗОПАСНОСТЬ ═════════════════ -->
-<section class="slide" id="s-data">
-  <div class="kicker"><b>13</b> Данные и интеграции</div>
-  <h2 class="title">Каждый видит <em>только своё</em>, наружу уходит минимум</h2>
-  <div class="body" style="gap:40px">
-    <div class="col" style="flex:1.6">
-      <table class="t" style="font-size:24px">
-        <tr><th>Данные</th><th>Где</th><th>Кто видит</th></tr>
-        <tr><td><b>Профиль студента</b><br><span class="muted">ФИО, группа, факультет</span></td><td>сервер вуза</td><td>сам студент; сотрудники своего вуза</td></tr>
-        <tr><td><b>Заявки, ответы, оценки</b></td><td>сервер вуза</td><td>студент — только свои; сотрудники своего вуза</td></tr>
-        <tr><td><b>Справки и файлы</b></td><td>сервер вуза, ссылка со случайным ID</td><td>владелец заявки и сотрудники</td></tr>
-        <tr><td><b>ID пользователя MAX</b></td><td>сервер вуза</td><td>только сервер — для отправки сообщений</td></tr>
-        <tr><td><b>Текст сообщения боту</b></td><td>Jev (Polza.AI)</td><td>только текст — без ФИО и ID</td></tr>
-        <tr><td><b>Проверка справки</b></td><td>публичная страница</td><td>фамилия и инициалы, номер, кем подписана</td></tr>
+<!-- 15 · ДАННЫЕ -->
+<section class="slide">
+  <h2 class="h">Данные и безопасность</h2>
+  <p class="sub">Каждый видит <b>только своё</b>, наружу уходит минимум</p>
+  <div class="content" style="gap:96px">
+    <table class="tb" style="flex:1.5">
+      <tr><th>Данные</th><th>Где</th><th>Кто видит</th></tr>
+      <tr><td>Профиль студента</td><td>сервер вуза</td><td>сам студент и&nbsp;сотрудники его вуза</td></tr>
+      <tr><td>Заявки и&nbsp;документы</td><td>сервер вуза</td><td>студент — только свои; сотрудники вуза</td></tr>
+      <tr><td>ID пользователя MAX</td><td>сервер вуза</td><td>только сервер — для отправки сообщений</td></tr>
+      <tr><td>Текст сообщения боту</td><td>Jev (Polza.AI)</td><td>только текст, без ФИО и&nbsp;ID</td></tr>
+      <tr><td>Проверка справки</td><td>публичная страница</td><td>фамилия и&nbsp;инициалы, номер, подписант</td></tr>
+    </table>
+    <div class="col" style="flex:1; gap:48px; justify-content:center">
+      <div><div class="label">Защита</div><ul class="list" style="margin-top:18px; gap:12px">
+        <li style="font-size:23px">вход в&nbsp;Mini App — по&nbsp;подписи MAX</li>
+        <li style="font-size:23px">токены и&nbsp;ключи — только в&nbsp;.env</li>
+        <li style="font-size:23px">версии библиотек зафиксированы</li>
+        <li style="font-size:23px">подделанная сессия — отказ (401)</li></ul></div>
+      <div><div class="label">Смоделировано в&nbsp;MVP</div><ul class="list" style="margin-top:18px; gap:12px">
+        <li style="font-size:23px">вход через систему вуза и&nbsp;база студентов</li>
+        <li style="font-size:23px">интеграции с&nbsp;1С и&nbsp;личным кабинетом</li>
+        <li style="font-size:23px">подпись — демо-ключ, не&nbsp;УКЭП</li></ul></div>
+    </div>
+  </div>
+  <div class="foot"><span>Реальные интеграции: MAX Bot API, MAX Bridge, Jev через Polza.AI, Let's Encrypt. Персональные данные в&nbsp;MVP вымышленные</span><span>15</span></div>
+</section>
+
+<!-- 16 · ЭФФЕКТ -->
+<section class="slide">
+  <h2 class="h">Ожидаемый эффект</h2>
+  <p class="sub">Что меняется для студента и&nbsp;деканата — и&nbsp;<b>как это измерить в&nbsp;пилоте</b></p>
+  <div class="content" style="gap:96px">
+    <table class="tb" style="flex:1.5">
+      <tr><th style="width:190px"></th><th>Сейчас</th><th>С «Ведомой»</th></tr>
+      <tr><td>Каналы</td><td>почта, сайт, кабинет, окно</td><td>один — чат в&nbsp;MAX</td></tr>
+      <tr><td>Визиты</td><td>до&nbsp;двух: подать и&nbsp;забрать</td><td>ноль — документ в&nbsp;чат</td></tr>
+      <tr><td>Действия</td><td>найти порядок, написать письмо</td><td>сообщение, 1–2 кнопки, «Отправить»</td></tr>
+      <tr><td>Статус</td><td>узнавать самому</td><td>приходит на&nbsp;каждом шаге</td></tr>
+      <tr><td>Сотрудник</td><td>набирает документ, отвечает «где?»</td><td>шаблон в&nbsp;1 клик, ответы уходят сами</td></tr>
+    </table>
+    <div class="col" style="flex:.8; justify-content:center">
+      <div class="label">Цели пилота <span class="hyp" style="text-transform:none; letter-spacing:0">— гипотезы</span></div>
+      <table class="tb" style="margin-top:18px; font-size:24px">
+        <tr><td style="font-weight:400">Заявок без визита</td><td class="accent" style="font-weight:700; text-align:right">≥ 80%</td></tr>
+        <tr><td style="font-weight:400">Время подачи</td><td class="accent" style="font-weight:700; text-align:right">&lt; 1 мин</td></tr>
+        <tr><td style="font-weight:400">ИИ понял с&nbsp;первого раза</td><td class="accent" style="font-weight:700; text-align:right">≥ 85%</td></tr>
+        <tr><td style="font-weight:400">Выполнено в&nbsp;срок</td><td class="accent" style="font-weight:700; text-align:right">≥ 95%</td></tr>
+        <tr><td style="font-weight:400">Оценка студентов</td><td class="accent" style="font-weight:700; text-align:right">≥ 4,5</td></tr>
       </table>
-    </div>
-    <div class="col" style="flex:1; gap:22px">
-      <div class="card" style="padding:30px 34px">
-        <h3 style="font-size:26px">Защита</h3>
-        <ul class="clean ul--ok" style="margin-top:16px; gap:12px">
-          <li style="font-size:23px">Вход в Mini App — по подписи MAX (initData), без пароля</li>
-          <li style="font-size:23px">Токены и ключи — только в .env, не в коде</li>
-          <li style="font-size:23px">Версии библиотек зафиксированы</li>
-          <li style="font-size:23px">Подделанную сессию сервер отклоняет (401)</li>
-        </ul>
-      </div>
-      <div class="card" style="padding:30px 34px; background:var(--coral-soft); box-shadow:none">
-        <span class="tag tag--mock">Смоделировано в MVP</span>
-        <ul class="clean ul--x" style="margin-top:16px; gap:12px">
-          <li style="font-size:23px">Вход через систему вуза (SSO) и база студентов — тестовые</li>
-          <li style="font-size:23px">Интеграции с 1С и личным кабинетом вуза — нет</li>
-          <li style="font-size:23px">Подпись справок — демо-ключ, не УКЭП</li>
-        </ul>
-      </div>
+      <p class="t-sm" style="margin:18px 0 0">Всё считается из&nbsp;данных системы: время, канал, оценки, просрочки</p>
     </div>
   </div>
-  <div class="foot"><span class="foot__src">Реальные интеграции: MAX Bot API, MAX Bridge, Jev через Polza.AI, Let's Encrypt. Все персональные данные в MVP вымышленные</span><span class="foot__num">15</span></div>
+  <div class="foot"><span>«Сейчас» — по&nbsp;официальным страницам вузов 8–10; справа — работающий MVP</span><span>16</span></div>
 </section>
 
-<!-- ═════════════════ 16. ЭФФЕКТ ═════════════════ -->
-<section class="slide" id="s-effect">
-  <div class="kicker"><b>14</b> Ожидаемый эффект</div>
-  <h2 class="title">Что меняется для студента и&nbsp;деканата</h2>
-  <div class="body" style="gap:40px">
-    <div class="col" style="flex:1.55">
-      <table class="t" style="font-size:25px">
-        <tr><th style="width:230px"></th><th>Сейчас</th><th>С «Ведомой»</th></tr>
-        <tr><td><b>Каналы</b></td><td>почта, сайт, кабинет, окно<span class="ref">[7–9]</span></td><td><b>один — чат в MAX</b></td></tr>
-        <tr><td><b>Визиты</b></td><td>до двух: подать и забрать</td><td><b>ноль — PDF с ЭП в чат</b></td></tr>
-        <tr><td><b>Действия</b></td><td>найти порядок, написать письмо или бланк</td><td><b>1 сообщение, 1–2 кнопки, «Отправить»</b></td></tr>
-        <tr><td><b>Статус</b></td><td>узнавать самому</td><td><b>приходит на каждом шаге</b></td></tr>
-        <tr><td><b>Срок</b></td><td>до 3 рабочих дней, не виден<span class="ref">[7–9]</span></td><td><b>тот же регламент, но виден и под контролем</b></td></tr>
-        <tr><td><b>Сотрудник</b></td><td>набирает справку, отвечает «где?»</td><td><b>шаблон в 1 клик, ответы уходят сами</b></td></tr>
-      </table>
+<!-- 17 · ПЛАТФОРМА -->
+<section class="slide slide--dark">
+  <h2 class="h">Ведома — платформа для вузов</h2>
+  <p class="sub">Мы делали не&nbsp;бота для одной справки, а&nbsp;<b style="color:#fff">SaaS: вуз подключается и&nbsp;собирает свои услуги сам</b></p>
+  <div class="content cols cols-3" style="margin-top:80px; gap:72px">
+    <div>
+      <div class="label" style="color:#7fd0da">Один продукт — много вузов</div>
+      <p class="t-md" style="color:#d9e6ea; margin:18px 0 0">У&nbsp;каждого вуза свой каталог, свои сотрудники и&nbsp;данные. В&nbsp;MVP на&nbsp;одном сервере уже работают два тестовых вуза.</p>
     </div>
-    <div class="col" style="flex:1">
-      <div class="card" style="flex:1; padding:32px 36px">
-        <span class="tag tag--hyp">Цели пилота · проверим измерением</span>
-        <div style="display:flex; flex-direction:column; gap:16px; margin-top:22px">
-          <div style="display:flex; justify-content:space-between; gap:16px; font-size:24px"><span>Заявок без визита</span><b style="font-family:var(--display); color:var(--teal)">≥ 80%</b></div><div class="divider"></div>
-          <div style="display:flex; justify-content:space-between; gap:16px; font-size:24px"><span>Время подачи заявки</span><b style="font-family:var(--display); color:var(--teal)">&lt; 1 мин</b></div><div class="divider"></div>
-          <div style="display:flex; justify-content:space-between; gap:16px; font-size:24px"><span>ИИ понял без переформулировки</span><b style="font-family:var(--display); color:var(--teal)">≥ 85%</b></div><div class="divider"></div>
-          <div style="display:flex; justify-content:space-between; gap:16px; font-size:24px"><span>Заявок выполнено в срок</span><b style="font-family:var(--display); color:var(--teal)">≥ 95%</b></div><div class="divider"></div>
-          <div style="display:flex; justify-content:space-between; gap:16px; font-size:24px"><span>Средняя оценка студентов</span><b style="font-family:var(--display); color:var(--teal)">≥ 4,5</b></div><div class="divider"></div>
-          <div style="display:flex; justify-content:space-between; gap:16px; font-size:24px"><span>Вопросов «где моя справка?»</span><b style="font-family:var(--display); color:var(--teal)">−70%</b></div>
-        </div>
-        <p style="font-size:18px; margin-top:22px">Всё считается из данных системы: время, канал, оценки, просрочки</p>
-      </div>
+    <div>
+      <div class="label" style="color:#7fd0da">Подключение без разработки</div>
+      <p class="t-md" style="color:#d9e6ea; margin:18px 0 0">Услуги и&nbsp;формы — в&nbsp;конструкторе, ИИ учится на&nbsp;каталоге сам. Вузу нужны список студентов и&nbsp;шаблоны документов.</p>
+    </div>
+    <div>
+      <div class="label" style="color:#7fd0da">Рынок идёт так&nbsp;же</div>
+      <p class="t-md" style="color:#d9e6ea; margin:18px 0 0">Единый бот расписания VK — уже 100+ вузов<span class="ref">7</span>. Платформа «Кампус» — 25 вузов Свердловской области<span class="ref">13</span>. «Портал грантов» в&nbsp;MAX<span class="ref">14</span>.</p>
     </div>
   </div>
-  <div class="foot"><span class="foot__src">«Сейчас» — по официальным страницам вузов [7–9]; правая колонка — работающий MVP; цели — наши гипотезы</span><span class="foot__num">16</span></div>
+  <div style="padding-top:36px; border-top:1px solid #23414c; font:500 30px/1.35 var(--body); color:#fff">Расписание уже едино для 100+ вузов. <span style="color:#7fd0da">Ведома делает то&nbsp;же для заявок и&nbsp;документов.</span></div>
+  <div class="foot" style="color:#5f7b86"><span>7 — VK, 20.03.2026 · 13 — Workspace, кейс «Кампус» · 14 — Ведомости, 22.09.2026</span><span>17</span></div>
 </section>
 
-<!-- ═════════════════ 17. МАСШТАБИРОВАНИЕ: ГДЕ ═════════════════ -->
-<section class="slide" id="s-scale">
-  <div class="kicker"><b>15</b> Потенциал масштабирования</div>
-  <h2 class="title">Та же механика работает везде, <em>где выдают документы по&nbsp;запросу</em></h2>
-  <div class="body" style="flex-direction:column; gap:28px">
-    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px">
-      <div class="card" style="padding:30px 32px; border-top:8px solid var(--teal)"><div class="big" style="font-size:80px">751</div><div class="stat__label" style="font-size:21px">вуз в России<span class="ref">[3]</span></div><h3 style="font-size:25px; margin-top:18px">Другие вузы</h3><p style="font-size:19px">Несколько вузов на одном сервере — уже в MVP: свои услуги, сотрудники и данные</p></div>
-      <div class="card" style="padding:30px 32px; border-top:8px solid var(--teal-2)"><div class="big" style="font-size:80px">3,2<small>тыс.</small></div><div class="stat__label" style="font-size:21px">колледжей, ≈4 млн студентов<span class="ref">[4]</span></div><h3 style="font-size:25px; margin-top:18px">Колледжи СПО</h3><p style="font-size:19px">Те же справки: военкомат, соцзащита, работа родителей</p></div>
-      <div class="card" style="padding:30px 32px; border-top:8px solid #5fa8b3"><div class="big" style="font-size:80px">38<small>тыс.</small></div><div class="stat__label" style="font-size:21px">школ, 18 млн школьников<span class="ref">[4]</span></div><h3 style="font-size:25px; margin-top:18px">Школы</h3><p style="font-size:19px">Справки об обучении для родителей — через бот родителя</p></div>
-      <div class="card" style="padding:30px 32px; border-top:8px solid var(--amber)"><div class="big" style="font-size:80px; color:var(--amber)">HR</div><div class="stat__label" style="font-size:21px">организации и ведомства</div><h3 style="font-size:25px; margin-top:18px">Справки сотрудникам</h3><p style="font-size:19px">С места работы, о доходах, пропуска — «единое окно» внутри компании <span class="tag tag--hyp" style="height:24px; font-size:12px">гипотеза</span></p></div>
+<!-- 18 · КАТАЛОГ УСЛУГ -->
+<section class="slide">
+  <h2 class="h">Не только справки</h2>
+  <p class="sub">Любая типовая услуга собирается в&nbsp;конструкторе. <b>Справка — лишь первый пример</b></p>
+  <div class="content cols cols-4" style="margin-top:72px; gap:56px">
+    <div><h3>Документы</h3><ul class="list" style="margin-top:20px; gap:12px"><li style="font-size:23px">справка об&nbsp;обучении <span class="accent" style="font-size:.8em">● MVP</span></li><li style="font-size:23px">справка для военкомата</li><li style="font-size:23px">о&nbsp;стипендии и&nbsp;доходах</li><li style="font-size:23px">выписка оценок</li></ul></div>
+    <div><h3>Учёба</h3><ul class="list" style="margin-top:20px; gap:12px"><li style="font-size:23px">академический отпуск <span class="accent" style="font-size:.8em">● MVP</span></li><li style="font-size:23px">запись в&nbsp;деканат <span class="accent" style="font-size:.8em">● MVP</span></li><li style="font-size:23px">пересдача и&nbsp;перезачёт</li><li style="font-size:23px">перевод и&nbsp;восстановление</li></ul></div>
+    <div><h3>Соцподдержка</h3><ul class="list" style="margin-top:20px; gap:12px"><li style="font-size:23px">материальная помощь <span class="accent" style="font-size:.8em">● MVP</span></li><li style="font-size:23px">повышенная стипендия</li><li style="font-size:23px">компенсации и&nbsp;льготы</li></ul></div>
+    <div><h3>Кампус</h3><ul class="list" style="margin-top:20px; gap:12px"><li style="font-size:23px">общежитие <span class="accent" style="font-size:.8em">● MVP</span></li><li style="font-size:23px">пропуск в&nbsp;кампус</li><li style="font-size:23px">заявка на&nbsp;ремонт</li><li style="font-size:23px">бронь аудитории</li></ul></div>
+  </div>
+  <p class="t-md" style="margin:0; padding-top:36px; border-top:1px solid var(--rule)">Механика одна: студент пишет → ИИ находит услугу → форма → очередь сотрудника → ответ в&nbsp;MAX → оценка. Меняется только каталог.</p>
+  <div class="foot"><span>● MVP — услуга уже есть в&nbsp;тестовых вузах демо-стенда</span><span>18</span></div>
+</section>
+
+<!-- 19 · МАСШТАБИРОВАНИЕ -->
+<section class="slide">
+  <h2 class="h">Масштабирование</h2>
+  <p class="sub">Та&nbsp;же механика работает везде, <b>где организация выдаёт документы по&nbsp;запросу</b></p>
+  <div class="content" style="flex-direction:column; gap:56px; margin-top:64px; justify-content:center">
+    <div class="cols cols-4" style="gap:56px">
+      <div><div class="num" style="font-size:72px">751</div><p class="t-sm" style="margin:12px 0 0"><b style="color:var(--ink)">вуз</b> — первая аудитория<span class="ref">3</span></p></div>
+      <div><div class="num" style="font-size:72px">3,2<small>тыс.</small></div><p class="t-sm" style="margin:12px 0 0"><b style="color:var(--ink)">колледжей</b>, ≈4 млн студентов — те&nbsp;же справки<span class="ref">4</span></p></div>
+      <div><div class="num" style="font-size:72px">25</div><p class="t-sm" style="margin:12px 0 0"><b style="color:var(--ink)">вузов в&nbsp;одной платформе</b> — так уже работает «Кампус» в&nbsp;регионе<span class="ref">13</span></p></div>
+      <div><div class="num" style="font-size:72px">HR</div><p class="t-sm" style="margin:12px 0 0"><b style="color:var(--ink)">компании</b> — справки сотрудникам <span class="hyp">гипотеза</span></p></div>
     </div>
-    <div style="display:flex; gap:24px; flex:1">
-      <div class="card card--soft" style="flex:1">
-        <h3 style="font-size:26px; color:var(--green)">Не меняется</h3>
-        <ul class="clean ul--ok" style="margin-top:16px; gap:10px">
-          <li style="font-size:21px">Бот с ИИ, Mini App, панель, подпись и проверка документов</li>
-          <li style="font-size:21px">Каталог и формы собираются в конструкторе, ИИ учится на нём сам</li>
-        </ul>
-      </div>
-      <div class="card" style="flex:1.25">
-        <h3 style="font-size:26px; color:var(--amber)">Адаптируем</h3>
-        <ul class="clean" style="margin-top:16px; gap:10px">
-          <li style="font-size:21px"><b>Данные:</b> список студентов и услуг, шаблоны документов организации</li>
-          <li style="font-size:21px"><b>Интеграции:</b> вход через систему вуза, 1С / личный кабинет, УКЭП</li>
-          <li style="font-size:21px"><b>Продукт:</b> роль родителя для школ, база данных вместо файла</li>
-        </ul>
-      </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:56px; padding-top:44px; border-top:1px solid var(--rule)">
+      <div><div class="label accent">1 · Пилот, семестр</div><p class="t-md" style="margin:14px 0 0">1 факультет, 3 услуги. Нужны выгрузка студентов, шаблон справки, куратор</p></div>
+      <div><div class="label accent">2 · Весь вуз, 2–3 мес.</div><p class="t-md" style="margin:14px 0 0">Все услуги в&nbsp;конструкторе. Вход через систему вуза, 1С, УКЭП</p></div>
+      <div><div class="label accent">3 · Регион, 6–12 мес.</div><p class="t-md" style="margin:14px 0 0">Облачная версия для нескольких вузов, хранение в&nbsp;РФ, поддержка</p></div>
+      <div><div class="label accent">4 · СПО и&nbsp;школы</div><p class="t-md" style="margin:14px 0 0">Шаблоны документов, роль родителя, строже доступ к&nbsp;данным детей</p></div>
     </div>
   </div>
-  <div class="foot"><span class="foot__src">[3] Минобрнауки России, январь 2026 · [4] Минпросвещения России, 2026 (по материалам кейса хакатона)</span><span class="foot__num">17</span></div>
+  <div class="foot"><span>3 — Минобрнауки, январь 2026 · 4 — Минпросвещения, 2026 · 13 — кейс «Кампус» · сроки этапов — наши допущения</span><span>19</span></div>
 </section>
 
-<!-- ═════════════════ 18. ТИРАЖИРОВАНИЕ ═════════════════ -->
-<section class="slide" id="s-rollout">
-  <div class="kicker"><b>16</b> Порядок тиражирования</div>
-  <h2 class="title">От одного факультета — <em>к вузам региона и колледжам</em></h2>
-  <div class="body" style="gap:22px; align-items:stretch">
-    <div class="card" style="flex:1; display:flex; flex-direction:column; border-top:8px solid var(--teal)">
-      <div style="font:700 22px var(--display); color:var(--teal)">1 · Пилот</div><div class="muted" style="font-size:19px; margin-top:6px">1 семестр</div>
-      <p style="font-size:25px; color:var(--ink); margin-top:20px; line-height:1.4"><b>1 факультет, 3 услуги</b>: справка, запись в деканат, матпомощь</p>
-      <div class="divider" style="margin:18px 0"></div>
-      <div style="font-size:17px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-2); font-weight:700">Нужно</div>
-      <p style="font-size:22px">Выгрузка студентов, шаблон справки вуза, куратор в деканате, 1 сервер</p>
-      <div style="margin-top:auto; padding-top:16px"><span class="pill pill--t" style="font-size:17px">переход: цели пилота выполнены</span></div>
-    </div>
-    <div class="arrow" style="align-self:center">→</div>
-    <div class="card" style="flex:1; display:flex; flex-direction:column; border-top:8px solid var(--teal-2)">
-      <div style="font:700 22px var(--display); color:var(--teal-2)">2 · Весь вуз</div><div class="muted" style="font-size:19px; margin-top:6px">2–3 месяца</div>
-      <p style="font-size:25px; color:var(--ink); margin-top:20px; line-height:1.4"><b>Все типовые услуги</b> через конструктор, все факультеты</p>
-      <div class="divider" style="margin:18px 0"></div>
-      <div style="font-size:17px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-2); font-weight:700">Нужно</div>
-      <p style="font-size:22px">Вход через систему вуза, связь с 1С / ЛК, УКЭП вуза, база данных</p>
-      <div style="margin-top:auto; padding-top:16px"><span class="pill pill--t" style="font-size:17px">переход: нагрузка и SLA в норме</span></div>
-    </div>
-    <div class="arrow" style="align-self:center">→</div>
-    <div class="card" style="flex:1; display:flex; flex-direction:column; border-top:8px solid #5fa8b3">
-      <div style="font:700 22px var(--display); color:#3f8f9b">3 · Регион</div><div class="muted" style="font-size:19px; margin-top:6px">6–12 месяцев</div>
-      <p style="font-size:25px; color:var(--ink); margin-top:20px; line-height:1.4"><b>Облачная версия</b> для нескольких вузов региона</p>
-      <div class="divider" style="margin:18px 0"></div>
-      <div style="font-size:17px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-2); font-weight:700">Нужно</div>
-      <p style="font-size:22px">Договор оператора ПДн, хранение в РФ, поддержка и обучение сотрудников</p>
-      <div style="margin-top:auto; padding-top:16px"><span class="pill pill--t" style="font-size:17px">переход: 3+ вуза на платформе</span></div>
-    </div>
-    <div class="arrow" style="align-self:center">→</div>
-    <div class="card" style="flex:1; display:flex; flex-direction:column; border-top:8px solid var(--amber)">
-      <div style="font:700 22px var(--display); color:var(--amber)">4 · СПО и школы</div><div class="muted" style="font-size:19px; margin-top:6px">далее</div>
-      <p style="font-size:25px; color:var(--ink); margin-top:20px; line-height:1.4"><b>Колледжи и школы</b> региона на той же платформе</p>
-      <div class="divider" style="margin:18px 0"></div>
-      <div style="font-size:17px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted-2); font-weight:700">Нужно</div>
-      <p style="font-size:22px">Шаблоны документов, роль родителя, строже доступ к данным детей</p>
+<!-- 20 · РИСКИ -->
+<section class="slide">
+  <h2 class="h">Риски и допущения</h2>
+  <p class="sub">Что может помешать — и&nbsp;<b>как мы это снимаем</b></p>
+  <div class="content" style="gap:96px">
+    <table class="tb" style="flex:1.5">
+      <tr><th style="width:300px">Риск</th><th>Как снижаем</th></tr>
+      <tr><td>Персональные данные</td><td>152-ФЗ: согласие, хранение в&nbsp;РФ, вуз — оператор; в&nbsp;ИИ уходит только текст</td></tr>
+      <tr><td>Сила документа</td><td>Демо-подпись меняется на&nbsp;УКЭП вуза, проверка по&nbsp;QR остаётся</td></tr>
+      <tr><td>ИИ ошибся</td><td>Уточнения кнопками, «Это другая услуга», форма перед отправкой</td></tr>
+      <tr><td>Сбой внешнего API</td><td>Бот переходит на&nbsp;ключевые слова и&nbsp;продолжает работать</td></tr>
+      <tr><td>Деканат не&nbsp;примет</td><td>Меньше ручной работы: шаблоны, автоответы, аналитика</td></tr>
+    </table>
+    <div class="col" style="flex:1; gap:48px; justify-content:center">
+      <div><div class="label">Ограничения MVP</div><ul class="list" style="margin-top:18px; gap:12px">
+        <li style="font-size:23px">хранилище — файл на&nbsp;одном сервере</li>
+        <li style="font-size:23px">Mini App открывается из&nbsp;MAX после регистрации адреса в&nbsp;кабинете бота</li></ul></div>
+      <div><div class="label">Допущения</div><ul class="list" style="margin-top:18px; gap:12px">
+        <li style="font-size:23px">банки принимают справку с&nbsp;УКЭП вуза</li>
+        <li style="font-size:23px">большая часть обращений — типовые</li>
+        <li style="font-size:23px">вуз готов выгрузить список студентов</li></ul></div>
     </div>
   </div>
-  <div class="foot"><span class="foot__src">Сроки и условия перехода — наши допущения для плана пилота</span><span class="foot__num">18</span></div>
+  <div class="foot"><span></span><span>20</span></div>
 </section>
 
-<!-- ═════════════════ 19. РИСКИ И ОГРАНИЧЕНИЯ ═════════════════ -->
-<section class="slide" id="s-risks">
-  <div class="kicker"><b>17</b> Риски, ограничения, допущения</div>
-  <h2 class="title">Что может помешать — и&nbsp;как мы&nbsp;это снимаем</h2>
-  <div class="body" style="gap:36px">
-    <div class="col" style="flex:1.45">
-      <table class="t" style="font-size:24px">
-        <tr><th style="width:320px">Риск</th><th>Как снижаем</th></tr>
-        <tr><td><b>Персональные данные</b></td><td>152-ФЗ: согласие, хранение в РФ, вуз — оператор данных; в ИИ уходит только текст</td></tr>
-        <tr><td><b>Юридическая сила справки</b></td><td>Демо-подпись меняется на УКЭП вуза, проверка по QR остаётся</td></tr>
-        <tr><td><b>ИИ ошибся</b></td><td>Уточнения кнопками, «Это другая услуга», студент видит форму перед отправкой</td></tr>
-        <tr><td><b>ИИ или внешний API недоступен</b></td><td>Бот переходит на ключевые слова и продолжает работать</td></tr>
-        <tr><td><b>Деканат не примет инструмент</b></td><td>Меньше ручной работы: шаблон в 1 клик, ответы уходят сами, аналитика</td></tr>
-      </table>
-    </div>
-    <div class="col" style="flex:1; gap:22px">
-      <div class="card" style="padding:28px 32px">
-        <span class="tag tag--mock">Ограничения MVP</span>
-        <ul class="clean ul--x" style="margin-top:16px; gap:10px">
-          <li style="font-size:23px">Хранилище — файл на одном сервере</li>
-          <li style="font-size:23px">Mini App открывается из MAX после регистрации адреса в кабинете бота</li>
-          <li style="font-size:23px">Статусы в Mini App обновляются раз в 4 секунды</li>
-        </ul>
-      </div>
-      <div class="card" style="padding:28px 32px">
-        <span class="tag tag--hyp">Ключевые допущения</span>
-        <ul class="clean" style="margin-top:16px; gap:10px">
-          <li style="font-size:23px">Банки и ведомства принимают справку с УКЭП вуза</li>
-          <li style="font-size:23px">Большая часть обращений — типовые справки</li>
-          <li style="font-size:23px">Вуз готов выгрузить список студентов для входа</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="foot"><span class="foot__brand">Ведома</span><span class="foot__num">19</span></div>
-</section>
-
-<!-- ═════════════════ 20. ИСТОЧНИКИ ═════════════════ -->
-<section class="slide" id="s-sources">
-  <div class="kicker"><b>18</b> Источники</div>
-  <h2 class="title">Использованные источники</h2>
-  <ol style="margin:44px 0 0; padding-left:36px; font-size:23px; line-height:1.5; columns:2; column-gap:64px; color:var(--muted)" class="src">
-    <li><b style="color:var(--ink)">Минобрнауки России</b> — 4,66 млн студентов вузов, 1,42 млн первокурсников в 2025 г. Интерфакс, 30.06.2026. interfax.ru/russia/1099194</li>
-    <li><b style="color:var(--ink)">ИСИЭЗ НИУ ВШЭ</b> «Образование в цифрах: 2025» — доля очной формы 62%. issek.hse.ru/news/1080237504.html</li>
-    <li><b style="color:var(--ink)">Минобрнауки России</b> — 751 вуз на январь 2026 г. По данным edu.sravni.ru</li>
-    <li><b style="color:var(--ink)">Минпросвещения России, 2026</b> — 3,2 тыс. колледжей и ≈4 млн студентов, 38 тыс. школ и 18 млн школьников. По материалам кейса трека «Образовательные решения»</li>
-    <li><b style="color:var(--ink)">RB.ru</b> — MAX: 107 млн пользователей, 77 млн в день, 26.03.2026</li>
-    <li><b style="color:var(--ink)">iPhones.ru</b> — 230 тыс. студенческих чатов и 2,4 млн участников, 5 тыс. каналов вузов в MAX, приглашения через Госуслуги, 30.07.2026</li>
-    <li><b style="color:var(--ink)">СПбПУ</b> — «Заявления и справки студентам»: 11 институтов с отдельными адресами, часы приёма, до 3 рабочих дней. spbstu.ru/students/enquiry</li>
-    <li><b style="color:var(--ink)">НИУ ВШЭ</b> — заказ справок до 3 дней; электронная справка с ЭП с 14.03.2023. hse.ru, studentcentre.hse.ru</li>
-    <li><b style="color:var(--ink)">РАНХиГС</b> — Студенческий офис: до 3 рабочих дней, платные бумажные дубликаты с 01.03.2026. ranepa.ru/mfc</li>
-    <li><b style="color:var(--ink)">РХТУ им. Менделеева</b> — «Все справки в одном месте: Единый деканат», 2021. muctr.ru</li>
-    <li><b style="color:var(--ink)">Т—Ж</b> — «Справка об обучении в вузе 2026»: для чего нужна справка. t-j.ru/spravka-dly-vuza</li>
-    <li><b style="color:var(--ink)">TypeSafe AI, Polza.AI</b> — документация Jev: docs.typesafe.ai, polza.ai/docs/gaidy/jev</li>
-    <li><b style="color:var(--ink)">Минтранс России</b> — «Университеты переходят в MAX», 05.02.2026. mintrans.gov.ru</li>
+<!-- 21 · ИСТОЧНИКИ -->
+<section class="slide">
+  <h2 class="h">Источники</h2>
+  <ol class="src">
+    <li><b>Минобрнауки России</b> — 4,66 млн студентов, 1,42 млн первокурсников. Интерфакс, 30.06.2026</li>
+    <li><b>ИСИЭЗ НИУ ВШЭ</b> — «Образование в цифрах: 2025», доля очной формы 62%</li>
+    <li><b>Минобрнауки России</b> — 751 вуз, январь 2026 (по данным edu.sravni.ru)</li>
+    <li><b>Минпросвещения России, 2026</b> — 3,2 тыс. колледжей, ≈4 млн студентов (по материалам кейса)</li>
+    <li><b>Mediascope</b> — месячная аудитория MAX ≈86 млн, июнь 2026 (Хабр, 22.07.2026)</li>
+    <li><b>VK, Минобрнауки</b> — 230 тыс. студенческих чатов, 2,4 млн участников, приглашения через Госуслуги (iPhones.ru, 30.07.2026)</li>
+    <li><b>VK</b> — бот расписания в MAX, более 100 вузов, 20.03.2026</li>
+    <li><b>СПбПУ</b> — «Заявления и справки студентам»: 11 институтов, часы приёма, до 3 рабочих дней</li>
+    <li><b>НИУ ВШЭ</b> — заказ справок до 3 дней; электронная справка с ЭП с 14.03.2023</li>
+    <li><b>РАНХиГС</b> — студенческий офис: до 3 рабочих дней, платные дубликаты с 01.03.2026</li>
+    <li><b>РХТУ им. Менделеева</b> — «Единый деканат», 2021</li>
+    <li><b>Т—Ж</b> — «Справка об обучении в вузе 2026»</li>
+    <li><b>Workspace</b> — кейс «Кампус»: платформа для 25 вузов Свердловской области</li>
+    <li><b>Ведомости</b> — «Max запустит сервис поиска грантов», 22.09.2026</li>
+    <li><b>TypeSafe AI, Polza.AI</b> — документация Jev</li>
   </ol>
-  <div class="foot"><span class="foot__src">Замеры ИИ, проверки API и скриншоты — собственные, на работающем MVP, 29.09.2026</span><span class="foot__num">20</span></div>
+  <div class="foot"><span>Замеры ИИ, проверки API и экраны — собственные, на работающем MVP, 29.09.2026</span><span>21</span></div>
 </section>
 
-<!-- ═════════════════ 21. ФИНАЛ ═════════════════ -->
-<section class="slide slide--dark" id="s-end" style="padding-top:150px">
-  <div class="kicker">Ведома · команда «Пантеры»</div>
-  <h2 style="font-size:92px; line-height:1.05; margin-top:40px; letter-spacing:-0.04em; max-width:1500px">Справка из вуза —<br><span style="color:#7fd0da">за один диалог в&nbsp;MAX</span></h2>
-  <div style="margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:24px">
-    <div class="card"><div style="font-size:19px; color:#9fb6c0">Бот в MAX</div><div class="mono" style="font-size:23px; margin-top:10px">@t302_hakaton_bot</div></div>
-    <div class="card"><div style="font-size:19px; color:#9fb6c0">Mini App и панель</div><div class="mono" style="font-size:23px; margin-top:10px">uniflow.betatestbyfridrix.ru</div></div>
-    <div class="card"><div style="font-size:19px; color:#9fb6c0">Репозиторий</div><div class="mono" style="font-size:23px; margin-top:10px; overflow-wrap:anywhere" data-p="repoShort"></div></div>
+<!-- 22 · ФИНАЛ -->
+<section class="slide slide--dark" style="padding-top:150px">
+  <div class="label" style="color:#7f9ba6">Ведома · команда «Пантеры» · СПбГУПТД</div>
+  <h2 style="font-family:var(--display); font-weight:600; font-size:88px; line-height:1.08; letter-spacing:-0.04em; color:#fff; margin:48px 0 0; max-width:1500px">Единое окно студенческих услуг&nbsp;— <span style="color:#7fd0da">для любого вуза в&nbsp;MAX</span></h2>
+  <div style="margin-top:auto; display:grid; grid-template-columns:repeat(3,1fr); gap:56px; padding-top:32px; border-top:1px solid #23414c">
+    <div><div class="label" style="color:#7f9ba6">Бот в MAX</div><div class="mono" style="font-size:24px; color:#fff; margin-top:10px">@t302_hakaton_bot</div></div>
+    <div><div class="label" style="color:#7f9ba6">Mini App и панель</div><div class="mono" style="font-size:24px; color:#fff; margin-top:10px">uniflow.betatestbyfridrix.ru</div></div>
+    <div><div class="label" style="color:#7f9ba6">Репозиторий</div><div class="mono" style="font-size:24px; color:#fff; margin-top:10px; overflow-wrap:anywhere" data-p="repoShort"></div></div>
   </div>
-  <div style="height:56px"></div>
-  <div class="foot"><span class="foot__brand">Ведома</span><span class="foot__num">21</span></div>
+  <div class="foot" style="color:#5f7b86"><span></span><span>22</span></div>
 </section>
 
 </main>
