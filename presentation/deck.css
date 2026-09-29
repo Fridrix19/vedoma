@@ -142,3 +142,4 @@ ol.src b { color: var(--ink); font-weight: 600; }
 /* содержимое по центру свободной высоты — без пустых полос внизу */
 .content.cols { align-content: center; }
 .content.cols .t-md { font-size: 27px; }
+table.tb.tb--tight td { padding: 15px 24px 15px 0; }
