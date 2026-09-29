@@ -34,7 +34,7 @@ const studentByMax = (d: DB, userId: number | undefined) =>
   userId ? d.students.find((s) => s.maxUserId === userId) : undefined;
 
 const greetUnknown =
-  'Здравствуйте! Я бот-помощник для студента.\n\n' +
+  'Здравствуйте! Я Ведома — бот-помощник для студента.\n\n' +
   'Оформлю справки, академ, матпомощь и запись в деканат.\n\n' +
   'Войдите через вуз — поля ФИО и группы подставятся сами.\n\n' +
   'Демо-версия: вузы и студенты тестовые.';
@@ -129,7 +129,7 @@ async function handleText(ctx: Context, userId: number, text: string) {
   switch (u.intent) {
     case 'greeting':
       await ctx.reply(
-        `Привет, ${st.firstName}! Я UniFlow — помощник студентов ${tenant?.short ?? 'вуза'}.\n\n` +
+        `Привет, ${st.firstName}! Я Ведома — помощник студентов ${tenant?.short ?? 'вуза'}.\n\n` +
           `Помогу оформить:\n${catalogLines(services)}\n\n` +
           'Просто напишите своими словами, что нужно, например «справка для банка», — остальное уточню сам.',
         { attachments: [menu] },
@@ -137,7 +137,7 @@ async function handleText(ctx: Context, userId: number, text: string) {
       return;
     case 'help':
       await ctx.reply(
-        `Я UniFlow — бот-помощник ${tenant?.name ?? 'вуза'}.\n\n` +
+        `Я Ведома — бот-помощник ${tenant?.name ?? 'вуза'}.\n\n` +
           'Как это работает:\n1. Вы пишете своими словами, что нужно.\n2. Я понимаю, какая это услуга, и уточняю недостающее кнопками.\n' +
           '3. Вы подтверждаете заявку, а результат (например, PDF-справка) приходит сюда же.\n\n' +
           `Что можно оформить:\n${catalogLines(services)}\n\nСтатус заявок — спросите «где моя справка?» или нажмите «Мои заявки».`,

@@ -2,7 +2,7 @@ import type { DB } from './types';
 import { replaceDB } from './store';
 import { webApp } from './max';
 
-// HTTP-клиент к серверу UniFlow (server/). Используется только в режиме BACKEND.
+// HTTP-клиент к серверу «Ведома» (server/). Используется только в режиме BACKEND.
 
 const TOKEN_KEY = { student: 'uniflow.token.student', panel: 'uniflow.token.panel' } as const;
 type Kind = keyof typeof TOKEN_KEY;

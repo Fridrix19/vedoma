@@ -13,7 +13,7 @@ import { issueCertificate, signUploaded, verifyDocument } from './documents';
 import { keyId, publicKeyPem } from './signing';
 import { verifyPage } from './verify-page';
 
-// Сервер UniFlow: API для Mini App и панели + раздача собранного фронта + бот MAX.
+// Сервер «Ведома»: API для Mini App и панели + раздача собранного фронта + бот MAX.
 
 const app = express();
 app.disable('x-powered-by');
@@ -265,7 +265,7 @@ if (existsSync(config.distDir)) {
 }
 
 app.listen(config.port, () => {
-  console.log(`[server] UniFlow запущен: http://localhost:${config.port}`);
+  console.log(`[server] Сервер «Ведома» запущен: http://localhost:${config.port}`);
   console.log(`[server] Mini App: ${config.publicUrl || `http://localhost:${config.port}`}/miniapp.html`);
   console.log(`[server] Панель:   ${config.publicUrl || `http://localhost:${config.port}`}/panel.html  (пароль из PANEL_PASSWORD)`);
   if (!config.publicUrl) console.warn('[server] PUBLIC_URL не задан — укажите https-адрес туннеля/хостинга, чтобы открыть Mini App из MAX.');

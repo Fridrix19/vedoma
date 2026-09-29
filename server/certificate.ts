@@ -46,8 +46,8 @@ export async function buildCertificatePdf(x: CertificateInput): Promise<Buffer> 
       Title: `Справка ${x.docId}`,
       Author: `${svc.department} · ${tenant.name}`,
       Subject: svc.title,
-      Creator: 'UniFlow',
-      Keywords: `UniFlow, ${x.docId}, демо`,
+      Creator: 'Ведома',
+      Keywords: `Ведома, ${x.docId}, демо`,
     },
   });
   doc.registerFont('serif', join(FONTS, 'LiberationSerif-Regular.ttf'));
@@ -87,7 +87,7 @@ export async function buildCertificatePdf(x: CertificateInput): Promise<Buffer> 
   doc.text(`Справка выдана для предъявления по месту требования: ${req.values.place || '—'}.`, body);
   const reason = req.values.reason?.trim().replace(/\.$/, '');
   if (reason) doc.text(`Цель получения: ${reason[0].toLowerCase()}${reason.slice(1)}.`, body);
-  doc.text(`Основание: заявка № ${req.id} от ${msk(req.createdAt)}, поданная через UniFlow в мессенджере MAX.`, body);
+  doc.text(`Основание: заявка № ${req.id} от ${msk(req.createdAt)}, поданная через сервис «Ведома» в мессенджере MAX.`, body);
 
   // Должность
   doc.moveDown(1.6).font('serif').fontSize(12.5);
@@ -126,7 +126,7 @@ export async function buildCertificatePdf(x: CertificateInput): Promise<Buffer> 
   doc.font('sans-b').fontSize(8.5).fillColor(C.demo)
     .text('ДЕМОНСТРАЦИОННЫЙ ДОКУМЕНТ. Данные тестовые, юридической силы не имеет.', L, fy + 8, { width: TW, align: 'center' });
   doc.font('sans').fontSize(8).fillColor(C.muted)
-    .text(`Сформирован UniFlow. Проверка подлинности: ${x.verifyUrl}`, { width: TW, align: 'center', link: x.verifyUrl });
+    .text(`Сформирован сервисом «Ведома». Проверка подлинности: ${x.verifyUrl}`, { width: TW, align: 'center', link: x.verifyUrl });
 
   doc.end();
   return done;

@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
-  title: UniFlow API
+  title: Ведома API
   version: 1.0.0
-  summary: API сервера UniFlow — Mini App студента и веб-панель вуза в MAX
+  summary: API сервера «Ведома» — Mini App студента и веб-панель вуза в MAX
   description: |
     Сервер обслуживает Mini App (студент) и веб-панель вуза (сотрудник деканата, администратор).
     Бот MAX работает в том же процессе и отправляет уведомления при изменении заявок.
@@ -442,7 +442,7 @@ paths:
       tags: [documents]
       summary: Проверить подлинность документа по номеру (номер и QR-код — в справке)
       parameters:
-        - { name: docId, in: path, required: true, schema: { type: string, example: UF-18425-8DUFI2 } }
+        - { name: docId, in: path, required: true, schema: { type: string, example: VD-18425-8DUFI2 } }
       responses:
         '200':
           description: Документ найден; valid — файл не изменён и подпись сделана ключом вуза
@@ -657,7 +657,7 @@ components:
       description: Электронная подпись документа (демо — Ed25519 ключ сервера вуза; подписывается SHA-256 файла)
       required: [docId, alg, keyId, sha256, sig, signedAt, signer]
       properties:
-        docId: { type: string, example: UF-18425-8DUFI2 }
+        docId: { type: string, example: VD-18425-8DUFI2 }
         alg: { type: string, const: Ed25519 }
         keyId: { type: string, example: 49D5 CFD5 3B79 48C7 }
         sha256: { type: string, pattern: '^[0-9a-f]{64}$' }

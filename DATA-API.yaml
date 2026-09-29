@@ -2,8 +2,8 @@
 # Полный контракт — openapi.yaml. Все данные тестовые.
 version: "1.0"
 solution:
-  name: UniFlow
-  team: UniFlow            # замените на идентификатор команды
+  name: Ведома
+  team: Пантеры            # идентификатор команды — уточните у организаторов
 base_url: https://uniflow.betatestbyfridrix.ru   # боевой стенд; при своём запуске — ваш PUBLIC_URL
 
 roles:
@@ -199,7 +199,7 @@ checks:
   - id: verify_unknown_document
     title: Неизвестный номер документа — 404
     method: GET
-    path: /api/public/verify/UF-0-NOTFOUND
+    path: /api/public/verify/VD-0-NOTFOUND
     role: public
     expected_status: [404]
     response:

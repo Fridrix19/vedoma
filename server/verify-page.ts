@@ -15,9 +15,9 @@ export function verifyPage(docId: string, v: Result): string {
   const ok = Boolean(v?.valid);
   const title = !v ? 'Документ не найден' : ok ? 'Подпись действительна' : 'Подпись недействительна';
   const lead = !v
-    ? `Документа с номером ${esc(docId)} нет в реестре UniFlow. Проверьте номер или отсканируйте QR-код ещё раз.`
+    ? `Документа с номером ${esc(docId)} нет в реестре сервиса «Ведома». Проверьте номер или отсканируйте QR-код ещё раз.`
     : ok
-      ? 'Документ выдан вузом через UniFlow, подписан электронной подписью и с момента подписания не изменялся.'
+      ? 'Документ выдан вузом через сервис «Ведома», подписан электронной подписью и с момента подписания не изменялся.'
       : 'Файл документа изменён или подпись не совпадает с ключом вуза. Не принимайте этот документ.';
   const rows = v
     ? [
@@ -34,7 +34,7 @@ export function verifyPage(docId: string, v: Result): string {
   return `<!doctype html>
 <html lang="ru"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Проверка документа ${esc(docId)} · UniFlow</title>
+<title>Проверка документа ${esc(docId)} · Ведома</title>
 <style>
   :root { --ink:#19283b; --muted:#5b6b7b; --line:#dfe6e8; --bg:#f3f6f7; --ok:#1b7f4b; --bad:#b3261e; --brand:#0b5361; }
   * { box-sizing:border-box } body { margin:0; font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; color:var(--ink); background:var(--bg) }
@@ -49,7 +49,7 @@ export function verifyPage(docId: string, v: Result): string {
   input[type=file] { display:none } #fileres { margin-top:10px; font-weight:600 }
   .demo { font-size:13px; color:var(--muted) }
 </style></head><body><main>
-  <div class="brand">UniFlow · проверка подлинности</div>
+  <div class="brand">Ведома · проверка подлинности</div>
   <div class="card status"><div class="icon">${v ? (ok ? '✓' : '!') : '?'}</div>
     <div><h1>${title}</h1><p>${lead}</p></div></div>
   ${v ? `<div class="card"><dl>${rows.map(([k, val]) => `<dt>${esc(k)}</dt><dd>${esc(val)}</dd>`).join('')}</dl></div>

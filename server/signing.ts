@@ -33,8 +33,8 @@ export const publicKeyPem = publicKey.export({ type: 'spki', format: 'pem' }).to
 
 export const sha256 = (buf: Buffer) => createHash('sha256').update(buf).digest('hex');
 
-/** Номер документа: UF-<заявка>-<6 случайных символов>. Он же ключ страницы проверки. */
-export const newDocId = (requestId: number) => `UF-${requestId}-${uid(6).toUpperCase()}`;
+/** Номер документа: VD-<заявка>-<6 случайных символов>. Он же ключ страницы проверки. */
+export const newDocId = (requestId: number) => `VD-${requestId}-${uid(6).toUpperCase()}`;
 
 export function signFile(buf: Buffer, docId: string, signer: string, signedAt = new Date().toISOString()): FileSignature {
   const hash = sha256(buf);

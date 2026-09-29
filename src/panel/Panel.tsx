@@ -218,7 +218,7 @@ function PanelLogin({ framed, onDone }: { framed: boolean; onDone: () => void })
     <div className={`pn ${framed ? 'pn--framed' : ''}`}>
       <aside className="pn-side">
         <div className="pn-side__title">Панель</div>
-        <div className="pn-side__sub">UniFlow · вуз</div>
+        <div className="pn-side__sub">Ведома · вуз</div>
       </aside>
       <section className="pn-main">
         <header className="pn-head"><div><h1>Вход в панель</h1><p>Для сотрудников деканата и администратора вуза</p></div></header>

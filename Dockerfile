@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# UniFlow: сервер (бот MAX + API) и собранный фронт (Mini App + панель) в одном образе.
+# «Ведома»: сервер (бот MAX + API) и собранный фронт (Mini App + панель) в одном образе.
 
 # ——— 1. Сборка фронта ———
 FROM node:22-alpine AS build

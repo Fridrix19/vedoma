@@ -40,7 +40,7 @@ export default function Demo() {
         <div className="demo-brand">
           <span className="demo-brand__mark">U</span>
           <div>
-            <div className="demo-brand__name">UniFlow</div>
+            <div className="demo-brand__name">Ведома</div>
             <div className="demo-brand__sub">Демо-стенд · бот MAX + Mini App + панель вуза · тестовые данные</div>
           </div>
         </div>
