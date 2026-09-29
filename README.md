@@ -67,15 +67,34 @@ MAX (мобильная и веб-версия)
 
 ## Запуск одной командой (Docker)
 
+Нужен только Docker 24+ с Compose v2 (на Windows и macOS — Docker Desktop).
+
 ```bash
-cp .env.example .env        # впишите BOT_TOKEN и пароли
+git clone https://github.com/Fridrix19/vedoma.git uniflow
+cd uniflow
+cp .env.example .env          # Windows (cmd): copy .env.example .env
 docker compose up -d --build
 ```
 
-Приложение: http://localhost:8080 (панель) и http://localhost:8080/miniapp.html (Mini App в браузере).
-Сборка образа занимает около минуты без учёта загрузки базового образа `node:22-alpine` (лимит кейса — 5 минут).
+Что вписать в `.env` (остальное можно не трогать):
 
-На сервере с доменом, чтобы у Mini App был https:
+| Что | Переменные | Без этого |
+|---|---|---|
+| Бот MAX | `BOT_TOKEN` | панель и Mini App в браузере работают, бот — нет |
+| Нейросеть Jev через Polza.AI | `JEV_API_KEY`, `JEV_API_URL=https://polza.ai/api/v1/systemone`, `JEV_MODEL=typesafe/jev` | бот понимает запросы по ключевым словам |
+| Свои пароли | `PANEL_PASSWORD`, `STAFF_CODE` | остаются тестовые `uniflow` |
+
+После запуска:
+
+- панель вуза — http://localhost:8080, пароль из `PANEL_PASSWORD`;
+- Mini App в браузере — http://localhost:8080/miniapp.html, вход `a.ivanova@student.univ-a.ru`, любой пароль от 4 символов;
+- бот — в MAX, кнопка «Демо-вход: тестовый студент»;
+- проверка, что сервер жив: `curl http://localhost:8080/api/health`.
+
+Сборка образа занимает около минуты без учёта загрузки базового образа `node:22-alpine` (лимит кейса — 5 минут).
+Логи: `docker compose logs -f app`. После правки `.env` — `docker compose up -d`.
+
+Чтобы Mini App открывался из MAX, нужен публичный домен с https — см. «Развёртывание на VPS». На сервере с доменом:
 
 ```bash
 docker compose --profile https up -d --build
