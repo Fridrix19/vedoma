@@ -12,7 +12,46 @@
 <body>
 <main class="deck">
 
-<!-- 1 · ТИТУЛ -->
+<!-- 1 · СЛУЖЕБНЫЙ -->
+<section class="slide">
+  <h2 class="h" style="font-size:52px">Данные для проверки</h2>
+  <p class="sub" style="font-size:26px">Служебный слайд: используется только для технической проверки. Все данные в решении тестовые.</p>
+  <div class="content" style="gap:80px; margin-top:52px">
+    <table class="tb" style="flex:1.2; font-size:22px">
+      <tr><td style="width:230px">Чат-бот в MAX</td><td><span class="mono" data-p="botLink"></span> · ник <span class="mono">@t302_hakaton_bot</span></td></tr>
+      <tr><td>Mini App</td><td class="mono">https://uniflow.betatestbyfridrix.ru/miniapp.html</td></tr>
+      <tr><td>Панель вуза</td><td><span class="mono">https://uniflow.betatestbyfridrix.ru/</span><br>пароль любой</td></tr>
+      <tr><td>API</td><td><span class="mono">https://uniflow.betatestbyfridrix.ru</span><br><span class="muted">openapi.yaml · DATA-API.yaml — 18 проверок</span></td></tr>
+      <tr><td>Репозиторий</td><td><span class="mono" data-p="repoUrl"></span><br>commit <span class="mono" data-p="commit"></span> · тег <span class="mono" data-p="tag"></span></td></tr>
+    </table>
+    <div class="col" style="flex:1; gap:40px">
+      <div>
+        <div class="label">Тестовые доступы</div>
+        <ul class="list" style="margin-top:18px; gap:12px">
+          <li style="font-size:21px">Студент в MAX: кнопка «Демо-вход: тестовый студент» в боте</li>
+          <li style="font-size:21px">Студент в Mini App: <span class="mono">a.ivanova@student.univ-a.ru</span>, любой пароль от 4 символов</li>
+          <li style="font-size:21px">Сотрудник в MAX: боту <span class="mono">/staff</span> — уведомления о&nbsp;новых заявках</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">Переменные для Docker</div>
+        <div class="mono" style="font-size:19px; line-height:1.7; margin-top:14px; color:var(--text)">
+          BOT_TOKEN=<span data-p="botToken"></span><br>
+          JEV_API_KEY=<span data-p="jevKey"></span><br>
+          JEV_API_URL=https://polza.ai/api/v1/systemone<br>
+          JEV_MODEL=typesafe/jev<br>
+          <span class="muted">остальное — в .env.example; запуск: docker compose up -d --build</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:28px; font-size:22px; line-height:1.5; color:var(--text)">
+    <b style="color:var(--ink)">Сценарий:</b> боту «Нужна справка» → «Банк / кредит» → «Оформить» → «Отправить» в Mini App → в панели «Взять в работу» → «Сформировать по шаблону» → «Готово» → в MAX приходит PDF с ЭП и кнопка «Проверить подпись»
+  </div>
+  <div class="foot"><span></span><span>1</span></div>
+</section>
+
+<!-- 2 · ТИТУЛ -->
 <section class="slide slide--dark" style="padding-top:136px">
   <div class="label" style="color:#7f9ba6">Хакатон MAX · трек «Образовательные решения»</div>
   <h1 style="font-family:var(--display); font-weight:600; font-size:168px; line-height:1; letter-spacing:-0.05em; color:#fff; margin:56px 0 0">Ведома</h1>
@@ -28,10 +67,10 @@
     <div><div style="font-size:26px; color:#fff; font-weight:600">Фёдор Хавалиц</div><div style="font-size:21px; color:#8aa6b0; margin-top:6px">Frontend · тимлид</div></div>
     <div><div style="font-size:26px; color:#fff; font-weight:600">Данил Ключников</div><div style="font-size:21px; color:#8aa6b0; margin-top:6px">Product-менеджер</div></div>
   </div>
-  <div class="foot" style="color:#5f7b86"><span></span><span>1</span></div>
+  <div class="foot" style="color:#5f7b86"><span></span><span>2</span></div>
 </section>
 
-<!-- 2 · РЕЗЮМЕ -->
+<!-- 3 · РЕЗЮМЕ -->
 <section class="slide">
   <h2 class="h">Коротко о проекте</h2>
   <p class="sub">Ведома переводит услуги вуза в&nbsp;MAX: <b>студент пишет своими словами — вуз отвечает документом в&nbsp;чат</b></p>
@@ -53,10 +92,10 @@
     </div>
   </div>
   <p class="t-md" style="margin:0; padding-top:36px; border-top:1px solid var(--rule)"><b style="color:var(--ink)">Уже работает:</b> бот MAX с&nbsp;нейросетью Jev · Mini App · панель деканата · PDF с&nbsp;ЭП · оценки и&nbsp;аналитика · конструктор услуг · несколько вузов на&nbsp;одной платформе</p>
-  <div class="foot"><span></span><span>2</span></div>
+  <div class="foot"><span></span><span>3</span></div>
 </section>
 
-<!-- 3 · АУДИТОРИЯ -->
+<!-- 4 · АУДИТОРИЯ -->
 <section class="slide">
   <h2 class="h">Для кого</h2>
   <p class="sub">Приоритетный сегмент — <b>студент очной формы</b>, которому нужна типовая услуга вуза: справка, заявление, запись к&nbsp;специалисту</p>
@@ -81,10 +120,10 @@
       <div><div class="num">1,42<small>млн</small></div><p class="t-sm" style="margin:12px 0 0">первокурсников в&nbsp;2025 году<span class="ref">1</span></p></div>
     </div>
   </div>
-  <div class="foot"><span>1 — Минобрнауки России, 2026 · 2 — ИСИЭЗ НИУ ВШЭ · 12 — Т—Ж</span><span>3</span></div>
+  <div class="foot"><span>1 — Минобрнауки России, 2026 · 2 — ИСИЭЗ НИУ ВШЭ · 12 — Т—Ж</span><span>4</span></div>
 </section>
 
-<!-- 4 · ПРОБЛЕМА -->
+<!-- 5 · ПРОБЛЕМА -->
 <section class="slide">
   <h2 class="h">Проблема</h2>
   <p class="sub">Типовая услуга вуза превращается в&nbsp;квест: <b>каналы разные, статуса нет, результат — только лично</b></p>
@@ -110,10 +149,10 @@
       <p class="t-md" style="margin:0 8px">Но это отдельные решения на&nbsp;сайтах конкретных вузов — там, куда студент заходит редко.</p>
     </div>
   </div>
-  <div class="foot"><span>8 — СПбПУ · 9 — НИУ ВШЭ · 10 — РАНХиГС · 11 — РХТУ: официальные страницы о&nbsp;справках и&nbsp;заявлениях</span><span>4</span></div>
+  <div class="foot"><span>8 — СПбПУ · 9 — НИУ ВШЭ · 10 — РАНХиГС · 11 — РХТУ: официальные страницы о&nbsp;справках и&nbsp;заявлениях</span><span>5</span></div>
 </section>
 
-<!-- 5 · ПОЧЕМУ MAX -->
+<!-- 6 · ПОЧЕМУ MAX -->
 <section class="slide">
   <h2 class="h">Почему MAX</h2>
   <p class="sub">Студенты и&nbsp;вузы уже там: <b>расписание и&nbsp;учебные чаты перешли в&nbsp;MAX</b>, а&nbsp;заявки и&nbsp;документы — пока нет</p>
@@ -131,10 +170,10 @@
       <li style="font-size:23px">статусы приходят туда, где студент читает сообщения</li>
     </ul>
   </div>
-  <div class="foot"><span>5 — Mediascope, 2026 · 6 — VK и&nbsp;Минобрнауки, 30.07.2026 · 7 — VK, 20.03.2026</span><span>5</span></div>
+  <div class="foot"><span>5 — Mediascope, 2026 · 6 — VK и&nbsp;Минобрнауки, 30.07.2026 · 7 — VK, 20.03.2026</span><span>6</span></div>
 </section>
 
-<!-- 6 · РЕШЕНИЕ -->
+<!-- 7 · РЕШЕНИЕ -->
 <section class="slide">
   <h2 class="h">Решение</h2>
   <p class="sub">Ведома — <b>единое окно студенческих услуг внутри MAX</b>: три части, связанные в&nbsp;один процесс</p>
@@ -156,10 +195,10 @@
     </div>
   </div>
   <p class="t-md" style="margin:0; padding-top:36px; border-top:1px solid var(--rule)">Заявка из&nbsp;бота сразу попадает в&nbsp;панель вуза, а&nbsp;каждый шаг — статус, документ, вопрос — приходит студенту сообщением в&nbsp;MAX.</p>
-  <div class="foot"><span></span><span>6</span></div>
+  <div class="foot"><span></span><span>7</span></div>
 </section>
 
-<!-- 7 · ПУТЬ СТУДЕНТА -->
+<!-- 8 · ПУТЬ СТУДЕНТА -->
 <section class="slide" style="padding-top:96px">
   <h2 class="h">Путь студента</h2>
   <p class="sub" style="margin-top:14px">На&nbsp;примере справки об&nbsp;обучении — от&nbsp;сообщения до&nbsp;документа, <b>без визитов и&nbsp;писем</b></p>
@@ -194,10 +233,10 @@
       <p class="t-sm" style="margin:0"><b style="color:var(--ink)">5. Документ с&nbsp;ЭП</b> — пересылает в&nbsp;банк</p>
     </div>
   </div>
-  <div class="foot"><span>Экраны бота и&nbsp;Mini App — из&nbsp;работающего MVP; ленту статусов (шаг 4) показываем схематично; данные тестовые</span><span>7</span></div>
+  <div class="foot"><span>Экраны бота и&nbsp;Mini App — из&nbsp;работающего MVP; ленту статусов (шаг 4) показываем схематично; данные тестовые</span><span>8</span></div>
 </section>
 
-<!-- 8 · JEV: ЧТО ЭТО -->
+<!-- 9 · JEV: ЧТО ЭТО -->
 <section class="slide">
   <h2 class="h">Нейросеть Jev</h2>
   <p class="sub">Jev (TypeSafe AI) — <b>модель принятия решений класса System One</b>. Не&nbsp;пишет текст, как LLM, а&nbsp;выбирает ответ и&nbsp;даёт его вероятность<span class="ref">15</span></p>
@@ -215,10 +254,10 @@
       <p class="t-sm" style="margin:0; font-style:italic">Данные разработчика<span class="ref">15</span>. Наш замер — на&nbsp;следующем слайде</p>
     </div>
   </div>
-  <div class="foot"><span>15 — TypeSafe AI: Jev — первая модель класса System One · 16 — Polza.AI: «модель другого класса, чем чат-модели»</span><span>8</span></div>
+  <div class="foot"><span>15 — TypeSafe AI: Jev — первая модель класса System One · 16 — Polza.AI: «модель другого класса, чем чат-модели»</span><span>9</span></div>
 </section>
 
-<!-- 9 · JEV: ЧТО ПОНИМАЕТ -->
+<!-- 10 · JEV: ЧТО ПОНИМАЕТ -->
 <section class="slide">
   <h2 class="h">Что понимает Jev</h2>
   <p class="sub">Студент не&nbsp;знает, как называется услуга. <b>Jev понимает смысл</b> и&nbsp;заполняет форму за&nbsp;него</p>
@@ -236,10 +275,10 @@
       <div><div class="num" style="font-size:72px">0,04<small>₽</small></div><p class="t-sm" style="margin:12px 0 0">стоимость разбора одного сообщения</p></div>
     </div>
   </div>
-  <div class="foot"><span>Наш замер на&nbsp;работающем MVP: Jev через Polza.AI, каталог тестового вуза, 29.09.2026</span><span>9</span></div>
+  <div class="foot"><span>Наш замер на&nbsp;работающем MVP: Jev через Polza.AI, каталог тестового вуза, 29.09.2026</span><span>10</span></div>
 </section>
 
-<!-- 10 · JEV: КАК РЕШАЕТ -->
+<!-- 11 · JEV: КАК РЕШАЕТ -->
 <section class="slide">
   <h2 class="h">Как Jev принимает решение</h2>
   <p class="sub">Каждый ответ — с&nbsp;вероятностью. <b>Бот действует сам, только когда модель уверена</b>, иначе переспрашивает</p>
@@ -270,10 +309,10 @@
       <div><h3>Не про услуги</h3><p class="t-md muted" style="margin:12px 0 0">Поздоровается, покажет статусы заявок или подскажет, с&nbsp;чем может помочь.</p></div>
     </div>
   </div>
-  <div class="foot"><span>Реальный ответ Jev на&nbsp;работающем MVP, 29.09.2026: 0,64&nbsp;с, 0,042&nbsp;₽ · порог 60% — настройка Ведомы</span><span>10</span></div>
+  <div class="foot"><span>Реальный ответ Jev на&nbsp;работающем MVP, 29.09.2026: 0,64&nbsp;с, 0,042&nbsp;₽ · порог 60% — настройка Ведомы</span><span>11</span></div>
 </section>
 
-<!-- 11 · ДОКУМЕНТ -->
+<!-- 12 · ДОКУМЕНТ -->
 <section class="slide">
   <h2 class="h">Документ с&nbsp;подписью</h2>
   <p class="sub">Продолжение той&nbsp;же заявки: <b>справка для банка приходит в&nbsp;чат PDF-файлом</b> с&nbsp;электронной подписью и&nbsp;QR-кодом</p>
@@ -288,10 +327,10 @@
     </div>
     <div class="phone" style="width:290px; align-self:flex-start"><img src="assets/img/verify.png" alt="Проверка подлинности" style="aspect-ratio:780/1644; object-fit:cover; object-position:top"></div>
   </div>
-  <div class="foot"><span>Экраны из&nbsp;работающего MVP · документ демонстрационный</span><span>11</span></div>
+  <div class="foot"><span>Экраны из&nbsp;работающего MVP · документ демонстрационный</span><span>12</span></div>
 </section>
 
-<!-- 12 · АВТОМАТИЗАЦИЯ -->
+<!-- 13 · АВТОМАТИЗАЦИЯ -->
 <section class="slide">
   <h2 class="h">Автоматизация</h2>
   <p class="sub">Большинство обращений типовые. <b>Вуз один раз настраивает процесс — дальше он идёт сам</b>, а&nbsp;сотрудник нужен только для решений</p>
@@ -316,10 +355,10 @@
     </div>
   </div>
   <p class="t-md" style="margin:0; padding-top:36px; border-top:1px solid var(--rule)"><b style="color:var(--ink)">Почему не&nbsp;всё автоматически?</b> Справка лишь подтверждает данные из&nbsp;базы вуза — её можно выдавать без человека. Выплата или отпуск — решение с&nbsp;последствиями: его принимает сотрудник, а&nbsp;Ведома готовит заявку.</p>
-  <div class="foot"><span>Режим выбирается для каждой услуги отдельно</span><span>12</span></div>
+  <div class="foot"><span>Режим выбирается для каждой услуги отдельно</span><span>13</span></div>
 </section>
 
-<!-- 13 · КОНСТРУКТОР -->
+<!-- 14 · КОНСТРУКТОР -->
 <section class="slide">
   <h2 class="h">Конструктор услуг</h2>
   <p class="sub">Как Тильда для сайтов — <b>только для услуг вуза</b>. Новая услуга появляется в&nbsp;боте и&nbsp;Mini App без программиста</p>
@@ -333,10 +372,10 @@
       <div><h3>Увидеть, где процесс буксует</h3><p class="t-md muted" style="margin:10px 0 0">Оценки и&nbsp;комментарии по&nbsp;каждой услуге, сроки и&nbsp;просрочки — и&nbsp;подсказки, что перенастроить.</p></div>
     </div>
   </div>
-  <div class="foot"><span>Экраны из&nbsp;работающего MVP · данные тестовые</span><span>13</span></div>
+  <div class="foot"><span>Экраны из&nbsp;работающего MVP · данные тестовые</span><span>14</span></div>
 </section>
 
-<!-- 14 · АРХИТЕКТУРА -->
+<!-- 15 · АРХИТЕКТУРА -->
 <section class="slide">
   <h2 class="h">Архитектура</h2>
   <p class="sub">Один сервер связывает MAX, нейросеть Jev и&nbsp;панель вуза. <b>Что куда уходит:</b></p>
@@ -377,10 +416,10 @@
       </g>
     </svg>
   </div>
-  <div class="foot"><span>Node.js 22 · Express · React 18 · официальная библиотека @maxhub/max-bot-api · pdfkit · Docker Compose</span><span>14</span></div>
+  <div class="foot"><span>Node.js 22 · Express · React 18 · официальная библиотека @maxhub/max-bot-api · pdfkit · Docker Compose</span><span>15</span></div>
 </section>
 
-<!-- 15 · ДАННЫЕ -->
+<!-- 16 · ДАННЫЕ -->
 <section class="slide">
   <h2 class="h">Данные и безопасность</h2>
   <p class="sub">Каждый видит <b>только своё</b>, наружу уходит минимум</p>
@@ -405,10 +444,10 @@
         <li style="font-size:23px">подпись — демо-ключ, не&nbsp;УКЭП</li></ul></div>
     </div>
   </div>
-  <div class="foot"><span>Реальные интеграции: MAX Bot API, MAX Bridge, Jev через Polza.AI, Let's Encrypt. Персональные данные в&nbsp;MVP вымышленные</span><span>15</span></div>
+  <div class="foot"><span>Реальные интеграции: MAX Bot API, MAX Bridge, Jev через Polza.AI, Let's Encrypt. Персональные данные в&nbsp;MVP вымышленные</span><span>16</span></div>
 </section>
 
-<!-- 16 · ЭФФЕКТ -->
+<!-- 17 · ЭФФЕКТ -->
 <section class="slide">
   <h2 class="h">Ожидаемый эффект</h2>
   <p class="sub">Что меняется для студента и&nbsp;деканата — и&nbsp;<b>как это измерить в&nbsp;пилоте</b></p>
@@ -433,10 +472,10 @@
       <p class="t-sm" style="margin:18px 0 0">Всё считается из&nbsp;данных системы: время, канал, оценки, просрочки</p>
     </div>
   </div>
-  <div class="foot"><span>«Сейчас» — по&nbsp;официальным страницам вузов 8–10; справа — MVP, автовыдача типовых документов — следующий релиз</span><span>16</span></div>
+  <div class="foot"><span>«Сейчас» — по&nbsp;официальным страницам вузов 8–10; справа — MVP, автовыдача типовых документов — следующий релиз</span><span>17</span></div>
 </section>
 
-<!-- 17 · ПЛАТФОРМА -->
+<!-- 18 · ПЛАТФОРМА -->
 <section class="slide slide--dark">
   <h2 class="h">Ведома — платформа для вузов</h2>
   <p class="sub">Мы делали не&nbsp;бота для одной справки, а&nbsp;<b style="color:#fff">SaaS: вуз подключается и&nbsp;собирает свои услуги сам</b></p>
@@ -455,10 +494,10 @@
     </div>
   </div>
   <div style="padding-top:36px; border-top:1px solid #23414c; font:500 30px/1.35 var(--body); color:#fff">Расписание уже едино для 100+ вузов. <span style="color:#7fd0da">Ведома делает то&nbsp;же для заявок и&nbsp;документов.</span></div>
-  <div class="foot" style="color:#5f7b86"><span>7 — VK, 20.03.2026 · 13 — Workspace, кейс «Кампус» · 14 — Ведомости, 22.09.2026</span><span>17</span></div>
+  <div class="foot" style="color:#5f7b86"><span>7 — VK, 20.03.2026 · 13 — Workspace, кейс «Кампус» · 14 — Ведомости, 22.09.2026</span><span>18</span></div>
 </section>
 
-<!-- 18 · КАТАЛОГ УСЛУГ -->
+<!-- 19 · КАТАЛОГ УСЛУГ -->
 <section class="slide">
   <h2 class="h">Не только справки</h2>
   <p class="sub">Любая типовая услуга собирается в&nbsp;конструкторе. <b>Справка — лишь первый пример</b></p>
@@ -469,10 +508,10 @@
     <div><h3>Кампус</h3><ul class="list" style="margin-top:20px; gap:12px"><li style="font-size:23px">общежитие <span class="accent" style="font-size:.8em">● MVP</span></li><li style="font-size:23px">пропуск в&nbsp;кампус</li><li style="font-size:23px">заявка на&nbsp;ремонт</li><li style="font-size:23px">бронь аудитории</li></ul></div>
   </div>
   <p class="t-md" style="margin:0; padding-top:36px; border-top:1px solid var(--rule)">Механика одна: студент пишет → Jev находит услугу → форма уже заполнена → типовое выдаётся по&nbsp;шаблону, остальное решает сотрудник → ответ в&nbsp;MAX. Меняется только каталог.</p>
-  <div class="foot"><span>● MVP — услуга уже есть в&nbsp;тестовых вузах демо-стенда</span><span>18</span></div>
+  <div class="foot"><span>● MVP — услуга уже есть в&nbsp;тестовых вузах демо-стенда</span><span>19</span></div>
 </section>
 
-<!-- 19 · МАСШТАБИРОВАНИЕ -->
+<!-- 20 · МАСШТАБИРОВАНИЕ -->
 <section class="slide">
   <h2 class="h">Масштабирование</h2>
   <p class="sub">Та&nbsp;же механика работает везде, <b>где организация выдаёт документы по&nbsp;запросу</b></p>
@@ -490,10 +529,10 @@
       <div><div class="label accent">4 · СПО и&nbsp;школы, от&nbsp;3 лет</div><p class="t-md" style="margin:14px 0 0">Шаблоны документов, роль родителя, строже доступ к&nbsp;данным детей</p></div>
     </div>
   </div>
-  <div class="foot"><span>3 — Минобрнауки, январь 2026 · 4 — Минпросвещения, 2026 · 13 — кейс «Кампус» · сроки этапов — наши допущения</span><span>19</span></div>
+  <div class="foot"><span>3 — Минобрнауки, январь 2026 · 4 — Минпросвещения, 2026 · 13 — кейс «Кампус» · сроки этапов — наши допущения</span><span>20</span></div>
 </section>
 
-<!-- 20 · РИСКИ -->
+<!-- 21 · РИСКИ -->
 <section class="slide">
   <h2 class="h">Риски и допущения</h2>
   <p class="sub">Что может помешать — и&nbsp;<b>как мы это снимаем</b></p>
@@ -517,10 +556,10 @@
         <li style="font-size:23px">вуз готов выгрузить список студентов</li></ul></div>
     </div>
   </div>
-  <div class="foot"><span></span><span>20</span></div>
+  <div class="foot"><span></span><span>21</span></div>
 </section>
 
-<!-- 21 · ИСТОЧНИКИ -->
+<!-- 22 · ИСТОЧНИКИ -->
 <section class="slide">
   <h2 class="h">Источники</h2>
   <ol class="src">
@@ -541,10 +580,10 @@
     <li><b>TypeSafe AI</b> — Jev, первая модель класса System One: документация; заявлено в&nbsp;20–200 раз быстрее и&nbsp;в&nbsp;40–400 раз дешевле сопоставимых LLM, ответ 70–500 мс (данные разработчика)</li>
     <li><b>Polza.AI</b> — страница модели Jev: модель принятия решений с&nbsp;вероятностями ответов</li>
   </ol>
-  <div class="foot"><span>Замеры ИИ, проверки API и экраны — собственные, на работающем MVP, 29.09.2026</span><span>21</span></div>
+  <div class="foot"><span>Замеры ИИ, проверки API и экраны — собственные, на работающем MVP, 29.09.2026</span><span>22</span></div>
 </section>
 
-<!-- 22 · ФИНАЛ -->
+<!-- 23 · ФИНАЛ -->
 <section class="slide slide--dark">
   <div class="label" style="color:#7f9ba6">Ведома · команда «Дейдж-ласт (Пантеры)» · СПбГУПТД</div>
   <h2 class="h" style="margin-top:28px">Попробуйте сами</h2>
@@ -579,46 +618,7 @@
       <div class="qr__url mono">github.com/Fridrix19/vedoma</div>
     </div>
   </div>
-  <div class="foot" style="color:#5f7b86"><span>В&nbsp;панель стенда пускает с&nbsp;любым паролем</span><span>22</span></div>
-</section>
-
-<!-- 23 · СЛУЖЕБНЫЙ -->
-<section class="slide">
-  <h2 class="h" style="font-size:52px">Данные для проверки</h2>
-  <p class="sub" style="font-size:26px">Служебный слайд: используется только для технической проверки. Все данные в решении тестовые.</p>
-  <div class="content" style="gap:80px; margin-top:52px">
-    <table class="tb" style="flex:1.2; font-size:22px">
-      <tr><td style="width:230px">Чат-бот в MAX</td><td><span class="mono" data-p="botLink"></span> · ник <span class="mono">@t302_hakaton_bot</span></td></tr>
-      <tr><td>Mini App</td><td class="mono">https://uniflow.betatestbyfridrix.ru/miniapp.html</td></tr>
-      <tr><td>Панель вуза</td><td><span class="mono">https://uniflow.betatestbyfridrix.ru/</span><br>пароль любой</td></tr>
-      <tr><td>API</td><td><span class="mono">https://uniflow.betatestbyfridrix.ru</span><br><span class="muted">openapi.yaml · DATA-API.yaml — 18 проверок</span></td></tr>
-      <tr><td>Репозиторий</td><td><span class="mono" data-p="repoUrl"></span><br>commit <span class="mono" data-p="commit"></span> · тег <span class="mono" data-p="tag"></span></td></tr>
-    </table>
-    <div class="col" style="flex:1; gap:40px">
-      <div>
-        <div class="label">Тестовые доступы</div>
-        <ul class="list" style="margin-top:18px; gap:12px">
-          <li style="font-size:21px">Студент в MAX: кнопка «Демо-вход: тестовый студент» в боте</li>
-          <li style="font-size:21px">Студент в Mini App: <span class="mono">a.ivanova@student.univ-a.ru</span>, любой пароль от 4 символов</li>
-          <li style="font-size:21px">Сотрудник в MAX: боту <span class="mono">/staff</span> — уведомления о&nbsp;новых заявках</li>
-        </ul>
-      </div>
-      <div>
-        <div class="label">Переменные для Docker</div>
-        <div class="mono" style="font-size:19px; line-height:1.7; margin-top:14px; color:var(--text)">
-          BOT_TOKEN=<span data-p="botToken"></span><br>
-          JEV_API_KEY=<span data-p="jevKey"></span><br>
-          JEV_API_URL=https://polza.ai/api/v1/systemone<br>
-          JEV_MODEL=typesafe/jev<br>
-          <span class="muted">остальное — в .env.example; запуск: docker compose up -d --build</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div style="margin-top:28px; font-size:22px; line-height:1.5; color:var(--text)">
-    <b style="color:var(--ink)">Сценарий:</b> боту «Нужна справка» → «Банк / кредит» → «Оформить» → «Отправить» в Mini App → в панели «Взять в работу» → «Сформировать по шаблону» → «Готово» → в MAX приходит PDF с ЭП и кнопка «Проверить подпись»
-  </div>
-  <div class="foot"><span></span><span>23</span></div>
+  <div class="foot" style="color:#5f7b86"><span>В&nbsp;панель стенда пускает с&nbsp;любым паролем</span><span>23</span></div>
 </section>
 
 </main>
