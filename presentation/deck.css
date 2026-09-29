@@ -143,3 +143,10 @@ ol.src b { color: var(--ink); font-weight: 600; }
 .content.cols { align-content: center; }
 .content.cols .t-md { font-size: 27px; }
 table.tb.tb--tight td { padding: 15px 24px 15px 0; }
+
+/* финал: QR-коды */
+.qr { display: flex; flex-direction: column; min-width: 0; }
+.qr__box { background: #fff; border-radius: 24px; padding: 26px; width: 300px; }
+.qr__img { display: block; width: 100%; height: auto; }
+.qr__note { font-size: 21px; color: #9fb7c0; margin: 8px 0 0; line-height: 1.4; }
+.qr__url { font-size: 19px; color: #fff; margin-top: 14px; overflow-wrap: anywhere; line-height: 1.4; }
