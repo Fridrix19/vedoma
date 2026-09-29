@@ -8,7 +8,7 @@ set SERVER=root@5.35.85.41
 set DOMAIN=uniflow.betatestbyfridrix.ru
 
 echo [1/3] Упаковываю проект...
-tar -czf "%TEMP%\uniflow-deploy.tgz" --exclude=node_modules --exclude=dist --exclude=dist-demo --exclude=data --exclude=.env --exclude=*.zip --exclude=.git .
+tar -czf "%TEMP%\uniflow-deploy.tgz" --exclude=node_modules --exclude=dist --exclude=dist-demo --exclude=data --exclude=.env --exclude=*.zip --exclude=.git --exclude=presentation .
 if errorlevel 1 goto fail
 
 echo [2/3] Загружаю на сервер (попросит пароль root)...
